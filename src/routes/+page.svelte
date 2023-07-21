@@ -29,6 +29,7 @@
 
 	.post {
 		max-inline-size: var(--size-content-3);
+		color: white;
 	}
 
 	.post:not(:last-child) {
@@ -37,15 +38,20 @@
 	}
 
 	.title {
-		font-size: var(--font-size-fluid-3);
+		font-size: 40px;
+		font-weight: 700;
 		text-transform: capitalize;
+		color: white;
 	}
 
 	.date {
+		font-size: 16px;
 		color: var(--text-2);
 	}
 
 	.description {
+		font-size: 16px;
+		font-weight: 300;
 		margin-top: var(--size-3);
 	}
 </style>
