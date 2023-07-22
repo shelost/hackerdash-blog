@@ -1,8 +1,8 @@
 ---
-series: Canvas — Lesson 1
-title: Getting Started
+series: Manifesto
+title: Why We Started Hackerdash
 description: Second post.
-date: '2023-7-21'
+date: '2023-7-22'
 author: 'Dantès'
 categories:
   - sveltekit
@@ -14,10 +14,8 @@ published: true
   import Counter from './counter.svelte'
 </script>
 
-### Introduction
 
-
-In this lesson, we're going to start with the very basics of getting started with the HTML Canvas.
+I believe Indie Hacking is the future of developer work.
 
 This assumes you know the basics of how HTML works — if you don't, W3Schools has an <a href='https://www.w3schools.com/html/'> excellent course </a> on how you can get started with the basics.
 

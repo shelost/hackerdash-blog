@@ -20,7 +20,7 @@
 		</PageTransition>
 	</main>
 
-	<Footer />
+
 </div>
 
 <style>
@@ -34,6 +34,7 @@
 	}
 
 	main {
+		margin-top: 70px;
 		padding-block: var(--size-9);
 	}
 

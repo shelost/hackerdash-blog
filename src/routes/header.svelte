@@ -13,6 +13,9 @@
 			<a href="/"> Home </a>
 		</li>
 		<li>
+			<a href="/blog"> Blog </a>
+		</li>
+		<li>
 			<a href="/about"> About </a>
 		</li>
 		<!--
@@ -30,14 +33,20 @@
 
 <style lang = "scss">
 
-
 	img{
-		height: 40px;
+		height: 32px;
 	}
 
-
 	nav {
-		padding-block: var(--size-7);
+		position: fixed;
+		top: 20px;
+		left: 20px;
+		width: calc(100vw - 40px);
+		padding: 15px 30px;
+		border-radius: 5px;
+		background: #ff0051;
+		display: flex;
+		align-items: center;
 	}
 
 	.links {
@@ -47,6 +56,14 @@
 	a {
 		color: inherit;
 		text-decoration: none;
+		color: rgba(255,255,255,0.5);
+		font-weight: 500;
+		font-size: 16px;
+		transition: 0.2s ease;
+	}
+
+	a:hover{
+		color: rgba(255,255,255,0.8);
 	}
 
 	@media (min-width: 768px) {
