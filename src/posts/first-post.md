@@ -1,6 +1,7 @@
 ---
+type: blog
 title: Welcome to Hackerdash!
-description: An introduction..
+description: An introduction.
 date: '2023-7-21'
 author: 'Dantès'
 categories:

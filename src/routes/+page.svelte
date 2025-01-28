@@ -1,138 +1,264 @@
 <script lang = "js">
+
+	import { resolveRoute } from "$app/paths"
+	import {writable} from 'svelte/store'
+	import { expandedPost } from '$lib/store';
 	import { formatDate } from '$lib/utils'
 	import * as config from '$lib/config'
 	import { onMount } from 'svelte'
+	import { goto } from '$app/navigation';
+	import {
+		blur,
+		crossfade,
+		draw,
+		fade,
+		fly,
+		scale,
+		slide
+	} from 'svelte/transition';
+
 	export let data
+
+
+	// Crossfade setup
+	const [send, receive] = crossfade({
+		duration: 500,
+	});
+
+	function handleClick(post, event) {
+		// Get bounding box of clicked post
+		const boundingBox = event.currentTarget.getBoundingClientRect();
+
+		// Set expanded post data
+		expandedPost.set({ post, boundingBox });
+
+		// Navigate to the article after capturing state
+		goto(`/${post.slug}`);
+	}
+
 
 	onMount(() => {
 
-			function C() {
-				e.globalCompositeOperation = 'source-over'
-				e.fillStyle = 'rgba(8,8,12,0.65)'
-				e.fillRect(0, 0, f, p)
-				e.globalCompositeOperation = 'lighter'
-				x = q - u
-				y = r - v
-				u = q
-				v = r
-				for (
-					var d = 0.86 * f, l = 0.125 * f, m = 0.5 * f, t = Math.random, n = Math.abs, o = z;
-					o--;
+		function Id(arg){
+			return document.getElementById(arg)
+		}
 
-				) {
-					var h = A[o],
-						i = h.x,
-						j = h.y,
-						a = h.a,
-						b = h.b,
-						c = i - q,
-						k = j - r,
-						g = Math.sqrt(c * c + k * k) || 0.001,
-						c = c / g,
-						k = k / g
-					if (w && g < m)
-						var s = 14 * (1 - g / m),
-							a = a + (c * s + 0.5 - t()),
-							b = b + (k * s + 0.5 - t())
-					g < d && ((s = 0.0014 * (1 - g / d) * f), (a -= c * s), (b -= k * s))
-					g < l && ((c = 2.6e-4 * (1 - g / l) * f), (a += x * c), (b += y * c))
-					a *= B
-					b *= B
-					c = n(a)
-					k = n(b)
-					g = 0.5 * (c + k)
-					0.1 > c && (a *= 3 * t())
-					0.1 > k && (b *= 3 * t())
-					c = 0.45 * g
-					c = Math.max(Math.min(c, 3.5), 0.4)
-					i += a
-					j += b
-					i > f ? ((i = f), (a *= -1)) : 0 > i && ((i = 0), (a *= -1))
-					j > p ? ((j = p), (b *= -1)) : 0 > j && ((j = 0), (b *= -1))
-					h.a = a
-					h.b = b
-					h.x = i
-					h.y = j
-					e.fillStyle = '#ff0051'
-					e.beginPath()
-					e.arc(i, j, c, 0, D, !0)
-					e.closePath()
-					e.fill()
+		function Class(arg){
+			return document.getElementsByClassName(arg)
+		}
+
+		//________________________________ Interaction ________________________________//
+
+		let XP = 1, YP = 1
+		let MX = 0, MY = 0
+		let in_window = true
+
+		window.addEventListener('mousemove', e => {
+			in_window = true
+			MX = e.clientX
+			MY = e.clientY
+			let xc = window.innerWidth / 2
+			let yc = window.innerHeight / 2
+			XP = 1 + (xc - MX) / (xc * 20)
+			YP = 1 + (MY - yc) / (yc*20)
+		})
+
+		window.addEventListener('mouseleave', e => {
+			in_window = false
+			console.log('yo')
+		})
+
+
+		window.addEventListener('mouseenter', e => {
+			in_window = true
+		})
+
+		document.addEventListener("mouseleave", e => {
+			if(e.clientY <= 0 || e.clientX <= 0 || (e.clientX >= window.innerWidth || e.clientY >= window.innerHeight))
+			{
+				in_window = false
+			}
+		});
+
+		function hover(x, y, w, h) {
+			if (MX > x && MX < x + w && MY > y && MY < y + h) {
+				return true
+			}
+			return false
+		}
+
+		//________________________________ Canvas ________________________________//
+
+		const canvas = Id('canvas');
+		const backdrop = Id('bgcanvas');
+		const ctx = canvas.getContext('2d');
+		const btx = backdrop.getContext('2d');
+
+		let height = window.innerHeight
+		let width = window.innerWidth
+		let ratio = window.innerWidth / window.innerHeight
+		let r1 = 0
+		let r2 = 0
+		let step = 0.5
+		let angle = 0
+		let loc = []
+
+		//________________________________ Loop ________________________________//
+
+		let loop = () => {
+
+			//document.body.style.cursor = 'none'
+			backdrop.width = window.innerWidth
+			backdrop.height = window.innerHeight
+
+			// canvas
+			canvas.width = window.innerWidth
+			canvas.height = window.innerHeight
+
+			let hovering = false
+
+			for (let i = 0; i < Class('hoverable').length; i++) {
+				let div = Class('hoverable')[i]
+				let rect = div.getBoundingClientRect()
+				if (hover(rect.x, rect.y, rect.width, rect.height)) {
+					hovering = div
 				}
 			}
-			function E(d) {
-				d = d ? d : window.event
-				q = d.clientX - m.offsetLeft - n.offsetLeft
-				r = d.clientY - m.offsetTop - n.offsetTop - 1000
-			}
-			function F() {
-				w = !0
-				return !1
-			}
-			function G() {
-				return (w = !1)
-			}
-			function H() {
-				this.color =
-					'rgb(' +
-					Math.floor(255 * Math.random()) +
-					',' +
-					Math.floor(255 * Math.random()) +
-					',' +
-					Math.floor(255 * Math.random()) +
-					')'
-				this.b = this.a = this.x = this.y = 0
-				this.size = 1
-			}
-			var D = 2 * Math.PI,
-				f = 1e3,
-				p = 560,
-				z = 300,
-				B = 0.96,
-				A = [],
-				o,
-				e,
-				n,
-				m,
-				q,
-				r,
-				x,
-				y,
-				u,
-				v,
-				w
 
-			function init() {
-				/*try{var nlng=navigator.language||navigator.userLanguage;var lng=nlng.substr(0, 2).toLowerCase();if(lng=="ru"||lng=="uk"||lng=="be")document.getElementById("flw").innerHTML=': <a href="http://www.twitter.com/spielzeugz" target="_blank">Twitter</a> / <a href="http://plus.google.com/116743952899287181520" target="_blank">G+</a> / <a href="http://vk.com/id266298870">VK</a>';}catch(e){}*/
-				o = document.getElementById('mainCanvas')
-				if (o.getContext) {
-					m = document.getElementById('outer')
-					n = document.getElementById('canvasContainer')
-					e = o.getContext('2d')
-					for (var d = z; d--; ) {
-						var l = new H()
-						l.x = 0.5 * f
-						l.y = 0.5 * p
-						l.a = 34 * Math.cos(d) * Math.random()
-						l.b = 34 * Math.sin(d) * Math.random()
-						A[d] = l
+			if (hovering) {
+				r2 = 12
+				r1 += step
+				if (r1 > 25 || r1 < 15) {
+					step = step * -1
+				}
+			} else {
+				r2 = 8
+				r1 = 15
+			}
+
+			if (in_window) {
+				ctx.globalAlpha = 1
+				ctx.fillStyle = '#030025'
+				ctx.beginPath()
+				ctx.arc(MX, MY, r2, 0, Math.PI * 2)
+				ctx.closePath()
+
+				ctx.globalAlpha = 1
+				ctx.shadowColor = 'white'
+				ctx.shadowBlur = 15;
+				ctx.shadowOffsetX = 5
+				ctx.shadowOffsetY = 5
+				ctx.fill()
+			}
+
+			if (in_window) {
+
+				for (let i = 0; i <3; i++){
+
+					if (loc[i] == undefined) {
+						loc[i] = [0,0,0,0]
 					}
-					q = u = 0.5 * f
-					r = v = 0.5 * p
-					document.onmousedown = F
-					document.onmouseup = G
-					document.onmousemove = E
-					setInterval(C, 30)
 
-					console.log('yo')
-				} else
-					document.getElementById('output').innerHTML =
-						'Sorry, needs a recent version of Chrome, Firefox, Opera, Safari, or Internet Explorer 9.'
+					let c = loc[i]
+
+					let dx = MX - c[0]
+					let dy = MY - c[2]
+
+					let theta = Math.atan(dy / dx)
+					let speed = 1.6 - 0.6*i
+
+					let xs = speed * Math.abs(Math.cos(theta))
+					let ys = speed * Math.abs(Math.sin(theta))
+
+					if (dx > 1) {
+						c[1] += xs
+					} else if (dx < - 1){
+						c[1] -= xs
+					} else {
+						c[1] *= 0.2
+					}
+
+					if (dy > 1) {
+						c[3] += ys
+					} else if (dy < -1){
+						c[3] -= ys
+					} else {
+						c[3] *= 0.2
+					}
+
+					c[0] += c[1]
+					c[2] += c[3]
+
+					c[1] *= 0.9
+					c[3] *= 0.9
+
+					let a = (angle + i) * ((-1) ** (i))
+					let r = 30+40*i
+
+					btx.globalAlpha = 0.3 - 0.1 * i
+					btx.globalAlpha = 1
+					btx.lineWidth = 0;
+					btx.lineCap = 'round'
+					btx.fillStyle = 'rgba(255,255,255, 0.1)'
+					btx.shadowOffsetX = 10;
+					btx.shadowOffsetY = 10;
+					//btx.fillStyle = 'black'
+
+					btx.shadowColor = 'blue'
+					switch (i){
+						case 1:
+							btx.shadowColor = 'red'
+							break
+						case 2:
+							btx.shadowColor = 'gold'
+							break
+						default:
+							break
+					}
+
+					btx.shadowBlur = 70;
+					btx.strokeStyle = 'rgba(255,255,255,1)'
+					btx.beginPath()
+					btx.arc(c[0], c[2], r, 0, Math.PI*2)
+					btx.closePath()
+					//btx.stroke()
+					btx.fill()
+
+				}
+				ctx.globalAlpha = 1;
 			}
 
-			init()
+			//ctx.globalAlpha = 0.5;
+			//ctx.fillStyle = 'red'
+			//ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-	})
+			angle += 0.1;
+
+			// pieces
+
+			width = window.innerWidth
+			height = window.innerHeight
+			ratio = window.innerWidth / window.innerHeight
+			let vw = window.innerWidth / 100
+			let vh = window.innerHeight / 100
+			let xw = (window.innerWidth - 1000) / 100
+			let yw = (window.innerHeight - 600)/100
+			let scale = Math.log10(window.innerWidth / 500)
+
+
+			for (let i = 0; i < Class('piece').length; i++){
+				let div = Class('piece')[i]
+			// div.style.transform = `scale(${scale})`
+			}
+
+			window.requestAnimationFrame(loop)
+		}
+
+		window.requestAnimationFrame(loop)
+
+	});
+
+
 </script>
 
 <svelte:head>
@@ -141,54 +267,47 @@
 
 
 
-<div id="splash" class="section center">
-	<div id="canvasContainer">
-		<canvas id="mainCanvas" width = "1000" height = "560">
+<div id="splash">
+	<div id="container">
+		<canvas id="bgcanvas">
 		</canvas>
 	</div>
 
+	<video id = 'video' autoplay muted loop>
+		<source src="timelapse.mp4" type="video/mp4">
+	</video>
+
 	<div class="expo">
-		<h1>Your life in an app.</h1>
-
-		<h2>(as an Indie Hacker)</h2>
-
-		<p>Coming Soon</p>
-
-		<div id="socials">
-			<a href="https://twitter.com/peyostudio">
-				<img src="twitter.svg" class="icon" alt="icon" />
-			</a>
-			<a href="https://linkedin.com/in/peyostudio">
-				<img src="linkedin.svg" class="icon" alt="icon" />
-			</a>
-			<a href="https://medium.com/@peyostudio">
-				<img src="medium.svg" class="icon" alt="icon" />
-			</a>
-			<a href="https://instagram.com/peyostudio">
-				<img src="instagram.svg" class="icon" alt="icon" />
-			</a>
-		</div>
+		<img id = 'logo' src = 'ahnheewon3.png' alt = 'Logo' transition:fly={{ duration: 500 }}>
 	</div>
+
+	<canvas id="canvas">
+	</canvas>
 </div>
 
-<!--
-<h1>Blog</h1>
+<h1> Blog </h1>
 <section>
 	<ul class="posts">
 		{#each data.posts as post}
-			<li class="post">
-				<a href={post.slug} class="title">{post.title}</a>
+			<li
+				class="post hoverable"
+				on:click={(event) => handleClick(post, event)}
+				in:fly={{ y: 50, opacity: 0 }}
+				out:fly={{ y: -50, opacity: 0 }}
+				use:send={{ key: post.slug }}
+			>
+				<h1 class="title">{post.title}</h1>
 				<p class="date">{formatDate(post.date)}</p>
 				<p class="description">{post.description}</p>
 			</li>
 		{/each}
 	</ul>
 </section>
--->
 
-<style>
 
-	#mainCanvas{
+<style lang="scss">
+
+	#bgcanvas{
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -197,6 +316,42 @@
 		z-index: -2;
 	}
 
+	#canvas{
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		z-index: 2;
+		pointer-events: none;
+	}
+
+	#video{
+		position: fixed;
+		top: 0vh;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		object-fit: cover;
+		z-index: -3;
+		opacity: 0.4;
+		filter: grayscale(100%);
+		display: none;
+	}
+
+	#splash{
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		height: 90vh;
+	}
+
+	#logo{
+		height: 120px;
+		margin-bottom: 100px;
+	}
 
 	#socials {
 		display: flex;
@@ -208,17 +363,6 @@
 
 	.icon {
 		height: 44px;
-		filter: invert(100%);
-	}
-
-	#splash {
-		width: 100vw;
-		height: 60vh;
-
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
 	}
 
 	.expo {
@@ -227,23 +371,22 @@
 		justify-content: center;
 		align-items: center;
 		text-align: center;
-		margin-top: 350px;
-	}
 
-	.expo h1 {
-		font-size: 64px;
-		font-weight: 600;
-		letter-spacing: -3px;
-		color: white;
-		margin-bottom: 10px;
-	}
+		h1 {
+			font-size: 64px;
+			font-weight: 600;
+			letter-spacing: -1px;
+			color: black;
+			margin-bottom: 10px;
+		}
 
-	.expo h2 {
-		font-size: 24px;
-		font-weight: 500;
-		letter-spacing: -1px;
-		color: white;
-		margin-bottom: 10px;
+		h2 {
+			font-size: 24px;
+			font-weight: 500;
+			letter-spacing: -1px;
+			color: black;
+			margin-bottom: 10px;
+		}
 	}
 
 	/* Blog */
@@ -267,31 +410,24 @@
 		color: black;
 
 		border-radius: 20px;
-		background: white;
+		border: none;
+		background: rgba(white, 0.5);
+		box-shadow: 0 15px 40px rgba(black, 0.04);
 
 		padding: 20px;
+		opacity: 0.75;
+		transition: 0.2s ease;
+
+		h1{
+			font-size: 28px;
+			font-weight: 700;
+		}
+
+		&:hover{
+			opacity: 1;
+		}
 	}
 
-	.post:not(:last-child) {
-		border-bottom: 1px solid var(--border);
-		padding-bottom: var(--size-7);
-	}
 
-	.title {
-		font-size: 40px;
-		font-weight: 400;
-		text-transform: capitalize;
-		color: black;
-	}
 
-	.date {
-		font-size: 16px;
-		color: var(--text-2);
-	}
-
-	.description {
-		font-size: 16px;
-		font-weight: 300;
-		margin-top: var(--size-3);
-	}
 </style>

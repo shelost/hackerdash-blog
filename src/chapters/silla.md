@@ -1,8 +1,8 @@
 ---
 series: Canvas — Lesson 1
-title: Getting Started
+title: King of Samhan
 description: Second post.
-date: '2023-7-21'
+date: '2025-01-27'
 author: 'Dantès'
 categories:
   - sveltekit
@@ -17,11 +17,26 @@ published: true
 ### Introduction
 
 
-In this lesson, we're going to start with the very basics of getting started with the HTML Canvas.
+Just an ordinary day in the kingdom of Silla.
 
-This assumes you know the basics of how HTML works — if you don't, W3Schools has an <a href='https://www.w3schools.com/html/'> excellent course </a> on how you can get started with the basics.
+The Silla kingdom was born on
 
-Alright, let's get into it:
+Meanwhile, her husband **Chunchu (29)** and young son **Bupmin (6**) and daughter **Gotaso (5)** are preparing
+
+Silla is a
+
+Everything in life is determined by one’s rank.
+
+The **Royals** run the affairs of the state, looking after the nation lik ea family.
+The **Nobles** dominate politics, the military, and all avenues of public life.
+The **6th Ranks** can become officials,
+The **5th Rank** was a
+The **4th Rank** was. a
+
+Everything below that? Well, the **1st, 2nd**, and **3rd** Ranks may as well as not be human.
+You could only really see them in the slave-quarters of rich families.
+
+The Harmony Council convenes to discuss the next king.
 
 &nbsp;
 ```html

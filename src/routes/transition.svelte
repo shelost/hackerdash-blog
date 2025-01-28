@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { fade } from 'svelte/transition'
+	import { fade, fly } from 'svelte/transition'
 
 	export let url: string
 </script>
 
 {#key url}
-	<div class="transition" in:fade>
+	<div class="transition" in:fly>
 		<slot />
 	</div>
 {/key}

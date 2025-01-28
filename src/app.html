@@ -7,11 +7,11 @@
 		<link rel="icon" href="https://fav.farm/🔥" />
 		<link rel="alternate" type="application/atom+xml" href="/rss.xml" />
 		<script type="module">
-			const theme = localStorage.getItem('color-scheme')
+			const theme = 'light'
 
 			theme
 				? document.documentElement.setAttribute('color-scheme', theme)
-				: localStorage.setItem('color-scheme', 'dark')
+				: localStorage.setItem('color-scheme', 'light')
 		</script>
 		%sveltekit.head%
 	</head>

@@ -9,9 +9,16 @@
 	import '../app.css'
 
 	export let data
+
+	let show = false
+
+	setTimeout(() => {
+		show = true
+	}, 100);
 </script>
 
 <div class="layout">
+
 	<Header />
 
 	<main>
@@ -34,7 +41,6 @@
 	}
 
 	main {
-		margin-top: 70px;
 		padding-block: var(--size-9);
 	}
 
