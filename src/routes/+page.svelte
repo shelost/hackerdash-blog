@@ -9,6 +9,8 @@
 	import { onMount } from 'svelte'
 	import {send, receive} from '$lib/crossfade.js';
 	import { goto } from '$app/navigation';
+	//import Masonry from 'masonry-layout'
+	import bricks from 'bricks.js';
 
 	import {
 		blur,
@@ -32,18 +34,36 @@
 
 	onMount(() => {
 
-
 		window.addEventListener('scroll', handleScroll);
 
 		console.log(data)
+		console.log(Grid)
 
-		/*
-		new Masonry(Grid, {
-				itemSelector: ".post",
-				columnWidth: ".post",
-				percentPosition: true,
+		setTimeout(() => {
+
+			const grid = bricks({
+				container: Grid,
+				packed: 'data-packed',
+				position: true,
+				sizes: [
+					{ columns: 3, gutter: 10 },
+					{ mq: '768px', columns: 3, gutter: 20 },
+					{ mq: '1024px', columns: 3, gutter: 20 }
+				]
 			});
+
+			grid.pack()
+
+			grid.resize(true);
+
+			console.log(grid)
+
+			/*
+			return () => {
+				grid.resize(false);
+			};
 			*/
+		}, 0);
 	});
 
 	function handleScroll(){
@@ -66,6 +86,9 @@
 				Flow.style.width = `${rect.width}px`;
 				Flow.style.height = `${rect.height}px`;
 				Flow.style.opacity = .2;
+				if (elem.classList.contains('blog')){
+					Flow.style.opacity = .4
+				}
 			}
 		}, 0);
 	}
@@ -129,6 +152,8 @@
 
 		<div class="expo">
 			<img id = 'logo' src = 'ahnheewon3.png' alt = 'Logo' transition:fly={{ duration: 500 }}>
+
+			<h1> Designs and Code </h1>
 		</div>
 
 		<canvas id="canvas">
@@ -161,59 +186,27 @@
 			{:else}
 
 				<div
-					class="post hoverable"
+					class="post blog hoverable"
 					on:click={(event) => handleClick(post, event)}
 					on:mouseenter={(event) => handleHover(post, event)}
 					on:mouseleave={clearHover}
 				>
 
 					<div class = 'expo'>
+						{#if post.meta.series}
+							<h3 class = 'series'> {post.meta.series} </h3>
+						{/if}
 						<h1 class="title">{post.meta.title}</h1>
 						<p class="date">{formatDate(post.meta.date)}</p>
 						<p class="description">{post.meta.type}</p>
+					</div>
+					<div class = 'prose text'>
+						<svelte:component this={post.content}></svelte:component>
 					</div>
 				</div>
 
 			{/if}
 
-			<!--
-				{#if post.banner}
-					<div
-						class="post game hoverable"
-						on:click={(event) => handleClick(post, event)}
-						on:mouseenter={(event) => handleHover(post, event)}
-						on:mouseleave={clearHover}
-					>
-						{#if post.banner}
-							<img src = '/card/{post.card}.png' class = 'img' alt = 'Image'>
-						{/if}
-
-						<div class = 'expo'>
-							<h1 class="title">{post.title}</h1>
-							<p class="date">{formatDate(post.date)}</p>
-							<p class="description">{post.type}</p>
-						</div>
-					</div>
-
-				{:else}
-
-					<div
-						class="post hoverable"
-						on:click={(event) => handleClick(post, event)}
-						on:mouseenter={(event) => handleHover(post, event)}
-						on:mouseleave={clearHover}
-					>
-						<div class = 'expo'>
-							<h1 class="title">{post.title}</h1>
-							<p class="date">{formatDate(post.date)}</p>
-							<p class="description">{post.type}</p>
-						</div>
-					</div>
-
-
-				{/if}
-
-				-->
 
 		{/each}
 		</div>
@@ -247,7 +240,7 @@
 					</div>
 
 					<div class="prose">
-					<svelte:component class = 'mode' this={$selected.content} />
+						<svelte:component class = 'mode' this={$selected.content} />
 					</div>
 
 					{#if $selected.meta.url}
@@ -332,7 +325,7 @@
 			width: 720px;
 			height: 600px;
 			max-height: 80%;
-			border-radius: 16px;
+			border-radius: 12px;
 			transition: 0.2s ease;
 			z-index: 4 !important;
 			background: white;
@@ -495,23 +488,25 @@
 	/* Blog */
 
 	#posts {
-		display: flex;
+		//display: flex;
 		flex-wrap: wrap;
+		justify-content: space-between;
 		margin: auto;
-		width: 1120px;
+		width: 1440px;
 		max-width: 90%;
 		padding: 0;
-		gap: 20px;
+		//gap: 2%;
 	}
 
 	.post {
-		width: 32%;
+		width: 31%;
 		height: fit-content;
 		color: black;
 		margin: 0;
+		margin-bottom: 3%;
 
-		border-radius: 16px;
-		border: none;
+		border-radius: 8px;
+		border: 2px solid rgba(white, 0.1);
 		background: rgba(white, 0.4);
 		box-shadow: 0 15px 40px rgba(black, 0.08);
 
@@ -532,9 +527,39 @@
 			justify-content: flex-end;
 
 			.expo{
+				display: none;
 				background-image: linear-gradient(to top, rgba(#030025, 0.25), rgba(#030025, 0));
 				h1{
 					text-shadow: 0 10px 25px rgba(black, .5);
+				}
+			}
+		}
+
+		&.blog{
+			aspect-ratio: 15/10;
+			background: rgba(white, 0.8);
+
+			h3{
+				font-size: 14px;
+				font-weight: 600;
+				margin-bottom: 4px;
+				color: red;
+			}
+
+			h1{
+				font-family: 'Playfair Display', sans-serif;
+				font-weight: 900;
+				font-size: 32px !important;
+				letter-spacing: -.5px;
+				color: rgba(black, 0.8);
+			}
+
+			.text{
+				padding: 0 24px 24px 24px;
+
+				p{
+					font-size: 11px;
+					color: red;
 				}
 			}
 		}
@@ -564,11 +589,14 @@
 				font-weight: 300;
 				letter-spacing: -0.25px;
 			}
+			.date{
+			//	display: none;
+			}
+			.description{
+				display: none;
+			}
 		}
 
-		.date{
-			display: none;
-		}
 
 		&:hover{
 			opacity: 1;

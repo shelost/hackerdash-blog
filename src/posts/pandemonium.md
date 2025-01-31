@@ -2,6 +2,7 @@
 type: comic
 title: Pandemonium
 description: A one-shot comic
+card: card-pandemonium
 banner: banner-pandemonium
 date: '2025-01-27'
 author: 'Dantès'

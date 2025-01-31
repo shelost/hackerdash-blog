@@ -1,7 +1,8 @@
 ---
 series: History
+type: blog
 title: The Master Timeline
-description: Second post.
+description: A historical perspective tool
 date: '2023-7-22'
 author: 'Dantès'
 categories:
