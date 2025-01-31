@@ -1,12 +1,15 @@
 <script lang = "js">
 
 	import { resolveRoute } from "$app/paths"
-	import {writable} from 'svelte/store'
+	import { writable } from 'svelte/store'
+	import { tweened } from 'svelte/motion';
 	import { expandedPost } from '$lib/store';
 	import { formatDate } from '$lib/utils'
 	import * as config from '$lib/config'
 	import { onMount } from 'svelte'
+	import {send, receive} from '$lib/crossfade.js';
 	import { goto } from '$app/navigation';
+
 	import {
 		blur,
 		crossfade,
@@ -19,245 +22,91 @@
 
 	export let data
 
+	let modal = writable(false)
 
-	// Crossfade setup
-	const [send, receive] = crossfade({
-		duration: 500,
-	});
+	let selected = writable(null)
 
-	function handleClick(post, event) {
-		// Get bounding box of clicked post
-		const boundingBox = event.currentTarget.getBoundingClientRect();
-
-		// Set expanded post data
-		expandedPost.set({ post, boundingBox });
-
-		// Navigate to the article after capturing state
-		goto(`/${post.slug}`);
-	}
-
+	let Modal;
+	let Flow;
+	let Grid;
 
 	onMount(() => {
 
-		function Id(arg){
-			return document.getElementById(arg)
-		}
 
-		function Class(arg){
-			return document.getElementsByClassName(arg)
-		}
+		window.addEventListener('scroll', handleScroll);
 
-		//________________________________ Interaction ________________________________//
+		console.log(data)
 
-		let XP = 1, YP = 1
-		let MX = 0, MY = 0
-		let in_window = true
-
-		window.addEventListener('mousemove', e => {
-			in_window = true
-			MX = e.clientX
-			MY = e.clientY
-			let xc = window.innerWidth / 2
-			let yc = window.innerHeight / 2
-			XP = 1 + (xc - MX) / (xc * 20)
-			YP = 1 + (MY - yc) / (yc*20)
-		})
-
-		window.addEventListener('mouseleave', e => {
-			in_window = false
-			console.log('yo')
-		})
-
-
-		window.addEventListener('mouseenter', e => {
-			in_window = true
-		})
-
-		document.addEventListener("mouseleave", e => {
-			if(e.clientY <= 0 || e.clientX <= 0 || (e.clientX >= window.innerWidth || e.clientY >= window.innerHeight))
-			{
-				in_window = false
-			}
-		});
-
-		function hover(x, y, w, h) {
-			if (MX > x && MX < x + w && MY > y && MY < y + h) {
-				return true
-			}
-			return false
-		}
-
-		//________________________________ Canvas ________________________________//
-
-		const canvas = Id('canvas');
-		const backdrop = Id('bgcanvas');
-		const ctx = canvas.getContext('2d');
-		const btx = backdrop.getContext('2d');
-
-		let height = window.innerHeight
-		let width = window.innerWidth
-		let ratio = window.innerWidth / window.innerHeight
-		let r1 = 0
-		let r2 = 0
-		let step = 0.5
-		let angle = 0
-		let loc = []
-
-		//________________________________ Loop ________________________________//
-
-		let loop = () => {
-
-			//document.body.style.cursor = 'none'
-			backdrop.width = window.innerWidth
-			backdrop.height = window.innerHeight
-
-			// canvas
-			canvas.width = window.innerWidth
-			canvas.height = window.innerHeight
-
-			let hovering = false
-
-			for (let i = 0; i < Class('hoverable').length; i++) {
-				let div = Class('hoverable')[i]
-				let rect = div.getBoundingClientRect()
-				if (hover(rect.x, rect.y, rect.width, rect.height)) {
-					hovering = div
-				}
-			}
-
-			if (hovering) {
-				r2 = 12
-				r1 += step
-				if (r1 > 25 || r1 < 15) {
-					step = step * -1
-				}
-			} else {
-				r2 = 8
-				r1 = 15
-			}
-
-			if (in_window) {
-				ctx.globalAlpha = 1
-				ctx.fillStyle = '#030025'
-				ctx.beginPath()
-				ctx.arc(MX, MY, r2, 0, Math.PI * 2)
-				ctx.closePath()
-
-				ctx.globalAlpha = 1
-				ctx.shadowColor = 'white'
-				ctx.shadowBlur = 15;
-				ctx.shadowOffsetX = 5
-				ctx.shadowOffsetY = 5
-				ctx.fill()
-			}
-
-			if (in_window) {
-
-				for (let i = 0; i <3; i++){
-
-					if (loc[i] == undefined) {
-						loc[i] = [0,0,0,0]
-					}
-
-					let c = loc[i]
-
-					let dx = MX - c[0]
-					let dy = MY - c[2]
-
-					let theta = Math.atan(dy / dx)
-					let speed = 1.6 - 0.6*i
-
-					let xs = speed * Math.abs(Math.cos(theta))
-					let ys = speed * Math.abs(Math.sin(theta))
-
-					if (dx > 1) {
-						c[1] += xs
-					} else if (dx < - 1){
-						c[1] -= xs
-					} else {
-						c[1] *= 0.2
-					}
-
-					if (dy > 1) {
-						c[3] += ys
-					} else if (dy < -1){
-						c[3] -= ys
-					} else {
-						c[3] *= 0.2
-					}
-
-					c[0] += c[1]
-					c[2] += c[3]
-
-					c[1] *= 0.9
-					c[3] *= 0.9
-
-					let a = (angle + i) * ((-1) ** (i))
-					let r = 30+40*i
-
-					btx.globalAlpha = 0.3 - 0.1 * i
-					btx.globalAlpha = 1
-					btx.lineWidth = 0;
-					btx.lineCap = 'round'
-					btx.fillStyle = 'rgba(255,255,255, 0.1)'
-					btx.shadowOffsetX = 10;
-					btx.shadowOffsetY = 10;
-					//btx.fillStyle = 'black'
-
-					btx.shadowColor = 'blue'
-					switch (i){
-						case 1:
-							btx.shadowColor = 'red'
-							break
-						case 2:
-							btx.shadowColor = 'gold'
-							break
-						default:
-							break
-					}
-
-					btx.shadowBlur = 70;
-					btx.strokeStyle = 'rgba(255,255,255,1)'
-					btx.beginPath()
-					btx.arc(c[0], c[2], r, 0, Math.PI*2)
-					btx.closePath()
-					//btx.stroke()
-					btx.fill()
-
-				}
-				ctx.globalAlpha = 1;
-			}
-
-			//ctx.globalAlpha = 0.5;
-			//ctx.fillStyle = 'red'
-			//ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-			angle += 0.1;
-
-			// pieces
-
-			width = window.innerWidth
-			height = window.innerHeight
-			ratio = window.innerWidth / window.innerHeight
-			let vw = window.innerWidth / 100
-			let vh = window.innerHeight / 100
-			let xw = (window.innerWidth - 1000) / 100
-			let yw = (window.innerHeight - 600)/100
-			let scale = Math.log10(window.innerWidth / 500)
-
-
-			for (let i = 0; i < Class('piece').length; i++){
-				let div = Class('piece')[i]
-			// div.style.transform = `scale(${scale})`
-			}
-
-			window.requestAnimationFrame(loop)
-		}
-
-		window.requestAnimationFrame(loop)
-
+		/*
+		new Masonry(Grid, {
+				itemSelector: ".post",
+				columnWidth: ".post",
+				percentPosition: true,
+			});
+			*/
 	});
 
+	function handleScroll(){
+		if (Flow){
+			Flow.style.opacity = 0
+		}
+	}
+
+	function handleHover(post, event) {
+		selected.set(post)
+
+		let elem = event.currentTarget;
+		let rect = elem.getBoundingClientRect();
+
+		// Wait for modal to be created
+		setTimeout(() => {
+			if (Flow) {
+				Flow.style.top = `${rect.top}px`;
+				Flow.style.left = `${rect.left}px`;
+				Flow.style.width = `${rect.width}px`;
+				Flow.style.height = `${rect.height}px`;
+				Flow.style.opacity = .2;
+			}
+		}, 0);
+	}
+
+	function clearHover() {
+		if ($modal != true){
+			//selected.set(null);
+		}
+	}
+
+	function handleClick(post, event) {
+		// goto(`/blog/${post.slug}`, {noScroll: true})
+		let elem = event.currentTarget
+		let rect = elem.getBoundingClientRect();
+		modal.set('true')
+		// Wait for modal to be created
+		setTimeout(() => {
+			let rect2 = Modal.getBoundingClientRect()
+			setTimeout(() => {
+				Flow.style.transition = '0.2s cubic-bezier(0.22, 1, 0.36, 1)'
+				Flow.style.top = `${rect2.top}px`
+				Flow.style.left = `${rect2.left}px`
+				Flow.style.width = `${rect2.width}px`
+				Flow.style.height = `${rect2.height}px`
+				Flow.style.opacity = 1
+				setTimeout(() => {
+					Flow.style.opacity = 0
+				}, 500);
+
+			}, 100);
+		}, 10);
+	}
+
+	function closeModal(event) {
+		// Only close the modal if the click was on the background (not the modal itself)
+		if (event.target.id === 'pop') {
+			modal.set(false)
+		}else{
+			goto(`/${$selected.slug}`, {noScroll: true})
+		}
+	}
 
 </script>
 
@@ -266,46 +115,299 @@
 </svelte:head>
 
 
+<div id = 'main' out:fade={{duration: 200}}>
 
-<div id="splash">
-	<div id="container">
-		<canvas id="bgcanvas">
+	<div id="splash">
+		<div id="container">
+			<canvas id="bgcanvas">
+			</canvas>
+		</div>
+
+		<video id = 'video' autoplay muted loop>
+			<source src="timelapse.mp4" type="video/mp4">
+		</video>
+
+		<div class="expo">
+			<img id = 'logo' src = 'ahnheewon3.png' alt = 'Logo' transition:fly={{ duration: 500 }}>
+		</div>
+
+		<canvas id="canvas">
 		</canvas>
 	</div>
 
-	<video id = 'video' autoplay muted loop>
-		<source src="timelapse.mp4" type="video/mp4">
-	</video>
 
-	<div class="expo">
-		<img id = 'logo' src = 'ahnheewon3.png' alt = 'Logo' transition:fly={{ duration: 500 }}>
+	<section>
+
+		<h1 class = 'title'> Featured </h1>
+		<div id = 'posts' bind:this={Grid}>
+			{#each data.posts as post}
+
+			{#if post.meta.card}
+
+				<div
+					class="post game hoverable"
+					on:click={(event) => handleClick(post, event)}
+					on:mouseenter={(event) => handleHover(post, event)}
+					on:mouseleave={clearHover}
+				>
+					<img src = '/card/{post.meta.card}.png' class = 'img' alt = 'Image'>
+					<div class = 'expo'>
+						<h1 class="title">{post.meta.title}</h1>
+						<p class="date">{formatDate(post.meta.date)}</p>
+						<p class="description">{post.meta.type}</p>
+					</div>
+				</div>
+
+			{:else}
+
+				<div
+					class="post hoverable"
+					on:click={(event) => handleClick(post, event)}
+					on:mouseenter={(event) => handleHover(post, event)}
+					on:mouseleave={clearHover}
+				>
+
+					<div class = 'expo'>
+						<h1 class="title">{post.meta.title}</h1>
+						<p class="date">{formatDate(post.meta.date)}</p>
+						<p class="description">{post.meta.type}</p>
+					</div>
+				</div>
+
+			{/if}
+
+			<!--
+				{#if post.banner}
+					<div
+						class="post game hoverable"
+						on:click={(event) => handleClick(post, event)}
+						on:mouseenter={(event) => handleHover(post, event)}
+						on:mouseleave={clearHover}
+					>
+						{#if post.banner}
+							<img src = '/card/{post.card}.png' class = 'img' alt = 'Image'>
+						{/if}
+
+						<div class = 'expo'>
+							<h1 class="title">{post.title}</h1>
+							<p class="date">{formatDate(post.date)}</p>
+							<p class="description">{post.type}</p>
+						</div>
+					</div>
+
+				{:else}
+
+					<div
+						class="post hoverable"
+						on:click={(event) => handleClick(post, event)}
+						on:mouseenter={(event) => handleHover(post, event)}
+						on:mouseleave={clearHover}
+					>
+						<div class = 'expo'>
+							<h1 class="title">{post.title}</h1>
+							<p class="date">{formatDate(post.date)}</p>
+							<p class="description">{post.type}</p>
+						</div>
+					</div>
+
+
+				{/if}
+
+				-->
+
+		{/each}
+		</div>
+	</section>
+
+
+	{#if $modal}
+
+	<div id = 'dark' transition:fade={{duration: 50}} ></div>
+	<div id = 'pop' on:click={closeModal}>
+
+			<div id = 'modal' bind:this={Modal} in:fade={{delay: 250}}>
+
+				{#if $selected.meta.banner}
+					<img src = '/banner/{$selected.meta.banner}.png' alt = 'Image'>
+				{/if}
+
+				<div class = 'content'>
+
+					<h1> { $selected ? $selected.meta.title : 'Title' } </h1>
+					<h2> { $selected ? $selected.meta.type : 'Title' } </h2>
+					<p>  { $selected ? $selected.meta.description : 'Description' } </p>
+					<div class="tags">
+						{#each $selected.meta.categories as category}
+							<div class = 'tag'>
+								<h3>
+									{category}
+								</h3>
+							</div>
+						{/each}
+					</div>
+
+					<div class="prose">
+					<svelte:component class = 'mode' this={$selected.content} />
+					</div>
+
+					{#if $selected.meta.url}
+						<a href = '{$selected.meta.url}'>
+							<button>
+								<h1>
+									Visit
+								</h1>
+							</button>
+						</a>
+					{/if}
+
+				</div>
+
+
+			</div>
+		</div>
+
+	{/if}
+	<div id="flow-container">
+		<div id = 'flow' bind:this={Flow}></div>
 	</div>
 
-	<canvas id="canvas">
-	</canvas>
 </div>
-
-<h1> Blog </h1>
-<section>
-	<ul class="posts">
-		{#each data.posts as post}
-			<li
-				class="post hoverable"
-				on:click={(event) => handleClick(post, event)}
-				in:fly={{ y: 50, opacity: 0 }}
-				out:fly={{ y: -50, opacity: 0 }}
-				use:send={{ key: post.slug }}
-			>
-				<h1 class="title">{post.title}</h1>
-				<p class="date">{formatDate(post.date)}</p>
-				<p class="description">{post.description}</p>
-			</li>
-		{/each}
-	</ul>
-</section>
 
 
 <style lang="scss">
+
+	#flow-container{
+		z-index: 1;
+	}
+
+	#flow{
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 20px;
+		height: 20px;
+		background: white;
+		border-radius: 10px;
+		pointer-events: none;
+		will-change: transform, opacity;
+		transition: 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+		box-shadow: 0 5px 10px rgba(black, 0.1);
+	}
+
+	#dark{
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background: rgba(black, 0.3);
+		z-index: 1;
+	}
+
+	section{
+		.title{
+			font-size: 48px;
+			width: 100%;
+			max-inline-size: 100%;
+			text-align: center;
+			margin-bottom: 60px;
+		}
+	}
+
+	#pop{
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background: rgba(black, 0.1);
+		z-index: 2;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		#modal{
+
+			width: 720px;
+			height: 600px;
+			max-height: 80%;
+			border-radius: 16px;
+			transition: 0.2s ease;
+			z-index: 4 !important;
+			background: white;
+			overflow-y: scroll;
+			box-shadow: 0 15px 60px rgba(black, .25);
+			//border: .5px solid rgba(white, 0.1);
+			//border: 1px solid rgba(white, 0.1);
+			clip-path: inset(0 0 0 0 round 16px);
+
+			img{
+				border: 0;
+				border-radius: 0;
+			}
+
+			.content{
+				padding: 32px;
+
+				h1{
+					font-size: 48px;
+					font-weight: 900;
+					line-height: 98%;
+				}
+
+				h2{
+					font-size: 24px;
+					font-weight: 500;
+				}
+
+				p{
+					margin-top: 12px;
+					letter-spacing: -0.15px;
+					font-size: 14px;
+					font-weight: 300;
+				}
+
+				.tags{
+					display: flex;
+					gap: 10px;
+					margin-top: 20px;
+					.tag{
+						padding: 8px 10px;
+						border-radius: 12px;
+						background: rgba(#030025, 0.1);
+						h3{
+							font-size: 14px;
+							font-weight: 500;
+						}
+					}
+				}
+
+
+				button{
+					background: #030025;
+					color: white;
+
+					border: none;
+					outline: none;
+
+					padding: 12px 30px;
+					border-radius: 8px;
+
+					margin-top: 24px;
+
+					h1{
+						font-size: 20px;
+						font-weight: 700;
+						text-shadow: none;
+					}
+				}
+			}
+		}
+	}
+
+
+
 
 	#bgcanvas{
 		position: fixed;
@@ -324,6 +426,7 @@
 		height: 100vh;
 		z-index: 2;
 		pointer-events: none;
+		display: none;
 	}
 
 	#video{
@@ -365,7 +468,7 @@
 		height: 44px;
 	}
 
-	.expo {
+	.exp {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -391,43 +494,86 @@
 
 	/* Blog */
 
-	.posts {
-		display: grid;
-		gap: var(--size-7);
-	}
-
-	ul {
+	#posts {
 		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		width: 90vw;
+		flex-wrap: wrap;
+		margin: auto;
+		width: 1120px;
+		max-width: 90%;
+		padding: 0;
+		gap: 20px;
 	}
 
 	.post {
-		width: 900px;
-		max-inline-size: 90%;
+		width: 32%;
+		height: fit-content;
 		color: black;
+		margin: 0;
 
-		border-radius: 20px;
+		border-radius: 16px;
 		border: none;
-		background: rgba(white, 0.5);
-		box-shadow: 0 15px 40px rgba(black, 0.04);
+		background: rgba(white, 0.4);
+		box-shadow: 0 15px 40px rgba(black, 0.08);
 
-		padding: 20px;
-		opacity: 0.75;
+		opacity: 1;
 		transition: 0.2s ease;
+		color: #030025;
+		position: relative;
 
-		h1{
-			font-size: 28px;
-			font-weight: 700;
+		overflow: hidden;
+
+		&.game{
+			color: white;
+			background: none;
+			aspect-ratio: 5/4;
+
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
+
+			.expo{
+				background-image: linear-gradient(to top, rgba(#030025, 0.25), rgba(#030025, 0));
+				h1{
+					text-shadow: 0 10px 25px rgba(black, .5);
+				}
+			}
+		}
+
+		img{
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: auto;
+			z-index: -1;
+		}
+
+		.expo{
+			padding: 24px;
+
+			h1{
+				font-size: 28px;
+				line-height: 98%;
+				font-weight: 800;
+				margin-bottom: 8px;
+				text-align: left;
+				//color: #19163b;
+			}
+			p{
+				font-size: 14px;
+				font-weight: 300;
+				letter-spacing: -0.25px;
+			}
+		}
+
+		.date{
+			display: none;
 		}
 
 		&:hover{
 			opacity: 1;
+			transform: scale(1.04);
 		}
 	}
-
-
 
 </style>

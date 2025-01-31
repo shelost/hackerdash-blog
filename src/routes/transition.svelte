@@ -1,11 +1,15 @@
 <script lang="ts">
-	import { fade, fly } from 'svelte/transition'
+	import { fade, fly, crossfade } from 'svelte/transition'
+
+	const [send, receive] = crossfade({});
+
+	// in:receive={{key: 'box'}} out:send={{key: 'box'}}
 
 	export let url: string
 </script>
 
 {#key url}
-	<div class="transition" in:fly>
+	<div class="transition" >
 		<slot />
 	</div>
 {/key}

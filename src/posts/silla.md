@@ -1,5 +1,6 @@
 ---
 series: Canvas — Lesson 1
+type: story
 title: King of Samhan
 description: Second post.
 date: '2025-01-27'

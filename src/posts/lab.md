@@ -1,5 +1,6 @@
 ---
 series: Canvas — Lesson 1
+type: design
 title: Learning + Recursion Lab
 description: Research Lab logos
 date: '2025-01-27'

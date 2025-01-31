@@ -28,9 +28,18 @@ html {
 	--background-light: none;
 	--border-light: var(--gray-4);
 
-	background: rgba(0,0,0,0.02);
+	background: rgba(#030025,0.1);
 
-	//cursor: none;
+	//cursor: url('circle.png'), auto !important;
+
+}
+
+::-webkit-scrollbar{
+	width: 0;
+}
+
+::-webkit-scrollbar-track{
+	width: 0;
 }
 
 :root {
@@ -104,7 +113,7 @@ html {
 }
 
 img {
-	border-radius: var(--radius-3);
+	border-radius: 12px;
 }
 
 ul,
@@ -139,6 +148,22 @@ li {
 
 
 
+
+
+#header{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 72px 0;
+	#logo{
+		height: 60px;
+		border-radius: 0;
+		border: none;
+	}
+}
+
+
+
 .prose{
 
 	h3{
@@ -154,20 +179,71 @@ li {
 	p{
 		font-size: 15px;
 		font-weight: 300;
-		margin: 16px 0;
+		margin: 16px auto;
 		padding: 0;
+		width: 900px;
+		max-inline-size: 100%;
 	}
 
 	blockquote{
 		margin: 16px 0;
-		padding-left: 12px;
+		padding: 24px;
 		border: 1px solid red;
 		p{
 			margin: 0;
 		}
 	}
 
+	img {
+		border-radius: 12px;
+		box-shadow: 0 12px 16px rgba(black, 0.05);
+		position: relative;
+		transition: 0.2s ease;
+		&::after{
+			content: '#';
+			background: rgba(black, 0.9);
+			width: 24px;
+			height: 24px;
+			position: absolute;
+			bottom: 0;
+			right: 0;
+		}
+		&:hover{
+			transform: scale(1.01);
+		}
+	}
+
+	.gallery{
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		//width: 120%;
+		//transform: translateX(-9%);
+		margin: 48px 0;
+		//gap: 2.5%;
+		img{
+			width: 32%;
+			border-radius: 4px;
+			margin-bottom: 48px;
+		}
+	}
+
+	iframe{
+		width: 100%;
+		max-width: 100%;
+		aspect-ratio: 16/9;
+		border: 1px solid rgba(black, 0.2);
+		//box-shadow: 0 16px 32px rgba(black, 0.12);
+		border-radius: 8px;
+		margin: 40px auto;
+	}
+
+	&.preview{
+
+	}
+
 }
+
 
 
 

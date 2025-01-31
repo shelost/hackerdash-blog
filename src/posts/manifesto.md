@@ -1,5 +1,6 @@
 ---
 series: Manifesto
+type: blog
 title: Why We Started Hackerdash
 description: Second post.
 date: '2023-7-22'
