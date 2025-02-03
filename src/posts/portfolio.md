@@ -1,5 +1,5 @@
 ---
-type: comic
+type: web
 title: Portfolio
 description: A one-shot comic
 date: '2025-01-27'

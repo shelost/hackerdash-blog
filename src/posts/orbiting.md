@@ -3,7 +3,6 @@ type: game
 title: Just Orbiting By
 description: A word end game
 url: https://shelost.github.io/orbiting
-banner: banner-platformr
 card: card-orbiting
 date: '2025-7-21'
 author: 'Dantès'
@@ -13,9 +12,7 @@ categories:
 published: true
 ---
 
-### What is Hackerdash?
-
-![Civilization](/card/card-platformr.png)
+<iframe src = 'https://shelost.github.io/orbiting' class = 'fullscreen'>
 
 Well, for now, it's just this blog. But it's gonna be much bigger someday, just you watch!
 

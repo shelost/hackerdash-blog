@@ -8,14 +8,11 @@ card: card-platformr
 date: '2025-7-21'
 author: 'Dantès'
 categories:
-  - sveltekit
-  - svelte
+  - HTML
+  - JS
+  - Canvas
 published: true
 ---
-
-### What is Hackerdash?
-
-![Civilization](/card/card-platformr.png)
 
 Well, for now, it's just this blog. But it's gonna be much bigger someday, just you watch!
 

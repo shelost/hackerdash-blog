@@ -247,13 +247,20 @@ window.requestAnimationFrame(loop)
 	<Header />
 
 	<main>
+		<video id = 'video' autoplay muted loop>
+			<source src="platformr.mp4" type="video/mp4">
+		</video>
+
 		<canvas id="bgcanvas">
 		</canvas>
+
 		<PageTransition url={data.url}>
 			<slot />
 		</PageTransition>
 		<canvas id="canvas">
 		</canvas>
+
+
 	</main>
 
 
@@ -271,6 +278,18 @@ window.requestAnimationFrame(loop)
 		z-index: -2;
 	}
 
+	#video{
+		position: fixed;
+		top: 0vh;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		object-fit: cover;
+		z-index: -3;
+		opacity: 0.1;
+		filter: grayscale(100%);
+	}
+
 	#canvas{
 		position: fixed;
 		top: 0;
@@ -285,14 +304,21 @@ window.requestAnimationFrame(loop)
 		height: 100%;
 		width: 100vw;
 		max-inline-size: 1440px;
-		display: grid;
-		grid-template-rows: auto 1fr auto;
-		margin-inline: auto;
-		padding-inline: var(--size-7);
+
+		//padding-inline: var(--size-7);
 	}
 
 	main {
-		padding-block: var(--size-9);
+		/*
+		position: fixed;
+		top: 0vh;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		overflow-y: scroll;
+		//border: 2px solid red;
+		//padding-block: var(--size-9);
+		*/
 	}
 
 	@media (min-width: 1440px) {

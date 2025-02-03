@@ -11,6 +11,8 @@
 	import { goto } from '$app/navigation';
 	//import Masonry from 'masonry-layout'
 	import bricks from 'bricks.js';
+	import Card from '$lib/components/Card.svelte'
+	import Cards from '$lib/components/Cards.svelte'
 
 	import {
 		blur,
@@ -32,38 +34,36 @@
 	let Flow;
 	let Grid;
 
+	let Bricks;
+
 	onMount(() => {
-
 		window.addEventListener('scroll', handleScroll);
-
-		console.log(data)
-		console.log(Grid)
-
+		/*
 		setTimeout(() => {
-
-			const grid = bricks({
+			Bricks = bricks({
 				container: Grid,
 				packed: 'data-packed',
 				position: true,
 				sizes: [
-					{ columns: 3, gutter: 10 },
+					{ columns: 3, gutter: 1 },
 					{ mq: '768px', columns: 3, gutter: 20 },
-					{ mq: '1024px', columns: 3, gutter: 20 }
+					{ mq: '1024px', columns: 3, gutter: 32 }
 				]
 			});
-
-			grid.pack()
-
-			grid.resize(true);
-
-			console.log(grid)
-
-			/*
+			Bricks.pack()
+			Bricks.update()
+			setTimeout(() => {
+				Bricks.pack()
+			}, 100);
+			setTimeout(() => {
+				Bricks.update()
+			}, 200);
+			Bricks.resize(true);
 			return () => {
 				grid.resize(false);
 			};
-			*/
-		}, 0);
+		}, 10);
+		*/
 	});
 
 	function handleScroll(){
@@ -74,10 +74,8 @@
 
 	function handleHover(post, event) {
 		selected.set(post)
-
 		let elem = event.currentTarget;
 		let rect = elem.getBoundingClientRect();
-
 		// Wait for modal to be created
 		setTimeout(() => {
 			if (Flow) {
@@ -146,14 +144,20 @@
 			</canvas>
 		</div>
 
-		<video id = 'video' autoplay muted loop>
-			<source src="timelapse.mp4" type="video/mp4">
-		</video>
-
-		<div class="expo">
+		<div class="head">
 			<img id = 'logo' src = 'ahnheewon3.png' alt = 'Logo' transition:fly={{ duration: 500 }}>
-
-			<h1> Designs and Code </h1>
+			<div id = 'ahw'>
+				<img class = 'letter' src = 'a.svg' in:fly={{ y:100, delay: 100 }}>
+				<img class = 'letter' src = 'h.svg' in:fly={{ y:100, delay: 150 }}>
+				<img class = 'letter' src = 'n.svg' in:fly={{ y:100, delay: 200 }}>
+				<img class = 'letter' src = 'h.svg' in:fly={{ y:100, delay: 300 }}>
+				<img class = 'letter' src = 'e.svg' in:fly={{ y:100, delay: 400 }}>
+				<img class = 'letter' src = 'e.svg' in:fly={{ y:100, delay: 500 }}>
+				<img class = 'letter' src = 'w.svg' in:fly={{ y:100, delay: 600 }}>
+				<img class = 'letter' src = 'o.svg' in:fly={{ y:100, delay: 700 }}>
+				<img class = 'letter' src = 'n.svg' in:fly={{ y:100, delay: 800 }}>
+			</div>
+			<h1>  </h1>
 		</div>
 
 		<canvas id="canvas">
@@ -162,54 +166,20 @@
 
 
 	<section>
-
 		<h1 class = 'title'> Featured </h1>
+
+		<!--
 		<div id = 'posts' bind:this={Grid}>
 			{#each data.posts as post}
-
-			{#if post.meta.card}
-
-				<div
-					class="post game hoverable"
-					on:click={(event) => handleClick(post, event)}
-					on:mouseenter={(event) => handleHover(post, event)}
-					on:mouseleave={clearHover}
-				>
-					<img src = '/card/{post.meta.card}.png' class = 'img' alt = 'Image'>
-					<div class = 'expo'>
-						<h1 class="title">{post.meta.title}</h1>
-						<p class="date">{formatDate(post.meta.date)}</p>
-						<p class="description">{post.meta.type}</p>
-					</div>
-				</div>
-
-			{:else}
-
-				<div
-					class="post blog hoverable"
-					on:click={(event) => handleClick(post, event)}
-					on:mouseenter={(event) => handleHover(post, event)}
-					on:mouseleave={clearHover}
-				>
-
-					<div class = 'expo'>
-						{#if post.meta.series}
-							<h3 class = 'series'> {post.meta.series} </h3>
-						{/if}
-						<h1 class="title">{post.meta.title}</h1>
-						<p class="date">{formatDate(post.meta.date)}</p>
-						<p class="description">{post.meta.type}</p>
-					</div>
-					<div class = 'prose text'>
-						<svelte:component this={post.content}></svelte:component>
-					</div>
-				</div>
-
-			{/if}
-
-
-		{/each}
+				<Card post={post} />
+			{/each}
 		</div>
+		-->
+
+		<div id = 'posts'>
+			<Cards data={data} />
+		</div>
+
 	</section>
 
 
@@ -217,15 +187,11 @@
 
 	<div id = 'dark' transition:fade={{duration: 50}} ></div>
 	<div id = 'pop' on:click={closeModal}>
-
 			<div id = 'modal' bind:this={Modal} in:fade={{delay: 250}}>
-
 				{#if $selected.meta.banner}
 					<img src = '/banner/{$selected.meta.banner}.png' alt = 'Image'>
 				{/if}
-
 				<div class = 'content'>
-
 					<h1> { $selected ? $selected.meta.title : 'Title' } </h1>
 					<h2> { $selected ? $selected.meta.type : 'Title' } </h2>
 					<p>  { $selected ? $selected.meta.description : 'Description' } </p>
@@ -238,11 +204,9 @@
 							</div>
 						{/each}
 					</div>
-
 					<div class="prose">
 						<svelte:component class = 'mode' this={$selected.content} />
 					</div>
-
 					{#if $selected.meta.url}
 						<a href = '{$selected.meta.url}'>
 							<button>
@@ -252,10 +216,7 @@
 							</button>
 						</a>
 					{/if}
-
 				</div>
-
-
 			</div>
 		</div>
 
@@ -271,6 +232,11 @@
 
 	#flow-container{
 		z-index: 1;
+	}
+
+	#main{
+		width: 100vw;
+		padding-bottom: 100px;
 	}
 
 	#flow{
@@ -298,6 +264,7 @@
 	}
 
 	section{
+		width: 100vw;
 		.title{
 			font-size: 48px;
 			width: 100%;
@@ -323,17 +290,15 @@
 		#modal{
 
 			width: 720px;
-			height: 600px;
-			max-height: 80%;
+			height: 720px;
+			max-height: 85%;
 			border-radius: 12px;
 			transition: 0.2s ease;
 			z-index: 4 !important;
 			background: white;
 			overflow-y: scroll;
+			transform: translateY(16px);
 			box-shadow: 0 15px 60px rgba(black, .25);
-			//border: .5px solid rgba(white, 0.1);
-			//border: 1px solid rgba(white, 0.1);
-			clip-path: inset(0 0 0 0 round 16px);
 
 			img{
 				border: 0;
@@ -344,9 +309,11 @@
 				padding: 32px;
 
 				h1{
+					font-family: 'DM Serif Display', sans-serif;
 					font-size: 48px;
 					font-weight: 900;
 					line-height: 98%;
+					letter-spacing: 0;
 				}
 
 				h2{
@@ -375,7 +342,6 @@
 						}
 					}
 				}
-
 
 				button{
 					background: #030025;
@@ -422,18 +388,7 @@
 		display: none;
 	}
 
-	#video{
-		position: fixed;
-		top: 0vh;
-		left: 0;
-		width: 100vw;
-		height: 100vh;
-		object-fit: cover;
-		z-index: -3;
-		opacity: 0.4;
-		filter: grayscale(100%);
-		display: none;
-	}
+
 
 	#splash{
 		margin: 0;
@@ -442,11 +397,13 @@
 		justify-content: center;
 		align-items: center;
 		height: 90vh;
+		width: 100vw;
 	}
 
 	#logo{
 		height: 120px;
 		margin-bottom: 100px;
+		display: none;
 	}
 
 	#socials {
@@ -461,12 +418,28 @@
 		height: 44px;
 	}
 
-	.exp {
+	.head{
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		text-align: center;
+
+
+		#ahw{
+			display: flex;
+			justify-content: center;
+			align-items: flex-end;
+			gap: 0;
+			margin-bottom: 56px;
+			//background: red;
+			.letter{
+				flex-shrink: 0;
+				//transform: scale(0.1);
+				//width: 60px;
+				//height: auto;
+			}
+		}
 
 		h1 {
 			font-size: 64px;
@@ -492,10 +465,20 @@
 		flex-wrap: wrap;
 		justify-content: space-between;
 		margin: auto;
-		width: 1440px;
+		width: 1120px;
 		max-width: 90%;
 		padding: 0;
+		//border: 1px solid yellow;
 		//gap: 2%;
+	}
+
+	@keyframes float{
+		0%{
+			transform: scale(1.04) translateY(0);
+		}
+		100%{
+			transform: scale(1.03) translateY(-8px);
+		}
 	}
 
 	.post {
@@ -506,9 +489,9 @@
 		margin-bottom: 3%;
 
 		border-radius: 8px;
-		border: 2px solid rgba(white, 0.1);
+		//border: 2px solid rgba(white, 0.1);
 		background: rgba(white, 0.4);
-		box-shadow: 0 15px 40px rgba(black, 0.08);
+		box-shadow: 0 15px 40px rgba(black, 0.25);
 
 		opacity: 1;
 		transition: 0.2s ease;
@@ -521,6 +504,8 @@
 			color: white;
 			background: none;
 			aspect-ratio: 5/4;
+
+			//border-radius: 40px;
 
 			display: flex;
 			flex-direction: column;
@@ -547,10 +532,10 @@
 			}
 
 			h1{
-				font-family: 'Playfair Display', sans-serif;
+				font-family: 'DM Serif Display', sans-serif;
 				font-weight: 900;
 				font-size: 32px !important;
-				letter-spacing: -.5px;
+				letter-spacing: .1px;
 				color: rgba(black, 0.8);
 			}
 
@@ -571,6 +556,7 @@
 			width: 100%;
 			height: auto;
 			z-index: -1;
+			border-radius: 0;
 		}
 
 		.expo{
@@ -582,16 +568,14 @@
 				font-weight: 800;
 				margin-bottom: 8px;
 				text-align: left;
-				//color: #19163b;
 			}
+
 			p{
 				font-size: 14px;
 				font-weight: 300;
 				letter-spacing: -0.25px;
 			}
-			.date{
-			//	display: none;
-			}
+
 			.description{
 				display: none;
 			}
@@ -600,7 +584,8 @@
 
 		&:hover{
 			opacity: 1;
-			transform: scale(1.04);
+			transform: scale(1.02);
+			//animation: float 0.5s ease-in-out infinite alternate-reverse;
 		}
 	}
 

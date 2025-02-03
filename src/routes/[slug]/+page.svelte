@@ -39,7 +39,11 @@
 <div class="main" in:fade={{duration: 200}}>
 
 
-	<div class = 'container'>
+	<div class = 'sidebar left'>
+
+	</div>
+
+	<div class = 'container {data.meta.type} {data.meta.theme? data.meta.theme : ''}'>
 		{#if data.meta.banner}
 			<div id = 'banner'>
 				<div id = 'img' style='background-image: url("banner/{data.meta.banner}.png")'>
@@ -50,7 +54,9 @@
 		<article>
 
 			<hgroup>
-				<h3>{data.meta.series}</h3>
+				{#if data.meta.series}
+					<h3>{data.meta.series}</h3>
+				{/if}
 				<h1>{data.meta.title}</h1>
 
 				<div class = 'profile'>
@@ -59,14 +65,16 @@
 				</div>
 
 				<h2> {formatDate(data.meta.date)}</h2>
+
+				<div class="tags">
+					{#each data.meta.categories as category}
+						<div class = 'tag'>
+							<h3> {category}  </h3>
+						</div>
+					{/each}
+				</div>
 			</hgroup>
 
-
-			<div class="tags">
-				{#each data.meta.categories as category}
-					<span class="surface-4">&num;{category}</span>
-				{/each}
-			</div>
 
 
 			<div class="prose preview">
@@ -75,27 +83,57 @@
 		</article>
 
 	</div>
+	<div class = 'sidebar right'></div>
 </div>
 
 <style lang="scss">
 
+	.sidebar{
+		width: 200px;
+		height: calc(100vh - 85px);
+		//background: white;
+		//box-shadow: 0 20px 60px rgba(#030025, 0.12);
+		border-radius: 12px;
+	}
+
 	.container {
-		width: 98%;
+		position: relative;
+		width: calc(95% - 400px);
 		max-width: 1440px;
 		height: calc(100vh - 85px);
 		max-height: 1080px;
-		margin: auto;
-		//margin-top: 36px;
-		transform: translateY(18px);
-		background: rgba(white, 0.75);
+
+
+
 		border-radius: 12px;
-		box-shadow: 0 20px 50px rgba(#110c45, 0.1);
+		box-shadow: 0 20px 60px rgba(#030025, 0.12);
+		overflow-x: hidden;
 		overflow-y: scroll;
-		padding: 20px;
-		position: relative;
+		padding: 0px;
 		border: 1px solid rgba(white, 0.1);
-		transition: all 0.5s ease;
 		border: 2px solid white;
+		background: rgba(white, 0.75);
+		transition: all 0.5s ease;
+
+
+		&.gallery{
+			background: rgba(white, 0.5);
+			backdrop-filter: blur(12px);
+			box-shadow: 0 20px 60px rgba(#030025, 0.1);
+			border: none;
+
+		}
+
+		&.dark{
+			background: rgba(black, 0.95);
+
+			hgroup{
+				color: #FFE4CE;
+				h1{
+					letter-spacing: 1px;
+				}
+			}
+		}
 	}
 
 
@@ -112,6 +150,8 @@
 		padding: 20px;
 		//border: 3px solid red;
 		transition: all 0.5s ease;
+
+		gap: 20px;
 
 		display: flex;
 		align-items: center;
@@ -134,6 +174,7 @@
 		position: absolute;
 		top: 0;
 		left: 0;
+		display: none;
 		#img{
 			width: 100%;
 			aspect-ratio: 3;
@@ -157,12 +198,20 @@
 	}
 
 	hgroup{
-		margin: 230px auto 100px auto;
+		//margin: 230px auto 100px auto;
 		width: 900px;
-		color: rgba(white, 0.8);
+		color: rgba(black, 0.8);
+
+		margin-bottom: 40px;
+
 		h1{
-			color: white;
-			text-shadow: 0 10px 30px rgba(black, 0.8);
+			font-family: 'DM Serif Display', sans-serif;
+			line-height: 100%;
+			max-inline-size: 100%;
+
+
+			//color: white;
+			//text-shadow: 0 10px 30px rgba(black, 0.8);
 		}
 		h2{
 			background: rgba(white, 0.8);
@@ -202,14 +251,22 @@
 	}
 
 	.tags {
-		display: none;
 		gap: var(--size-3);
 		margin-top: var(--size-7);
+
+		display: flex;
+
+		.tag{
+			width: fit-content;
+			background: white;
+			padding: 6px 12px;
+			border-radius: 8px;
+			box-shadow: 0 5px 10px rgba(#030025, 0.1);
+			h3{
+				margin: 0;
+			}
+		}
 	}
 
-	.tags > * {
-		padding: var(--size-2) var(--size-3);
-		border-radius: var(--radius-round);
-	}
 
 </style>

@@ -1,10 +1,12 @@
 ---
 series: History
-type: blog
+type: art
 title: The Master Timeline
 description: A historical perspective tool
+card: null
 date: '2023-7-22'
 author: 'Dantès'
+theme: dark
 categories:
   - sveltekit
   - svelte
@@ -24,10 +26,6 @@ Alright, let's get into it:
 
 &nbsp;
 
-![Civilization](/civilization2.png)
+![Civilization](/civilization3.png)
 
 
-
-## Counter
-
-<Counter />

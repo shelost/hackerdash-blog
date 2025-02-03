@@ -52,7 +52,8 @@
 
 <nav>
 	<div class="title" on:click={() => { goto(`/`); }}>
-		<img src='smiley.png'>
+		<img src='smiley.png' class = 'smiley' alt = 'logo'>
+		<img src='ahw.png' class = 'ahw' alt = 'logo'>
 	</div>
 
 	<ul class="links">
@@ -77,15 +78,7 @@
 	</ul>
 </nav>
 
-{#if $splashEffect}
-	{#each $splashEffect as { index, distance }, i}
-		<style>
-			.links li:nth-child({index + 1}) {
-				animation: splash 0.6s ease-in-out {i * 50}ms;
-			}
-		</style>
-	{/each}
-{/if}
+
 
 <style lang="scss">
 	@keyframes splash {
@@ -110,11 +103,23 @@
 		background: white;
 		border-radius: 12px;
 		box-shadow: 0 10px 25px rgba(black, 0.1);
-		padding: 4px;
+		padding: 8px 12px 8px 10px;
 
-		img {
-			height: 32px;
+		display: flex;
+		align-items: center;
+		gap: 3px;
+
+		.smiley{
+			height: 24px;
+		}
+
+		.ahw {
+			height: 22px;
 			border-radius: 0;
+		}
+
+		&:hover{
+			transform: scale(1.03);
 		}
 	}
 

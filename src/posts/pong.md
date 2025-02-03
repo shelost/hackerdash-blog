@@ -1,7 +1,7 @@
 ---
 type: game
-title: Platformr
-description: A 2D Platformer Game, with a Twist
+title: Super Pong
+description: Pong, but with superpowers
 url: https://shelost.github.io/superpong
 banner: banner-platformr
 card: card-pong

@@ -1,8 +1,9 @@
 ---
 series: Canvas — Lesson 1
-type: design
+type: gallery
 title: Learning + Recursion Lab
 description: Research Lab logos
+color: d0d0d0
 date: '2025-01-27'
 author: 'Dantès'
 categories:
@@ -12,21 +13,33 @@ published: true
 ---
 
 <script>
-  export let data
+
+  import Gallery from '$lib/components/gallery.svelte'
+
+  let images = [
+    { url: 'img-lab-01', caption: "" },
+    { url: 'img-lab-02', caption: '' },
+    { url: 'img-lab-03', caption: "" },
+    { url: 'img-lab-04', caption: '' },
+    { url: 'img-lab-05', caption: "" },
+    { url: 'img-lab-06', caption: "" },
+    { url: 'img-lab-07', caption: '' },
+    { url: 'img-lab-08', caption: "" },
+    { url: 'img-lab-09', caption: "" },
+    { url: 'img-lab-10', caption: '' },
+    { url: 'img-lab-11', caption: "" },
+    { url: 'img-lab-12', caption: "" },
+    { url: 'img-lab-13', caption: "" },
+    { url: 'img-lab-14', caption: "" },
+    { url: 'img-lab-15', caption: "" },
+    { url: 'img-lab-16', caption: "" },
+  ]
+
 </script>
-
-
 
 The <a href = ''> Learning + Recursion Lab </a> is a
 
 
-<div class = 'gallery'>
-  <img src = '../img/img-lab-00.png' alt = 'Image'>
-  <img src = '../img/img-lab-01.png' alt = 'Image'>
-  <img src = '../img/img-lab-02.png' alt = 'Image'>
-  <img src = '../img/img-lab-03.png' alt = 'Image'>
-  <img src = '../img/img-lab-04.png' alt = 'Image'>
-  <img src = '../img/img-lab-05.png' alt = 'Image'>
-  <img src = '../img/img-lab-06.png' alt = 'Image'>
-  <img src = '../img/img-lab-07.png' alt = 'Image'>
-</div>
+<img src = 'img/img-lab-00.png' alt = 'Image'>
+
+<Gallery images = {images} />
