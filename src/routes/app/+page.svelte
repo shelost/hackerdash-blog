@@ -70,7 +70,6 @@
         margin: 5px 10px;
         border-radius: 5px;
         transition: 0.1s ease;
-        // cursor: pointer;
     }
 
     .space:hover{
