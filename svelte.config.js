@@ -1,6 +1,5 @@
 import adapter from '@sveltejs/adapter-vercel'
 import { vitePreprocess } from '@sveltejs/kit/vite'
-import image from 'svelte-image'
 
 import { mdsvex, escapeSvelte } from 'mdsvex'
 import shiki from 'shiki'
@@ -31,7 +30,6 @@ const config = {
 	preprocess: [
 		vitePreprocess(),
 		mdsvex(mdsvexOptions),
-		image()
 	],
 	kit: {
 		adapter: adapter()
