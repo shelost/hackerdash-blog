@@ -16,7 +16,7 @@ published: true
 
 <script>
   export let data
-  import Gallery from '$lib/components/gallery.svelte'
+  import Gallery from '$lib/components/Gallery.svelte'
 
   let images = [
     { url: 'img-231', caption: 'Kim Chunchu' },

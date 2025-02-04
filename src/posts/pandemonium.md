@@ -14,7 +14,7 @@ published: true
 
 <script>
 
-  import Gallery from '$lib/components/gallery.svelte'
+  import Gallery from '$lib/components/Gallery.svelte'
 
   let images = [
     { url: 'page1', caption: 'Page 1' },
