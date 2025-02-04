@@ -287,7 +287,8 @@ window.requestAnimationFrame(loop)
 		object-fit: cover;
 		z-index: -3;
 		opacity: 0.1;
-		filter: grayscale(100%);
+		//filter: grayscale(100%);
+		display: none;
 	}
 
 	#canvas{

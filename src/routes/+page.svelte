@@ -1,6 +1,9 @@
 <script lang = "js">
 
-	import { resolveRoute } from "$app/paths"
+import { base } from "$app/paths";
+
+const myRoute = `${base}/some-page`;
+
 	import { writable } from 'svelte/store'
 	import { tweened } from 'svelte/motion';
 	import { expandedPost } from '$lib/store';
@@ -25,6 +28,8 @@
 	} from 'svelte/transition';
 
 	export let data
+
+	console.log(data)
 
 	let modal = writable(false)
 
@@ -435,6 +440,7 @@
 			//background: red;
 			.letter{
 				flex-shrink: 0;
+				margin: 0 -4px;
 				//transform: scale(0.1);
 				//width: 60px;
 				//height: auto;

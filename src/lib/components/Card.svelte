@@ -28,7 +28,6 @@
         }, 200);
         */
 
-
         // goto(`/${post.slug}`)
     }
 
@@ -64,7 +63,6 @@
 </script>
 
 
-
 <div class = 'card' on:mouseover on:click>
 
     <div class = 'label'>
@@ -73,6 +71,10 @@
         </span>
         <h3> {titleCase(post.meta.type)} </h3>
     </div>
+
+    {#if post.meta.type == 'blog'}
+        <div class = 'paper'></div>
+    {/if}
 
     <div
         class = 'post {post.meta.type}'
@@ -91,6 +93,7 @@
             <div class = 'bar'></div>
 
             <div class = 'expo'>
+                <h3 class = 'series'> {post.meta.series} </h3>
                 <h1 class="title">{post.meta.title}</h1>
                 <p class="date">{formatDate(post.meta.date)}</p>
                 <p class="description">{post.meta.type}</p>
@@ -126,6 +129,8 @@
 
     {:else if post.meta.type == 'game'}
 
+
+
             <div class = 'expo'>
                 <h1 class="title">{post.meta.title}</h1>
                 <p class="date">{formatDate(post.meta.date)}</p>
@@ -137,6 +142,15 @@
                         </div>
                     {/each}
                 </div>
+                {#if post.meta.rating}
+                    <div class = 'rating'>
+                        {#each {length: post.meta.rating} as _, i}
+                            <span class="material-icons">
+                                star
+                            </span>
+                        {/each}
+                    </div>
+                {/if}
             </div>
 
     {:else}
@@ -193,13 +207,15 @@
 
         .label{
             position: absolute;
+
             top: -2px;
             left: -3px;
+
             z-index: 1;
-            border-radius: 10px;
+            border-radius: 8px;
             padding: 6px 8px;
             color: #030025;
-            background: rgba(white, 0.95);
+            background: rgba(white, 0.9);
             backdrop-filter: blur(4px);
             //border: 2px solid black;
             box-shadow: 0 4px 20px rgba(#00106D, 0.25), inset 0 -2px 3px rgba(black, 0.08);
@@ -222,10 +238,27 @@
             }
         }
 
+        .paper{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(white, 0.75);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(#030025, 0.1), inset 0 -2px 3px rgba(black, 0.08);
+            transform: rotate(5deg);
+            transition: 0.2s ease;
+            //border: 5px solid red;
+        }
+
         &:hover{
             .label{
                 transform: translateY(-10px);
                 opacity: 0;
+            }
+            .paper{
+                transform: rotate(3deg) scale(1.01);
             }
         }
     }
@@ -246,6 +279,7 @@
         border: 2px solid rgba(white, 0.1);
         backdrop-filter: blur(10px);
 		overflow: hidden;
+
 
         .thumbnail{
 			position: absolute;
@@ -295,6 +329,12 @@
 				letter-spacing: -0.25px;
 			}
 
+            .date{
+                color: rgba(black, 0.5);
+                font-weight: 100;
+                letter-spacing: -0.4px;
+            }
+
 			.description{
 				display: none;
 			}
@@ -313,17 +353,39 @@
 
 
 			.expo{
-				opacity: 0;
-                transform: translateY(10px);
+				//opacity: 0;
+                //transform: translateY(10px);
                 transition: 0.2s ease;
 				background-image: linear-gradient(to top, rgba(#030025, 0.5), rgba(#030025, 0));
+
+                background: white;
+
 				h1{
-					text-shadow: 0 10px 25px rgba(black, .5);
+                    font-weight: 800;
+					//text-shadow: 0 10px 25px rgba(black, .5);
+                    color: #030025;
 				}
                 .date{
                     display: none;
                 }
+
+                .tags{
+                    display: none;
+                }
 			}
+
+            .rating{
+                display: none;
+                gap: 2px;
+                background: rgba(white, 0.9);
+                border-radius: 12px;
+                width: fit-content;
+                padding: 4px 6px;
+                color: #ffce00;
+                span{
+                    font-size: 22px;
+                }
+            }
 
             /*
             .expo{
@@ -386,7 +448,7 @@
 		}
 
 		&.blog{
-			aspect-ratio: 15/10;
+			aspect-ratio: 1;
 			background: rgba(white, 0.8);
             border-radius: 8px;
 
@@ -410,30 +472,20 @@
 				letter-spacing: .1px;
 				color: rgba(black, 0.8);
 			}
-
-            &::after{
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 1%;
-                width: 98%;
-                height: 100%;
-                z-index: -1;
-                //transform: rotate(3deg);
-                background: white;
-                box-shadow: 0 15px 40px rgba(black, 0.15);
-            }
 		}
 
         &.gallery{
 
-            aspect-ratio: 1;
+            aspect-ratio: 4/5;
 
             .prose{
                 margin: auto;
                 width: 90%;
                 aspect-ratio: 1;
                 overflow: hidden;
+                border: 2px solid red;
+
+
             }
             .thumbnail{
                 display: none;
@@ -448,8 +500,11 @@
                 bottom: 0;
                 width: 100%;
                 height: 50%;
-                background-image: linear-gradient(to top, rgba(white, 1) 40%, rgba(white, 0));
+                //background-image: linear-gradient(to top, rgba(white, 1) 40%, rgba(white, 0));
             }
+
+
+
         }
 
         &.web{

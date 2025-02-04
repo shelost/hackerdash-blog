@@ -3,7 +3,7 @@ type: game
 title: Trails
 description: Kind of like Snake
 url: https://shelost.github.io/trails
-banner: banner-platformr
+banner: null
 card: card-trails
 date: '2025-7-21'
 author: 'Dantès'
@@ -22,8 +22,6 @@ Well, for now, it's just this blog. But it's gonna be much bigger someday, just 
 I'm going to be teaching you guys about some of the basic principles I've learned while programming, and why I believe the HTML Canvas is the solution to 99% of the world's problems.
 
 But first:
-
-
 
 &nbsp;
 

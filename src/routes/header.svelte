@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { fly, scale } from 'svelte/transition';
 	import { quintOut, cubicOut } from 'svelte/easing';
+	import "material-icons/iconfont/material-icons.css";
 
 	let show = false;
 	setTimeout(() => {
@@ -10,11 +11,11 @@
 	}, 400);
 
 	const links = [
-		{ text: 'Design', route: '/design' },
-		{ text: 'Games', route: '/games' },
-		{ text: 'Blog', route: '/blog' },
-		{ text: 'Comics', route: '/comics' },
-		{ text: 'Apps', route: '/apps' }
+		{ text: 'Design', route: '/design', icon: 'palette', color: '#F959FF' },
+		{ text: 'Games', route: '/games', icon: 'sports_esports', color: '#6355FF' },
+		{ text: 'Blog', route: '/blog', icon: 'article', color: '#FF2E65' },
+		{ text: 'Comics', route: '/comics', icon: 'question_answer', color: '#FF7559' },
+		{ text: 'Apps', route: '/apps', icon: 'apps', color: '#0C75ED' }
 	];
 
 	let buttons = [];
@@ -59,22 +60,32 @@
 	<ul class="links">
 		{#if show}
 			{#each links as link, index}
-				<li
+				<div
 					bind:this={buttons[index]}
-					class="hoverable"
+					class="link hoverable"
 					on:click={(event) => handleClick(event, index, link.route)}
 					transition:fly={{y: -30, delay: index*75}}
 				>
-					{link.text}
-				</li>
+					<span class="material-icons" style="color: {link.color}">
+						{link.icon}
+					</span>
+					<h3>
+						{link.text}
+					</h3>
+				</div>
 			{/each}
 		{/if}
 	</ul>
 
 	<ul class="links">
-		<li on:click={() => { goto(`/contact`); }}>
-			Contact
-		</li>
+		<div class = 'link' on:click={() => { goto(`/contact`); }}>
+			<span class="material-icons">
+				phone
+			</span>
+			<h3>
+				Contact
+			</h3>
+		</div>
 	</ul>
 </nav>
 
@@ -109,12 +120,14 @@
 		align-items: center;
 		gap: 3px;
 
+		transition: 0.2s ease;
+
 		.smiley{
-			height: 24px;
+			height: 20px;
 		}
 
 		.ahw {
-			height: 22px;
+			height: 18px;
 			border-radius: 0;
 		}
 
@@ -128,18 +141,28 @@
 		display: flex;
 		align-items: center;
 
-		li {
+		.link {
 			background: rgba(white, 0.9);
-			padding: 3px 12px;
+			padding: 5px 10px;
 			border-radius: 20px;
-			font-size: 14px;
-			font-weight: 600;
 			margin: 0;
 			transition: 0.2s ease;
 			border: 2px solid white;
 			box-shadow: 3px 6px 14px rgba(black, 0.1), inset 0 -3px 5px rgba(black, 0.03);
 			backdrop-filter: blur(12px);
+			display: flex;
+			align-items: center;
+			gap: 6px;
 			// cursor: pointer;
+
+			span{
+				font-size: 16px;
+			}
+
+			h3{
+				font-size: 14px;
+				font-weight: 600;
+			}
 
 			&:hover {
 				transform: scale(105%);

@@ -15,6 +15,10 @@
 	} from 'svelte/transition';
 	export let data;
 
+	let headers = [];
+
+	let activeId = '';
+
 
 	onMount(()=> {
 		document.body.style.overflow = 'hidden';
@@ -24,7 +28,46 @@
 			document.body.style.overflow = '';
 		}, 500);
 
+
+		const article = document.querySelector('.prose.preview');
+        if (article) {
+            headers = Array.from(article.querySelectorAll('h1, h2, h3')).map(header => ({
+                id: header.id || header.textContent.toLowerCase().replace(/\s+/g, '-'), // Generate an ID if missing
+                text: header.textContent,
+                tag: header.tagName.toLowerCase()
+            }));
+
+            // Assign IDs to headers if they don't already have them
+            headers.forEach(header => {
+                const element = article.querySelector(`[id="${header.id}"]`);
+                if (!element) {
+                    article.querySelector(`h1,h2,h3:contains("${header.text}")`)?.setAttribute('id', header.id);
+                }
+            });
+        }
+
+
+		const observer = new IntersectionObserver(entries => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					activeId = entry.target.id;
+				}
+			});
+		}, { rootMargin: '-50px 0px -80% 0px', threshold: 0.1 });
+
+		headers.forEach(header => {
+			const element = document.getElementById(header.id);
+			if (element) observer.observe(element);
+		});
+
 	})
+
+	function scrollToHeader(id) {
+        const target = document.getElementById(id);
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
 
 	//  in:fly={{y: 500, duration: 500}} out:fly={{y: 500, duration: 500}}
 
@@ -83,7 +126,18 @@
 		</article>
 
 	</div>
-	<div class = 'sidebar right'></div>
+	<div class = 'sidebar right'>
+		<nav class='menu'>
+			<h2>Table of Contents</h2>
+			<ul>
+				{#each headers as header}
+					<li class={header.tag}>
+						<a href="#" on:click|preventDefault={() => scrollToHeader(header.id)}>{header.text}</a>
+					</li>
+				{/each}
+			</ul>
+		</nav>
+	</div>
 </div>
 
 <style lang="scss">
@@ -94,6 +148,47 @@
 		//background: white;
 		//box-shadow: 0 20px 60px rgba(#030025, 0.12);
 		border-radius: 12px;
+		//border: 1px solid orange;
+	}
+
+
+	a{
+		color: black;
+	}
+
+	.menu{
+		color: black;
+		h2{
+			margin: 40px 0 20px 0;
+		}
+		ul{
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 12px;
+
+			li{
+				font-size: 13px;
+				font-weight: 400;
+				padding: 4px 8px;
+				border-radius: 8px;
+				background: rgba(white, 0.5);
+				box-shadow: 0 6px 12px rgba(#030025, 0.12);
+				opacity: 0.75;
+				transition: 0.2s ease;
+
+				&.h2{
+					//font-size: 13px;
+					margin-left: 8px;
+				}
+
+				&:hover{
+					opacity: 1;
+					background: rgba(white, 0.8);
+					transform: translateX(4px);
+				}
+			}
+		}
 	}
 
 	.container {

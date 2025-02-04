@@ -40,6 +40,6 @@ published: true
 The <a href = ''> Learning + Recursion Lab </a> is a
 
 
-<img src = 'img/img-lab-00.png' alt = 'Image'>
-
 <Gallery images = {images} />
+
+<img src = 'img/img-lab-00.png' alt = 'Image'>

@@ -1,6 +1,4 @@
 <script>
-
-    import { resolveRoute } from "$app/paths"
     import { writable } from 'svelte/store'
     import { formatDate } from '$lib/utils'
 	import * as config from '$lib/config'
@@ -8,6 +6,7 @@
     import { goto } from '$app/navigation';
 	import bricks from 'bricks.js';
 	import Card from '$lib/components/Card.svelte'
+    import Image from "svelte-image";
 	import {
 		blur,
 		crossfade,
@@ -27,6 +26,7 @@
     let Bricks;
     let Flow;
     let Modal;
+    let Banner;
 
 	onMount(async () => {
         await tick();
@@ -91,10 +91,10 @@
     }, 4000);
 
     let sizes = [
-                { columns: 3, gutter: 1 },
-                { mq: '768px', columns: 3, gutter: 20 },
-                { mq: '1024px', columns: 3, gutter: 32 }
-			]
+        { columns: 3, gutter: 1 },
+        { mq: '768px', columns: 3, gutter: 20 },
+        { mq: '1024px', columns: 3, gutter: 40 }
+	]
 
     function initBricks(){
         if (Grid){
@@ -161,16 +161,23 @@
 		setTimeout(() => {
 			let rect2 = Modal.getBoundingClientRect()
             Flow.style.opacity = 1
+
+            console.log(Banner)
 			setTimeout(() => {
-				Flow.style.transition = '0.2s cubic-bezier(0.22, 1, 0.36, 1)'
-				Flow.style.top = `${rect2.top}px`
+				Flow.style.transition = '0.3s cubic-bezier(0.22, 1, 0.36, 1)'
+				Flow.style.top = `${rect2.top+75}px`
 				Flow.style.left = `${rect2.left}px`
 				Flow.style.width = `${rect2.width}px`
 				Flow.style.height = `${rect2.height}px`
 				Flow.style.opacity = 1
+
+                setTimeout(() => {
+                      Flow.style.top = `${rect2.top}px`
+                }, 100);
 				setTimeout(() => {
 					Flow.style.opacity = 0
-				}, 300);
+
+				}, 500);
 
 			}, 100);
 		}, 50);
@@ -178,14 +185,14 @@
 
 </script>
 
-
-
 <div id = 'cards' bind:this={Grid}>
-    {#each data.posts as post}
-        <Card post={post}
-            on:mouseover={(event) => handleHover(post, event)}
-            on:click={(event) => handleClick(post, event)}
-        />
+    {#each data.posts as post, i}
+        <div in:fly={{y: 100, delay: 500+i*100}}>
+            <Card post={post}
+                on:mouseover={(event) => handleHover(post, event)}
+                on:click={(event) => handleClick(post, event)}
+            />
+        </div>
     {/each}
 </div>
 
@@ -195,16 +202,31 @@
 
 {#if $modal}
 
-	<div id = 'dark' transition:fade={{duration: 50}} ></div>
+	<div id = 'dark' transition:fade={{duration: 200}} ></div>
 	<div id = 'pop' on:click={closeModal}>
-        <div id = 'modal' bind:this={Modal} in:fade={{delay: 200}}>
+        <div id = 'modal' bind:this={Modal} in:fade={{delay: 300}}>
 			{#if $selected.meta.banner}
-				<img src = '/banner/{$selected.meta.banner}.png' alt = 'Image'>
+
+				<img in:scale = {{ start: .8, delay: 200}} src = '/banner/{$selected.meta.banner}.png' loading='lazy' class = 'banner' alt = 'Image'>
+                <!--
+                <div class = 'banner'>
+                    <Image
+                        src="/banner/{$selected.meta.banner}.png"
+                        alt="Image"
+                        lazy
+                        height=290
+                        width="720"
+                        placeholder="blur"
+                        bind:this={Banner}
+                    />
+                </div>
+                -->
+
 			{/if}
 			<div class = 'content'>
-                <h1> { $selected ? $selected.meta.title : 'Title' } </h1>
-                <h2> { $selected ? $selected.meta.type : 'Title' } </h2>
-                <p>  { $selected ? $selected.meta.description : 'Description' } </p>
+                <h1 in:fly = {{y: 100, delay: 100}}> { $selected ? $selected.meta.title : 'Title' } </h1>
+                <h2 in:fly = {{y: 100, delay: 150}}> { $selected ? $selected.meta.type : 'Title' } </h2>
+                <p in:fly = {{y: 100, delay: 200}}>  { $selected ? $selected.meta.description : 'Description' } </p>
                 <div class="tags">
                 	{#each $selected.meta.categories as category}
                 		<div class = 'tag'>
@@ -214,7 +236,7 @@
                 		</div>
                 	{/each}
                 </div>
-                <div class="prose">
+                <div class="prose" in:fly = {{y: 100, delay: 300}}>
                 	<svelte:component class = 'mode' this={$selected.content} />
                 </div>
                 {#if $selected.meta.url}
@@ -265,7 +287,8 @@
 		left: 0;
 		width: 100vw;
 		height: 100vh;
-		background: rgba(black, 0.3);
+		background: rgba(black, 0.4);
+        transition: 0.4s ease;
 		z-index: 3;
 	}
 
@@ -296,20 +319,38 @@
 			box-shadow: 0 15px 60px rgba(black, .25), inset 0px -15px 20px rgba(black, 0.08);
             border: 1px solid rgba(black, 0.2);
 
+            /*
 			img{
 				border: 0;
 				border-radius: 0;
 			}
+                */
+
+            .banner{
+                width: 100%;
+                height: 290px;
+                overflow-y: hidden;
+               img{
+                    width: 100%;
+                    height: 290px;
+                    object-fit: cover;
+               }
+            }
+
+            .wrapper{
+                border: 2px solid blue;
+            }
 
 			.content{
 				padding: 32px;
 
 				h1{
 					font-family: 'DM Serif Display', sans-serif;
-					font-size: 48px;
+					font-size: 52px;
 					font-weight: 900;
 					line-height: 98%;
 					letter-spacing: 0;
+                    max-inline-size: 100%;
 				}
 
 				h2{

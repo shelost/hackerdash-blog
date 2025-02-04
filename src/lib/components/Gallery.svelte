@@ -17,7 +17,7 @@
 </script>
 
 
-<div class = 'gallery col-{col}' in:fade>
+<div class = 'gallery grid col-{col}' in:fade>
 
     {#each images as image, index}
 
@@ -39,10 +39,12 @@
 		//flex-wrap: wrap;
 		//width: 120%;
 		//transform: translateX(-9%);
-		margin: 48px 0;
+        //border: 1px solid red;
+		margin: 18px 0;
         display: grid;
-        grid-template-columns: repeat(3, calc(33% - 8px));
-        gap: 16px;
+        grid-template-columns: repeat(3, 32%);
+        column-gap: 2%;
+        row-gap: 8px;
 
         &.col-2{
             grid-template-columns: repeat(2, calc(50% - 12px));
@@ -51,13 +53,13 @@
 
         .elem{
             width: 100%;
-            margin-bottom: 16px;
+            margin-bottom: 0;
             img{
                 box-shadow: none;
                 border-radius: 6px;
                 margin-bottom: 6px;
 
-                box-shadow: 0 8px 16px rgba(black, 0.05);
+                box-shadow: 0 6px 12px rgba(black, 0.05);
                 border: 1px solid rgba(white, 0.4);
             }
             p{

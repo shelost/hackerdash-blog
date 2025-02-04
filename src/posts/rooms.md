@@ -3,7 +3,7 @@ type: game
 title: Rooms
 description: A 2D Platformer Game, with a Twist
 url: https://shelost.github.io/platformr
-banner: banner-platformr
+banner: null
 card: card-rooms
 date: '2025-7-21'
 author: 'Dantès'

@@ -7,7 +7,6 @@ author: 'Dantès'
 categories:
   - sveltekit
   - svelte
-published: true
 ---
 
 ### What is Hackerdash?

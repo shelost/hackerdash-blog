@@ -3,7 +3,7 @@ type: game
 title: Super Pong
 description: Pong, but with superpowers
 url: https://shelost.github.io/superpong
-banner: banner-platformr
+banner: null
 card: card-pong
 date: '2025-7-21'
 author: 'Dantès'
