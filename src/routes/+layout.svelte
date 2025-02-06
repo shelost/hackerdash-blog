@@ -290,6 +290,7 @@ window.requestAnimationFrame(loop)
 		background-size: cover;
 		background-position: center;
 		opacity: 0.1;
+		display: none;
 		//filter: contrast(1000%);
 	}
 

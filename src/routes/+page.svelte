@@ -180,18 +180,18 @@
 
 			<div class = 'links'>
 				{#each links as link, index}
-				<div
-					class="link hoverable"
-					transition:fly={{y: -30, delay: index*75}}
-				>
-					<span class="material-icons" style="color: {link.color}">
-						{link.icon}
-					</span>
-					<h3>
-						{link.text}
-					</h3>
-				</div>
-			{/each}
+					<div
+						class="link hoverable"
+						transition:fly={{y: -30, delay: index*75}}
+					>
+						<span class="material-icons" style="color: {link.color}">
+							{link.icon}
+						</span>
+						<h3>
+							{link.text}
+						</h3>
+					</div>
+				{/each}
 			</div>
 
 
@@ -503,6 +503,7 @@
 		width: 100vw;
 		height: 100vh;
 		z-index: -2;
+		display: none;
 	}
 
 	#canvas{
@@ -749,12 +750,17 @@
 	@media screen and (max-width: 800px){
 
 		.head{
+			#logo{
+				display: block;
+				height: auto;
+				width: 90vw;
+				margin-bottom: 32px;
+			}
 			#ahw{
-				transform: scale(0.25);
-				.letter{
-					//width: 20px;
-				}
-
+				display: none;
+			}
+			.links{
+				display: none;
 			}
 		}
 	}

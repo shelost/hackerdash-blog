@@ -17,7 +17,28 @@ tier: 1
 published: true
 ---
 
-[button url="http://www.google.com"]
+
+<script>
+
+  import Gallery from '$lib/components/Gallery.svelte'
+
+  let images = [
+    { url: 'platformr-1', caption: '' },
+    { url: 'platformr-2', caption: '' },
+    { url: 'platformr-3', caption: '' },
+    { url: 'platformr-4', caption: '' },
+    { url: 'platformr-5', caption: '' },
+    { url: 'platformr-6', caption: '' },
+    { url: 'platformr-7', caption: '' },
+    { url: 'platformr-8', caption: '' },
+  ]
+</script>
+
+<a href = ' https://shelost.github.io/platformr'>
+  <button>
+    Play
+  </button>
+</a>
 
 
 # Introduction
@@ -35,6 +56,7 @@ unique uses of the HTML Canvas in order to make the game look & feel as immersiv
 
 There aren't a
 
+<Gallery images = {images} col = 2 />
 
 # Source Code
 
