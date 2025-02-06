@@ -32,7 +32,8 @@ html {
 
 	overflow-x: hidden;
 
-	//background: rgba(#030025,0.04);
+
+	background: rgba(#030025,0.05);
 	//cursor: url('circle.png'), auto !important;
 
 }
@@ -62,6 +63,14 @@ html {
 	--surface-4: var(--surface-4-dark);
 	--background: var(--background-dark);
 	--border: var(--border-dark);
+
+
+	--color-design: #F959FF;
+	--color-game: #6355FF;
+	--color-blog: #FF2E65;
+	--color-comic: #FF7559;
+	--color-app: #0C75ED;
+
 }
 
 @media (prefers-color-scheme: light) {
@@ -206,17 +215,31 @@ li {
 	}
 	p{
 		font-size: 15px;
-		font-weight: 300;
+		font-weight: 350;
 		margin: 16px auto;
 		padding: 0;
-		width: 900px;
+		//width: 900px;
 		max-inline-size: 100%;
+	}
+
+	.shiki{
+		padding: 12px 24px 16px 16px;
+		border-radius: 8px;
+		box-shadow: 0 6px 12px rgba(black, 0.25);
+		margin: 18px 0;
+	}
+
+	code{
+		font-size: 12px;
 	}
 
 	blockquote{
 		margin: 24px 0;
 		padding: 0 18px;
 		width: 100%;
+		border-left: 3px solid rgba(black, 0.2);
+
+		background: rgba(white, 1);
 		p{
 			margin: 0;
 			width: 100%;
@@ -289,6 +312,7 @@ li {
 	}
 
 	&.prose-text{
+		pointer-events: none;
 		margin: 0;
 		padding: 0;
 		color: rgba(black, 0.5);
@@ -320,8 +344,10 @@ li {
 	}
 
 	&.prose-image{
+		pointer-events: none;
 		.grid{
-			border: 2px solid red;
+			column-gap: 2% !important;
+			row-gap: 0% !important;
 		}
 		.gallery{
 			.elem{

@@ -3,8 +3,12 @@ series: Canvas — Lesson 1
 type: story
 title: King of Samhan
 description: Second post.
-date: '2025-01-27'
-author: 'Dantès'
+date: 2025-01-27
+author: Dantès
+blurb: 'The King of Samhan is a story based on the 7th-century Unification Wars,
+which brought an end to the Three Kingdoms period in Korean history.
+I am currently working on a webcomic version, but here are the early drafts of the
+story in text form.'
 categories:
   - sveltekit
   - svelte
@@ -15,7 +19,12 @@ published: true
   import Counter from './counter.svelte'
 </script>
 
-### Introduction
+
+
+# 632 AD
+
+## 1) Sunduk's Coronation
+
 
 #### Silla, 632 AD.
 
@@ -71,3 +80,104 @@ May Princess Dukman bring peace to the land…*
 
 
 > *(Altogether) And so it shall be.*
+
+
+Munhee’s slave-girl asks if she can attend the coronation.
+
+> *Sorry, girl… the ceremony is for Nobles and Royals only.
+You can probably watch from behind the walls, though!*
+>
+
+The coronation begins.
+
+Marshal **Yushin (37)**, Munhee’s older brother, is close with Princess Dukman.
+He is the leader of the **Hwarang**, an elite training unit for young Noblemen.
+
+> *Are you feeling alright, your majesty?*
+>
+
+> *Hm? (startled)*
+>
+
+> *Hey, look at me… it’s all going to be alright.
+No matter what happens, your loyal servant will always be by your side, until the end.
+(smiles)*
+>
+
+The Royal Princesses approach and joke with Dukman.
+
+> *Never thought I’d live to see the day when one of us actually became queen…
+Yeah, spoiled brat, you’ll let me have a turn on the throne, right? Ha!*
+>
+
+The Hwarang Knights, including **🟣 Bidam (27), 🟡 Alchun (27),** and 🟢 **Pumsuk (14),** pledge allegiance to the throne.
+
+> *We, the young Hwarang knights of Silla, pledge eternal allegiance to the Queen!*
+>
+
+Finally, Munhee arrives just in time backstage for the coronation.
+
+> *(pant) (pant) the… crown….
+Oh… your majesty… congratulations…*
+>
+
+At the end of the ceremony, everyone chants for their new queen.
+
+> *Long live the Queen!
+Long live the great Hwarang spirit!
+Long live Silla!*
+>
+
+The young Hwarang Pumsuk (14) hands the young Gotaso (5) a flower.
+
+> *What a cute little girl…*
+>
+
+Silla sends envoys to the other kingdoms to let them know of their new queen.
+
+> *So, that old brat Jinpyung is finally dead…
+Bah! Good riddance.
+Sunhw,kkja’s sister, eh…?*
+- **King Mu (51)** of Baekje
+>
+
+> *Le*
+**- King Youngryu (49)** of Goguryeo
+>
+
+> *A woman king… those Korean barbarians are at it again, aren’t they?
+Wu! Prepare my robes.*
+- **Emperor Taizong (34)** of Tang
+>
+
+> *First my aunt, and now Silla as well…?
+It must be a new trend.*
+- **King Jomei** of Yamato
+>
+
+
+
+## 2) Tournament of Princes
+
+## 3) The High Summit
+
+
+
+
+# 641 AD
+
+## 4) Gotaso's Wedding
+
+## 5) King Euija
+
+## 6) The Yeon Family
+
+
+
+# 642 AD
+
+## 7) Daeya Fortress
+
+## 8) Battle of Daeya
+
+## 9) Yeon's Massacre

@@ -101,13 +101,16 @@
 
 	nav {
 		position: fixed;
-		top: 10px;
-		left: 16px;
-		width: calc(100vw - 32px);
+		top: 0px;
+		padding: 10px 14px;
+		left: 0px;
+		width: 100vw;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		z-index: 3;
+
+		background-image: linear-gradient(to bottom, rgba(white, 0.75), rgba(white, 0));
 	}
 
 	.title {
@@ -148,7 +151,7 @@
 			margin: 0;
 			transition: 0.2s ease;
 			border: 2px solid white;
-			box-shadow: 3px 6px 14px rgba(black, 0.1), inset 0 -3px 5px rgba(black, 0.03);
+			box-shadow: 3px 6px 20px rgba(#030025, 0.15), inset 0 -3px 5px rgba(black, 0.03);
 			backdrop-filter: blur(12px);
 			display: flex;
 			align-items: center;

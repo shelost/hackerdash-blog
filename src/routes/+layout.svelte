@@ -2,6 +2,7 @@
 	import Footer from './footer.svelte'
 	import Header from './header.svelte'
 	import PageTransition from './transition.svelte'
+	import { expandedPost, showHeader } from '$lib/store';
 	import { onMount } from 'svelte'
 
 	import 'open-props/style'
@@ -244,6 +245,8 @@ window.requestAnimationFrame(loop)
 
 <div class="layout">
 
+
+
 	<Header />
 
 	<main>
@@ -305,7 +308,6 @@ window.requestAnimationFrame(loop)
 		height: 100%;
 		width: 100vw;
 		max-inline-size: 1440px;
-
 		//padding-inline: var(--size-7);
 	}
 

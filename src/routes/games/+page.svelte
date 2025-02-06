@@ -62,12 +62,15 @@
 
 <style lang='scss'>
 
-	body{
-		background: yellow !important;
-	}
-
 	section{
 		padding-bottom: 100px;
+		background: rgba(#6355FF, 0.03);
+	}
+
+	#header{
+		margin: 0;
+		padding: 120px 0 60px 0;
+		//background: yellow
 	}
 
 	#posts {

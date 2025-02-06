@@ -9,8 +9,6 @@ export async function load({ fetch }) {
 		try {
 			const post = await import(`../../posts/${posts[i].slug}.md`)
 
-			console.log(post)
-
 			if (post.metadata.type == 'game') {
 				p.push({
 					content: post.default,

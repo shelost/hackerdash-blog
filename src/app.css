@@ -26,6 +26,7 @@ html {
   --background-light: none;
   --border-light: var(--gray-4);
   overflow-x: hidden;
+  background: rgba(3, 0, 37, 0.05);
 }
 
 ::-webkit-scrollbar {
@@ -52,6 +53,11 @@ html {
   --surface-4: var(--surface-4-dark);
   --background: var(--background-dark);
   --border: var(--border-dark);
+  --color-design: #F959FF;
+  --color-game: #6355FF;
+  --color-blog: #FF2E65;
+  --color-comic: #FF7559;
+  --color-app: #0C75ED;
 }
 
 @media (prefers-color-scheme: light) {
@@ -185,16 +191,26 @@ li {
 }
 .prose p {
   font-size: 15px;
-  font-weight: 300;
+  font-weight: 350;
   margin: 16px auto;
   padding: 0;
-  width: 900px;
   max-inline-size: 100%;
+}
+.prose .shiki {
+  padding: 12px 24px 16px 16px;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+  margin: 18px 0;
+}
+.prose code {
+  font-size: 12px;
 }
 .prose blockquote {
   margin: 24px 0;
   padding: 0 18px;
   width: 100%;
+  border-left: 3px solid rgba(0, 0, 0, 0.2);
+  background: white;
 }
 .prose blockquote p {
   margin: 0;
@@ -255,6 +271,7 @@ li {
   border-end-end-radius: 6px;
 }
 .prose.prose-text {
+  pointer-events: none;
   margin: 0;
   padding: 0;
   color: rgba(0, 0, 0, 0.5);
@@ -283,8 +300,13 @@ li {
   line-height: 140%;
   margin: 8px 0;
 }
+.prose.prose-image {
+  pointer-events: none;
+}
 .prose.prose-image .grid {
-  border: 2px solid red;
+  -moz-column-gap: 2% !important;
+       column-gap: 2% !important;
+  row-gap: 0% !important;
 }
 .prose.prose-image .gallery .elem {
   margin: 0;

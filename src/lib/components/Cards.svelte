@@ -93,8 +93,12 @@
     let sizes = [
         { columns: 3, gutter: 1 },
         { mq: '768px', columns: 3, gutter: 20 },
-        { mq: '1024px', columns: 3, gutter: 40 }
+        { mq: '1024px', columns: 3, gutter: 48 }
 	]
+
+    function titleCase(val) {
+        return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+    }
 
     function initBricks(){
         if (Grid){
@@ -124,12 +128,41 @@
 		}
 	}
 
+    let icon = 'sports_esports'
+    let theme = '#6355FF'
+
+
     function handleHover(post, event) {
        // console.log(post, event)
 		selected.set(post)
 		let elem = event.currentTarget;
 		let rect = elem.getBoundingClientRect();
 		// Wait for modal to be created
+
+        switch($selected.meta.type){
+            case 'game':
+                icon = 'sports_esports'
+                theme = '#6355FF'
+                break
+            case 'blog':
+                icon = 'feed'
+                theme = '#FF2E65'
+                break
+            case 'gallery':
+                icon = 'collections'
+                theme = '#F959FF'
+                break
+            case 'comic':
+                icon = 'question_answer'
+                theme = '#FF7559'
+                break
+            case 'web':
+                icon = 'computer'
+                theme = '#0C75ED'
+                break
+            default:
+                break
+        }
 
         if (Flow) {
 				Flow.style.top = `${rect.top}px`;
@@ -187,7 +220,7 @@
 
 <div id = 'cards' bind:this={Grid}>
     {#each data.posts as post, i}
-        <div in:fly={{y: 100, delay: 500+i*100}}>
+        <div in:fly={{y: 100, delay: i*150}}>
             <Card post={post}
                 on:mouseover={(event) => handleHover(post, event)}
                 on:click={(event) => handleClick(post, event)}
@@ -225,7 +258,12 @@
 			{/if}
 			<div class = 'content'>
                 <h1 in:fly = {{y: 100, delay: 100}}> { $selected ? $selected.meta.title : 'Title' } </h1>
-                <h2 in:fly = {{y: 100, delay: 150}}> { $selected ? $selected.meta.type : 'Title' } </h2>
+                <div class = 'label'>
+                    <span class="material-icons" style = 'color: {theme}'>
+                        { icon }
+                    </span>
+                    <h3> {titleCase( $selected ? $selected.meta.type : 'Type' )} </h3>
+                </div>
                 <p in:fly = {{y: 100, delay: 200}}>  { $selected ? $selected.meta.description : 'Description' } </p>
                 <div class="tags">
                 	{#each $selected.meta.categories as category}
@@ -256,7 +294,6 @@
 
 
 <style lang="scss">
-
 
     #flow-container{
 		z-index: 2;
@@ -341,6 +378,10 @@
                 border: 2px solid blue;
             }
 
+            .prose{
+                pointer-events: none;
+            }
+
 			.content{
 				padding: 32px;
 
@@ -379,6 +420,24 @@
 						}
 					}
 				}
+
+                .label{
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    padding: 6px 10px;
+                    box-shadow: 0 4px 8px rgba(black, 0.1);
+                    width: fit-content;
+                    border-radius: 8px;
+                    margin: 16px 0 16px 0;
+                    span{
+                        font-size: 16px;
+                    }
+                    h3{
+                        font-size: 16px;
+                        font-weight: 700;
+                    }
+                }
 
 				button{
 					background: #030025;

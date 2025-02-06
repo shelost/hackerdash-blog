@@ -1,4 +1,6 @@
 <script>
+    import { writable } from 'svelte/store'
+    import { activeImage, showPreview } from '$lib/store';
     import {
 		blur,
 		crossfade,
@@ -12,6 +14,27 @@
     export let images = []
     export let col = 3
 
+    let Preview
+
+    let preview = writable(false)
+    let active = writable(null)
+
+    function handleClick(event, image, index){
+
+        showPreview.set(true)
+        activeImage.set(image)
+        console.log(event, image, index)
+    }
+
+    function closeModal(event) {
+		// Only close the modal if the click was on the background (not the modal itself)
+		if (event.target.id === 'pop') {
+			showPreview.set(false)
+		}else{
+			//goto(`/${$selected.slug}`, {noScroll: true})
+		}
+	}
+
     //console.log(images)
 
 </script>
@@ -21,7 +44,10 @@
 
     {#each images as image, index}
 
-        <div class = 'elem' in:fly={{y: 50, delay: 200+index*100}}>
+        <div class = 'elem'
+            in:fly={{y: 50, delay: 200+index*100}}
+            on:click = {(event) => {handleClick(event, image, index)}}
+        >
             <img src = '../img/{image.url}.png' alt = 'Image'>
             <p> {image.caption} </p>
         </div>
@@ -45,15 +71,22 @@
         grid-template-columns: repeat(3, 32%);
         column-gap: 2%;
         row-gap: 8px;
+        transition: 0.2s ease;
 
         &.col-2{
-            grid-template-columns: repeat(2, calc(50% - 12px));
-            gap: 24px;
+            grid-template-columns: repeat(2, calc(49%));
+            //gap: 24px;
+        }
+
+        &.col-4{
+            grid-template-columns: repeat(4, calc(23.5%));
+            //gap: 24px;
         }
 
         .elem{
             width: 100%;
             margin-bottom: 0;
+            transition: 0.2s ease;
             img{
                 box-shadow: none;
                 border-radius: 6px;
@@ -68,8 +101,13 @@
                 font-weight: 500;
                 margin: 0;
             }
+
+            &:hover{
+                opacity: 0.95;
+            }
         }
 	}
+
 
     @media screen and (max-width: 800px){
         .gallery{

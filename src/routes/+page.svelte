@@ -134,6 +134,14 @@ const myRoute = `${base}/some-page`;
 		}
 	}
 
+	const links = [
+		{ text: 'Design', route: '/design', icon: 'palette', color: '#F959FF' },
+		{ text: 'Games', route: '/games', icon: 'sports_esports', color: '#6355FF' },
+		{ text: 'Blog', route: '/blog', icon: 'article', color: '#FF2E65' },
+		{ text: 'Comics', route: '/comics', icon: 'question_answer', color: '#FF7559' },
+		{ text: 'Apps', route: '/apps', icon: 'apps', color: '#0C75ED' }
+	];
+
 </script>
 
 <svelte:head>
@@ -152,17 +160,33 @@ const myRoute = `${base}/some-page`;
 		<div class="head">
 			<img id = 'logo' src = 'ahnheewon3.png' alt = 'Logo' transition:fly={{ duration: 500 }}>
 			<div id = 'ahw'>
-				<img class = 'letter' src = 'a.svg' in:fly={{ y:100, delay: 100 }}>
-				<img class = 'letter' src = 'h.svg' in:fly={{ y:100, delay: 150 }}>
-				<img class = 'letter' src = 'n.svg' in:fly={{ y:100, delay: 200 }}>
-				<img class = 'letter' src = 'h.svg' in:fly={{ y:100, delay: 300 }}>
-				<img class = 'letter' src = 'e.svg' in:fly={{ y:100, delay: 400 }}>
-				<img class = 'letter' src = 'e.svg' in:fly={{ y:100, delay: 500 }}>
-				<img class = 'letter' src = 'w.svg' in:fly={{ y:100, delay: 600 }}>
-				<img class = 'letter' src = 'o.svg' in:fly={{ y:100, delay: 700 }}>
-				<img class = 'letter' src = 'n.svg' in:fly={{ y:100, delay: 800 }}>
+				<img class = 'letter a 1' src = 'a.svg' in:fly={{ x: 80, delay: 100 }}>
+				<img class = 'letter h 2' src = 'h.svg' in:fly={{ x: 80, delay: 150 }}>
+				<img class = 'letter n 3' src = 'n.svg' in:fly={{ x: 80, delay: 200 }}>
+				<img class = 'letter h 4' src = 'h.svg' in:fly={{ x: 80, delay: 300 }}>
+				<img class = 'letter e 5' src = 'e.svg' in:fly={{ x: 80, delay: 400 }}>
+				<img class = 'letter e 6' src = 'e.svg' in:fly={{ x: 80, delay: 500 }}>
+				<img class = 'letter w 7' src = 'w.svg' in:fly={{ x: 80, delay: 600 }}>
+				<img class = 'letter o 8' src = 'o.svg' in:fly={{ x: 80, delay: 700 }}>
+				<img class = 'letter n 9' src = 'n.svg' in:fly={{ x: 80, delay: 800 }}>
 			</div>
 			<h1>  </h1>
+
+			<div class = 'links'>
+				{#each links as link, index}
+				<div
+					class="link hoverable"
+					transition:fly={{y: -30, delay: index*75}}
+				>
+					<span class="material-icons" style="color: {link.color}">
+						{link.icon}
+					</span>
+					<h3>
+						{link.text}
+					</h3>
+				</div>
+			{/each}
+			</div>
 		</div>
 
 		<canvas id="canvas">
@@ -276,6 +300,32 @@ const myRoute = `${base}/some-page`;
 			max-inline-size: 100%;
 			text-align: center;
 			margin-bottom: 60px;
+		}
+	}
+
+
+	.links{
+		display: flex;
+		gap: 18px;
+		position: sticky !important;
+		top: 10px;
+		.link{
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			//background: white;
+			padding: 8px;
+			border-radius: 12px;
+
+			span{
+				font-size: 36px;
+			}
+
+			h3{
+				font-size: 18px;
+				font-weight: 700;
+				display: none;
+			}
 		}
 	}
 
@@ -437,6 +487,8 @@ const myRoute = `${base}/some-page`;
 			align-items: flex-end;
 			gap: 0;
 			margin-bottom: 56px;
+
+			filter: drop-shadow(2px 6px 8px rgba(#030025, 0.3));
 			//background: red;
 			.letter{
 				flex-shrink: 0;
@@ -444,6 +496,26 @@ const myRoute = `${base}/some-page`;
 				//transform: scale(0.1);
 				//width: 60px;
 				//height: auto;
+
+				&.a{
+					margin: 0px -8px -2px 0;
+				}
+
+				&.e{
+					margin: 0 -1px;
+				}
+
+				&.w{
+					margin: 0 -7px 1px -7px;
+				}
+
+				&.o{
+					margin: 0 -3px -2px -5px;
+				}
+
+				&.n{
+					margin: 0 -6px 0 -2px;
+				}
 			}
 		}
 

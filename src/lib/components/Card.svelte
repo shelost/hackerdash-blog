@@ -76,17 +76,27 @@
         <div class = 'paper'></div>
     {/if}
 
+    {#if post.meta.type == 'comic'}
+        <div class = 'paper'></div>
+    {/if}
+
+
     <div
         class = 'post {post.meta.type}'
     >
 
-    {#if post.meta.card}
-        <img class = 'thumbnail' src = '/card/{post.meta.card}.png' alt = 'Image'>
-    {/if}
 
     {#if post.meta.color}
         <div class = 'color' style = 'background: #{post.meta.color}'></div>
     {/if}
+
+    {#if post.meta.card}
+    <!--
+    <img class = 'thumbnail' src = '/card/{post.meta.card}.png' alt = 'Image'>
+    -->
+
+    <div class = 'thumbnail' style = 'background-image: url("/card/{post.meta.card}.png")'></div>
+{/if}
 
     {#if post.meta.type == 'blog'}
 
@@ -94,47 +104,45 @@
 
             <div class = 'expo'>
                 <h3 class = 'series'> {post.meta.series} </h3>
-                <h1 class="title">{post.meta.title}</h1>
-                <p class="date">{formatDate(post.meta.date)}</p>
-                <p class="description">{post.meta.type}</p>
+                <h1 class="title"> {post.meta.title} </h1>
+                <p class="description"> {post.meta.description} </p>
+                <h2 class="date"> {formatDate(post.meta.date)} </h2>
+            </div>
 
-                <div class = 'prose prose-text'>
-                    <svelte:component this={post.content} />
-                </div>
+            <div class = 'prose prose-text'>
+                <svelte:component this={post.content} />
             </div>
 
     {:else if post.meta.type == 'comic'}
 
+            <div class = 'prose prose-image'>
+                <svelte:component this={post.content} />
+            </div>
+
             <div class = 'expo'>
                 <h1 class="title">{post.meta.title}</h1>
-                <p class="date">{formatDate(post.meta.date)}</p>
-                <p class="description">{post.meta.type}</p>
-
-                <div class = 'prose text'>
-                    <svelte:component this={post.content} />
-                </div>
+                <p class="description">{post.meta.description}</p>
+                <h2 class="date"> {formatDate(post.meta.date)} </h2>
             </div>
 
      {:else if post.meta.type == 'gallery'}
 
              <div class = 'prose prose-image'>
-                    <svelte:component this={post.content} />
-                </div>
+                <svelte:component this={post.content} />
+             </div>
 
             <div class = 'expo'>
                 <h1 class="title">{post.meta.title}</h1>
-                <p class="date">{formatDate(post.meta.date)}</p>
-                <p class="description">{post.meta.type}</p>
+                <p class="description">{post.meta.description}</p>
+                <h2 class="date"> {formatDate(post.meta.date)} </h2>
             </div>
 
     {:else if post.meta.type == 'game'}
 
-
-
             <div class = 'expo'>
                 <h1 class="title">{post.meta.title}</h1>
-                <p class="date">{formatDate(post.meta.date)}</p>
-                <p class="description">{post.meta.type}</p>
+                <p class="description">{post.meta.description}</p>
+                <h2 class="date"> {formatDate(post.meta.date)} </h2>
                 <div class = 'tags'>
                     {#each post.meta.categories as tag}
                         <div class = 'tag'>
@@ -153,15 +161,23 @@
                 {/if}
             </div>
 
+            <div class = 'play'>
+                <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M97.5361 56.4061L32.5073 18.6191C30.5073 17.4569 28 18.8998 28 21.213V96.787C28 99.1002 30.5073 100.543 32.5073 99.3809L97.5361 61.5939C99.5265 60.4373 99.5265 57.5627 97.5361 56.4061Z" fill="white"/>
+                </svg>
+            </div>
+
     {:else}
 
             <div class = 'expo'>
                 <h1 class="title">{post.meta.title}</h1>
-                <p class="date">{formatDate(post.meta.date)}</p>
-                <p class="description">{post.meta.type}</p>
+                <p class="description">{post.meta.description}</p>
+                <h2 class="date"> {formatDate(post.meta.date)} </h2>
             </div>
 
     {/if}
+
+    <div class = 'gradient'></div>
 
     </div>
 
@@ -222,7 +238,7 @@
             transition: 0.2s ease;
 
 
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
             gap: 4px;
@@ -250,6 +266,8 @@
             transform: rotate(5deg);
             transition: 0.2s ease;
             //border: 5px solid red;
+
+            display: none;
         }
 
         &:hover{
@@ -266,8 +284,8 @@
 
 
     .post {
-		width: 360px;
-		border-radius: 16px;
+		width: 350px;
+		border-radius: 12px;
 		box-shadow: 0 15px 40px rgba(black, 0.15);
         aspect-ratio: 5/4;
 
@@ -286,9 +304,12 @@
 			top: 0;
 			left: 0;
 			width: 100%;
-			height: auto;
+            height: 100%;
 			z-index: -1;
 			border-radius: 0;
+            background-size: cover;
+            background-position: center center;
+            transform: none;
             transition: 0.2s ease;
 		}
 
@@ -298,6 +319,8 @@
             left: 0;
             width: 100%;
             height: 100%;
+            z-index: -2;
+            opacity: 0.8;
         }
 
 		.expo{
@@ -310,6 +333,7 @@
 				font-weight: 700;
 				margin-bottom: 8px;
 				text-align: left;
+                max-inline-size: 100%;
 			}
 
 
@@ -331,39 +355,71 @@
 
             .date{
                 color: rgba(black, 0.5);
-                font-weight: 100;
+                font-size: 13px;
+                font-weight: 500;
                 letter-spacing: -0.4px;
+                background: white;
+                padding: 4px 8px;
+                border-radius: 8px;
+                width: fit-content;
+                margin-top: 8px;
+
+                position: absolute;
+                bottom: 0;
+                right: 0;
             }
 
 			.description{
-				display: none;
+				//display: none;
 			}
 		}
 
 
 		&.game{
 			color: white;
-			background: none;
+			background: white;
 			aspect-ratio: 5/4;
 			display: flex;
 			flex-direction: column;
 			justify-content: flex-end;
-            border-radius: 28px;
-            border: 6px solid rgba(white, 0);
+            border-radius: 20px;
+            border: none;
+            //border: 10px solid rgba(white, 0);
 
+            box-shadow: 0 20px 40px rgba(black, 0.1);
+
+            .color{
+                display: none;
+            }
+
+            .thumbnail{
+                top: 4%;
+                left: 4%;
+                width: 92%;
+                aspect-ratio: 5/4;
+                height: auto;
+                border-radius: 12px 12px 50px 12px;
+                border: 1px solid rgba(white, 0);
+                box-shadow: 0 8px 16px rgba(black, 0.2), inset 0 -10px 15px rgba(black, 0.05);
+            }
 
 			.expo{
-				//opacity: 0;
+				opacity: 0;
                 //transform: translateY(10px);
                 transition: 0.2s ease;
-				background-image: linear-gradient(to top, rgba(#030025, 0.5), rgba(#030025, 0));
+				background-image: linear-gradient(to top, rgba(white, 0.75), rgba(#030025, 0));
+               // background: rgba(white, 0.75);
 
-                background: white;
+                margin: 12px;
+                border-radius: 12px;
+
+                //color: black;
 
 				h1{
+                    font-size: 26px;
                     font-weight: 800;
-					//text-shadow: 0 10px 25px rgba(black, .5);
-                    color: #030025;
+					text-shadow: 0 10px 25px rgba(black, .5);
+                    color: white;
 				}
                 .date{
                     display: none;
@@ -373,6 +429,29 @@
                     display: none;
                 }
 			}
+
+            .play{
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                width: 60px;
+                height: 60px;
+                border-radius: 50px;
+                z-index: 3;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                background: #6355FF;
+                border: 2px solid rgba(white, 0.1);
+
+                box-shadow: 0 5px 20px rgba(#030025, 0.5), inset 0 -5px 10px rgba(black, 0.15);
+
+                svg{
+                    height: 32px;
+                }
+            }
 
             .rating{
                 display: none;
@@ -387,28 +466,17 @@
                 }
             }
 
-            /*
-            .expo{
-				opacity: 0;
-                transform: translateY(10px);
-                transition: 0.2s ease;
-				background: rgba(white, 1);
-                //color: black;
-                margin: 8px;
-                border-radius: 18px;
-				h1{
-					text-shadow: 0 10px 25px rgba(black, .5);
-				}
-                .date{
-                    display: none;
-                }
-			}
-                */
-
             &:hover{
+                /*
                 .thumbnail{
-                    transform: scale(1.05);
+                    top: 0%;
+                    left: 0%;
+                    width: 100%;
+                    height: 70%;
+                   // transform: scale(1.03) translateY(-90px);
                 }
+                   */
+
                 .expo{
                     opacity: 1;
                     transform: translateY(0px);
@@ -421,9 +489,15 @@
 			color: white;
 			background: none;
 			aspect-ratio: 10/12;
-			display: flex;
-			flex-direction: column;
-			justify-content: flex-end;
+			//display: flex;
+			//flex-direction: column;
+			//justify-content: flex-end;
+            .thumbnail{
+                z-index: 1;
+                transition: 0.5s ease;
+                border: 1px solid rgba(white, 0.5);
+                box-shadow: -5px 5px 25px rgba(black, 0.75);
+            }
 			.expo{
 				opacity: 0;
                 transform: translateY(10px);
@@ -439,10 +513,27 @@
                     display: none;
                 }
 			}
+            .prose{
+                z-index: -1;
+                transform: none;
+                transition: 5s ease;
+
+            }
+
             &:hover{
+                .thumbnail{
+                    border-radius: 12px;
+                    left: -90%;
+                    //top: 1%;
+                    //transform: rotate(-5deg);
+                }
                 .expo{
                     opacity: 1;
-                    transform: translateY(0px);
+                    //transform: translateY(0px);
+                }
+                .prose{
+                    transition: 30s ease;
+                    transform: translateY(-50%);
                 }
             }
 		}
@@ -454,38 +545,59 @@
 
             .bar{
                 width: 100%;
-                height: 36px;
+                height: 18px;
                 background: rgba(#FF2E65, 0.8);
+                transition: 0.2s ease;
                 //display: none;
             }
 
-			h3{
-				font-size: 14px;
-				font-weight: 600;
-				margin-bottom: 4px;
-			}
+            .expo{
+                h3{
+                    font-size: 13px;
+                    font-weight: 600;
+                    margin-bottom: 6px;
+                    color: #FF2E65;
+                }
+                h1{
+                    font-family: 'DM Serif Display', sans-serif;
+                    font-weight: 900;
+                    font-size: 32px !important;
+                    letter-spacing: .1px;
+                    color: rgba(black, 0.8);
+                }
+            }
 
-			h1{
-				font-family: 'DM Serif Display', sans-serif;
-				font-weight: 900;
-				font-size: 32px !important;
-				letter-spacing: .1px;
-				color: rgba(black, 0.8);
-			}
+            .prose{
+                padding: 0 24px;
+                margin-top: -16px;
+                margin: auto;
+            }
+
+            .gradient{
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                height: 50px;
+                background-image: linear-gradient(to top, rgba(white, 1), rgba(white, 0.5));
+            }
+
+            &:hover{
+                .bar{
+                    height: 4px;
+                }
+            }
 		}
 
         &.gallery{
-
             aspect-ratio: 4/5;
 
             .prose{
                 margin: auto;
                 width: 90%;
-                aspect-ratio: 1;
+                aspect-ratio: 9.5/10;
                 overflow: hidden;
-                border: 2px solid red;
-
-
+                //border: 2px solid red;
             }
             .thumbnail{
                 display: none;
@@ -502,9 +614,6 @@
                 height: 50%;
                 //background-image: linear-gradient(to top, rgba(white, 1) 40%, rgba(white, 0));
             }
-
-
-
         }
 
         &.web{

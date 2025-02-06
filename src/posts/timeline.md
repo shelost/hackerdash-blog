@@ -1,6 +1,6 @@
 ---
 series: History
-type: art
+type: blog
 title: The Master Timeline
 description: A historical perspective tool
 card: null

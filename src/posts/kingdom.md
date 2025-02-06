@@ -1,7 +1,7 @@
 ---
 type: gallery
 series: Samhan
-title: Concept Art
+title: Kingdom (Concept)
 description: A one-shot comic
 card: card-pandemonium
 banner: null
@@ -40,6 +40,10 @@ published: true
     { url: 'img-251', caption: 'Everyone' },
     { url: 'img-252', caption: 'The Kim Family' },
     { url: 'img-253', caption: 'The Three Kingdoms' },
+
+    { url: 'img-255', caption: 'Everyone' },
+    { url: 'img-256', caption: 'The Kim Family' },
+    { url: 'img-257', caption: 'The Three Kingdoms' },
   ]
 
   let images2 = [
@@ -50,9 +54,9 @@ published: true
 </script>
 
 
-**Pandemonium** is my first attempt at a real comic, hand-drawn on Procreate and assembled on Figma on the web.
+This is a collection of early drawings / concept art for the **King of Samhan**, a comic project that I'm currently working on.
 
-The story is a fusion of various classical stories (Romance of the Three Kingdoms, Water Margin, Hong Gildong, etc.)
+The story is based on the 7th-century Unification Wars in Korea, when
 
 [a relative link](platformr)
 

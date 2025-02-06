@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { fade, fly, crossfade } from 'svelte/transition'
+	import Player from '$lib/components/Music.svelte'
 
 	const [send, receive] = crossfade({});
 
@@ -12,6 +13,8 @@
 	<div class="transition" >
 		<slot />
 	</div>
+
+	<Player />
 {/key}
 
 <style>

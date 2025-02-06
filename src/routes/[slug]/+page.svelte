@@ -1,6 +1,7 @@
 <script lang="ts">
+	import { writable } from 'svelte/store'
 	import { tweened } from 'svelte/motion';
-	import { expandedPost } from '$lib/store';
+	import { activeImage, showPreview } from '$lib/store';
 	import { formatDate } from '$lib/utils';
 	import {send, receive} from '$lib/crossfade.js';
 	import {onMount} from 'svelte'
@@ -18,7 +19,6 @@
 	let headers = [];
 
 	let activeId = '';
-
 
 	onMount(()=> {
 		document.body.style.overflow = 'hidden';
@@ -45,8 +45,6 @@
                 }
             });
         }
-
-
 		const observer = new IntersectionObserver(entries => {
 			entries.forEach(entry => {
 				if (entry.isIntersecting) {
@@ -69,6 +67,17 @@
         }
     }
 
+	let Preview
+
+    function closeModal(event) {
+		// Only close the modal if the click was on the background (not the modal itself)
+		if (event.target.id === 'pop' || event.target.id === 'modal') {
+			showPreview.set(false)
+		}else{
+			//goto(`/${$selected.slug}`, {noScroll: true})
+		}
+	}
+
 	//  in:fly={{y: 500, duration: 500}} out:fly={{y: 500, duration: 500}}
 
 </script>
@@ -79,14 +88,14 @@
 	<meta property="og:title" content={data.meta.title} />
 </svelte:head>
 
-<div class="main" in:fade={{duration: 200}}>
-
+<div class="main" in:fade={{duration: 200}} style='background: #{data.meta.color}' >
 
 	<div class = 'sidebar left'>
 
+
 	</div>
 
-	<div class = 'container {data.meta.type} {data.meta.theme? data.meta.theme : ''}'>
+	<div class = 'container {data.meta.type} {data.meta.theme ? data.meta.theme : ''}'>
 		{#if data.meta.banner}
 			<div id = 'banner'>
 				<div id = 'img' style='background-image: url("banner/{data.meta.banner}.png")'>
@@ -118,8 +127,6 @@
 				</div>
 			</hgroup>
 
-
-
 			<div class="prose preview">
 				<svelte:component this={data.content} />
 			</div>
@@ -132,12 +139,35 @@
 			<ul>
 				{#each headers as header}
 					<li class={header.tag}>
-						<a href="#" on:click|preventDefault={() => scrollToHeader(header.id)}>{header.text}</a>
+						<a href="#" on:click|preventDefault={() => scrollToHeader(header.id)}>
+							<p>
+								{header.text}
+							</p>
+						</a>
 					</li>
 				{/each}
 			</ul>
 		</nav>
 	</div>
+
+
+
+	{#if $showPreview}
+		{#if $activeImage}
+			<div id = 'dark' transition:fade={{duration: 100}} ></div>
+			<div id = 'pop' on:click={closeModal}>
+				<div id = 'modal' bind:this={Preview} in:fade={{duration: 100}}>
+						<img src = '/img/{$activeImage.url}.png' loading='lazy' class = 'banner' alt = 'Image'>
+					<div class = 'content'>
+					</div>
+				</div>
+			</div>
+
+		{/if}
+	{/if}
+
+
+
 </div>
 
 <style lang="scss">
@@ -154,6 +184,9 @@
 
 	a{
 		color: black;
+		&:hover{
+			//text-decoration: none;
+		}
 	}
 
 	.menu{
@@ -168,14 +201,20 @@
 			gap: 12px;
 
 			li{
-				font-size: 13px;
-				font-weight: 400;
 				padding: 4px 8px;
 				border-radius: 8px;
-				background: rgba(white, 0.5);
+				background: rgba(white, 0.4);
 				box-shadow: 0 6px 12px rgba(#030025, 0.12);
 				opacity: 0.75;
 				transition: 0.2s ease;
+
+				p{
+					color: rgba(black, 0.75);
+					font-size: 13px;
+					font-weight: 500;
+					transition: 0.2s ease;
+				}
+
 
 				&.h2{
 					//font-size: 13px;
@@ -184,8 +223,15 @@
 
 				&:hover{
 					opacity: 1;
-					background: rgba(white, 0.8);
-					transform: translateX(4px);
+					background: rgba(white, 0.6);
+					//transform: translateX(-1px);
+					//font-weight: 600;
+
+					p{
+						color: black;
+						//font-weight: 600;
+					}
+
 				}
 			}
 		}
@@ -198,7 +244,7 @@
 		height: calc(100vh - 85px);
 		max-height: 1080px;
 
-
+		margin-top: 28px;
 
 		border-radius: 12px;
 		box-shadow: 0 20px 60px rgba(#030025, 0.12);
@@ -317,14 +363,29 @@
 			border-radius: 8px;
 			width: fit-content;
 		}
-	}
 
-	.profile{
-		display: flex;
-		align-items: center;
-		gap: 14px;
-		padding: 20px 0;
-		display: none;
+		.tags {
+			gap: var(--size-3);
+			margin-top: var(--size-7);
+
+			display: flex;
+
+			.tag{
+				width: fit-content;
+				background: white;
+				padding: 6px 12px;
+				border-radius: 8px;
+				box-shadow: 0 5px 10px rgba(#030025, 0.1);
+				h3{
+					margin: 0;
+				}
+			}
+		}
+
+		.profile{
+			display: none;
+		}
+
 	}
 
 	img{
@@ -345,23 +406,62 @@
 		margin-bottom: 5px;
 	}
 
-	.tags {
-		gap: var(--size-3);
-		margin-top: var(--size-7);
+
+
+	#dark{
+		position: fixed !important;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background: rgba(black, 0.6);
+        transition: 0.4s ease;
+		z-index: 3;
+	}
+
+    #pop{
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		//background: rgba(black, 0.1);
+		z-index: 4;
 
 		display: flex;
+		justify-content: center;
+		align-items: center;
 
-		.tag{
-			width: fit-content;
-			background: white;
-			padding: 6px 12px;
-			border-radius: 8px;
-			box-shadow: 0 5px 10px rgba(#030025, 0.1);
-			h3{
-				margin: 0;
+		#modal{
+
+			width: 720px;
+			height: 720px;
+			max-height: 85%;
+			border-radius: 12px;
+			transition: 0.2s ease;
+			z-index: 4 !important;
+
+			overflow-y: hidden;
+			transform: translateY(16px);
+			//background: white;
+			//box-shadow: 0 15px 60px rgba(black, .25), inset 0px -15px 20px rgba(black, 0.08);
+            //border: 1px solid rgba(black, 0.2);
+
+
+			img{
+				width: auto;
+				height: 100%;
+				border-radius: 12px;
+				border: none;
+				margin: auto;
+				object-fit: contain;
+				border: 1px solid rgba(white, 0.1);
+
+				box-shadow: 0 15px 60px rgba(black, .5), inset 0px -15px 20px rgba(black, 0.08);
 			}
-		}
-	}
+        }
+    }
+
 
 
 </style>

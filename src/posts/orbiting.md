@@ -4,6 +4,8 @@ title: Just Orbiting By
 description: A word end game
 url: https://shelost.github.io/orbiting
 card: card-orbiting
+rating: 3
+color: e0e0e0
 date: '2025-7-21'
 author: 'Dantès'
 categories:

@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import * as config from '$lib/config'
 	import {send, receive} from '$lib/crossfade.js';
+	import Cards from '$lib/components/Cards.svelte'
 	import {
 		blur,
 		crossfade,
@@ -19,9 +20,11 @@
 		goto(`/${post.slug}`, { noScroll: true });
 	}
 
-	console.log(data)
 
-	let posts = data.posts.filter( a => a.type == 'blog')
+
+	let posts = data.posts.filter( a => a.meta.type == 'blog')
+
+	console.log(posts)
 
 </script>
 
@@ -41,24 +44,43 @@
 		{#each posts as post, i}
 			<div class="post"  on:click={(event) => handleClick(event, post)} in:fly = {{x:200, delay: 0+i*100}}>
 
-				<h1 class="title">{post.title}</h1>
+				<h1 class="title">{post.meta.title}</h1>
 
                 <div class = 'profile'>
                     <a href="https://lh3.googleusercontent.com/drive-viewer/AITFw-xPEYrPxiy026fqjw7Rjxen5nkMMpx8rP8_gYRhj4f1kkcUhXKJyhTE55n1MXPaQz-cKjTs_EuXD7whMajZsdR0HAn29A=s2560?source=screenshot.guru"> <img src="https://lh3.googleusercontent.com/drive-viewer/AITFw-xPEYrPxiy026fqjw7Rjxen5nkMMpx8rP8_gYRhj4f1kkcUhXKJyhTE55n1MXPaQz-cKjTs_EuXD7whMajZsdR0HAn29A=s2560" /> </a>
-                    <h2> {post.author} </h2>
+                    <h2> {post.meta.author} </h2>
                 </div>
 
-				<p class="date">{formatDate(post.date)}</p>
-				<p class="description">{post.description}</p>
+				<p class="date">{formatDate(post.meta.date)}</p>
+				<p class="description">{post.meta.description}</p>
 			</div>
 		{/each}
 	</div>
+
+
+	<!--
+	<div id = 'posts' in:fade>
+		<Cards data={data} />
+	</div>
+	-->
+
 </section>
 
 <style lang='scss'>
 
+	section{
+		//border: 5px solid red;
+		padding: 0;
+	}
+
 	body{
 		background: yellow;
+	}
+
+	#header{
+		margin: 0;
+		padding: 120px 0 60px 0;
+		//background: yellow
 	}
 
 	.posts {
@@ -82,11 +104,13 @@
 		box-shadow: 0 15px 50px rgba(black, 0.1);
 
 		.title {
-			font-family: 'Playfair Display', 'Newsreader', sans-serif;
-			font-size: 28px;
+			font-family: 'DM Serif Display', 'Newsreader', sans-serif;
+			font-size: 32px;
 			font-weight: 800;
 			text-transform: capitalize;
 			margin-bottom: 10px;
+			max-inline-size: 100%;
+			letter-spacing: 0.1px;
 		}
 		h2{
 			font-size: 16px;
