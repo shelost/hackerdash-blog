@@ -91,8 +91,8 @@
     }, 4000);
 
     let sizes = [
-        { columns: 3, gutter: 1 },
-        { mq: '768px', columns: 3, gutter: 20 },
+        { columns: 1, gutter: 0},
+        { mq: '800px', columns: 2, gutter: 20 },
         { mq: '1024px', columns: 3, gutter: 48 }
 	]
 
@@ -460,5 +460,14 @@
 			}
 		}
 	}
+
+    @media screen and (max-width: 800px){
+
+        #cards{
+            width: 100%;
+            //border: 2px solid red;
+        }
+
+    }
 
 </style>

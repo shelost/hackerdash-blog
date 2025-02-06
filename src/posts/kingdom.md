@@ -1,8 +1,8 @@
 ---
 type: gallery
 series: Samhan
-title: Kingdom (Concept)
-description: A one-shot comic
+title: Kingdom
+description: Concept Art
 card: card-pandemonium
 banner: null
 color: FFF7E4

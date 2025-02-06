@@ -66,7 +66,7 @@
 		//width: 120%;
 		//transform: translateX(-9%);
         //border: 1px solid red;
-		margin: 18px 0;
+		margin: 48px 0;
         display: grid;
         grid-template-columns: repeat(3, 32%);
         column-gap: 2%;
@@ -111,7 +111,7 @@
 
     @media screen and (max-width: 800px){
         .gallery{
-            border: 2px solid red;
+            //border: 2px solid red;
         }
     }
 

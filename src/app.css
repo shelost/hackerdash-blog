@@ -29,7 +29,7 @@ html {
   background: rgba(3, 0, 37, 0.05);
 }
 
-::-webkit-scrollbar {
+::highlight() ::-webkit-scrollbar {
   width: 0 !important;
 }
 
@@ -304,12 +304,16 @@ li {
   pointer-events: none;
 }
 .prose.prose-image .grid {
-  -moz-column-gap: 2% !important;
-       column-gap: 2% !important;
+  -moz-column-gap: 1% !important;
+       column-gap: 1% !important;
   row-gap: 0% !important;
+  margin: 0 !important;
 }
 .prose.prose-image .gallery .elem {
   margin: 0;
+}
+.prose.prose-image h1, .prose.prose-image h2, .prose.prose-image h3, .prose.prose-image h4 {
+  display: none;
 }
 .prose.prose-image p {
   display: none;

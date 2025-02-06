@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { writable } from 'svelte/store'
 	import { tweened } from 'svelte/motion';
-	import { activeImage, showPreview } from '$lib/store';
+	import { activeImage, showPreview, showHeader } from '$lib/store';
 	import { formatDate } from '$lib/utils';
 	import {send, receive} from '$lib/crossfade.js';
 	import {onMount} from 'svelte'
@@ -17,7 +17,6 @@
 	export let data;
 
 	let headers = [];
-
 	let activeId = '';
 
 	onMount(()=> {
@@ -71,6 +70,8 @@
 
     function closeModal(event) {
 		// Only close the modal if the click was on the background (not the modal itself)
+
+		console.log(event.target.id)
 		if (event.target.id === 'pop' || event.target.id === 'modal') {
 			showPreview.set(false)
 		}else{
@@ -155,11 +156,10 @@
 	{#if $showPreview}
 		{#if $activeImage}
 			<div id = 'dark' transition:fade={{duration: 100}} ></div>
-			<div id = 'pop' on:click={closeModal}>
-				<div id = 'modal' bind:this={Preview} in:fade={{duration: 100}}>
-						<img src = '/img/{$activeImage.url}.png' loading='lazy' class = 'banner' alt = 'Image'>
-					<div class = 'content'>
-					</div>
+				<div id = 'pop' on:click={closeModal}>
+					<div id = 'modal' bind:this={Preview} in:fade={{duration: 100}}>
+						<img id = 'preview' src = '/img/{$activeImage.url}.png' loading='lazy' alt = 'Image'>
+						<div class = 'content'> {$activeImage.caption} </div>
 				</div>
 			</div>
 
@@ -414,7 +414,7 @@
 		left: 0;
 		width: 100vw;
 		height: 100vh;
-		background: rgba(black, 0.6);
+		background: rgba(black, 0.8);
         transition: 0.4s ease;
 		z-index: 3;
 	}
@@ -433,31 +433,29 @@
 		align-items: center;
 
 		#modal{
-
 			width: 720px;
 			height: 720px;
 			max-height: 85%;
 			border-radius: 12px;
 			transition: 0.2s ease;
 			z-index: 4 !important;
-
-			overflow-y: hidden;
+			overflow: visible;
 			transform: translateY(16px);
 			//background: white;
 			//box-shadow: 0 15px 60px rgba(black, .25), inset 0px -15px 20px rgba(black, 0.08);
-            //border: 1px solid rgba(black, 0.2);
+            //border: 1px solid red;
 
-
-			img{
-				width: auto;
-				height: 100%;
-				border-radius: 12px;
+			#preview{
+				width: 100%;
+    			height: 100%;
+				border-radius: 0px;
+				overflow: hidden;
 				border: none;
 				margin: auto;
-				object-fit: contain;
-				border: 1px solid rgba(white, 0.1);
-
-				box-shadow: 0 15px 60px rgba(black, .5), inset 0px -15px 20px rgba(black, 0.08);
+				object-fit: contain !important;
+				//border: 1px solid rgba(white, 0.1);
+				//box-shadow: 0 15px 60px rgba(black, .5), inset 0px -15px 20px rgba(black, 0.08);
+				filter: drop-shadow(0 15px 50px rgba(black, 0.5));
 			}
         }
     }

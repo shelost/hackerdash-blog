@@ -113,6 +113,8 @@
 		background-image: linear-gradient(to bottom, rgba(white, 0.75), rgba(white, 0));
 	}
 
+
+
 	.title {
 		background: white;
 		border-radius: 12px;
@@ -172,4 +174,27 @@
 			}
 		}
 	}
+
+	@media screen and (max-width: 800px){
+
+		nav{
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 60px;
+			background: red;
+		}
+
+		.links{
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 60px;
+			background: white;
+		}
+	}
+
+
 </style>

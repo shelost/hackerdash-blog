@@ -70,7 +70,7 @@
 
 	section{
 		//border: 5px solid red;
-		padding: 0;
+		padding-bottom: 100px;
 	}
 
 	body{

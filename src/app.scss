@@ -38,6 +38,8 @@ html {
 
 }
 
+::highlight()
+
 ::-webkit-scrollbar{
 	width: 0 !important;
 }
@@ -346,13 +348,17 @@ li {
 	&.prose-image{
 		pointer-events: none;
 		.grid{
-			column-gap: 2% !important;
+			column-gap: 1% !important;
 			row-gap: 0% !important;
+			margin: 0 !important;
 		}
 		.gallery{
 			.elem{
 				margin: 0;
 			}
+		}
+		h1, h2, h3, h4{
+			display: none;
 		}
 		p{
 			display: none;

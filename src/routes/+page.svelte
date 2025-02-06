@@ -1,9 +1,8 @@
 <script lang = "js">
 
-import { base } from "$app/paths";
+	const myRoute = `${base}/some-page`;
 
-const myRoute = `${base}/some-page`;
-
+	import { base } from "$app/paths";
 	import { writable } from 'svelte/store'
 	import { tweened } from 'svelte/motion';
 	import { expandedPost } from '$lib/store';
@@ -12,7 +11,6 @@ const myRoute = `${base}/some-page`;
 	import { onMount } from 'svelte'
 	import {send, receive} from '$lib/crossfade.js';
 	import { goto } from '$app/navigation';
-	//import Masonry from 'masonry-layout'
 	import bricks from 'bricks.js';
 	import Card from '$lib/components/Card.svelte'
 	import Cards from '$lib/components/Cards.svelte'
@@ -666,5 +664,19 @@ const myRoute = `${base}/some-page`;
 			//animation: float 0.5s ease-in-out infinite alternate-reverse;
 		}
 	}
+
+	@media screen and (max-width: 800px){
+
+		.head{
+			#ahw{
+				transform: scale(0.25);
+				.letter{
+					//width: 20px;
+				}
+
+			}
+		}
+	}
+
 
 </style>

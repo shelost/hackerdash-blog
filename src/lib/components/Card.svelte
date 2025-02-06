@@ -1,5 +1,5 @@
 <script>
-    import { formatDate } from '$lib/utils'
+    import { formatDate, formatYear } from '$lib/utils'
     import { goto } from '$app/navigation';
     import "material-icons/iconfont/material-icons.css";
 
@@ -106,7 +106,7 @@
                 <h3 class = 'series'> {post.meta.series} </h3>
                 <h1 class="title"> {post.meta.title} </h1>
                 <p class="description"> {post.meta.description} </p>
-                <h2 class="date"> {formatDate(post.meta.date)} </h2>
+                <h2 class="date"> {formatYear(formatDate(post.meta.date))} </h2>
             </div>
 
             <div class = 'prose prose-text'>
@@ -134,7 +134,7 @@
             <div class = 'expo'>
                 <h1 class="title">{post.meta.title}</h1>
                 <p class="description">{post.meta.description}</p>
-                <h2 class="date"> {formatDate(post.meta.date)} </h2>
+                <h2 class="date"> {formatYear(formatDate(post.meta.date))} </h2>
             </div>
 
     {:else if post.meta.type == 'game'}
@@ -180,7 +180,6 @@
     <div class = 'gradient'></div>
 
     </div>
-
 
 
 </div>
@@ -265,7 +264,6 @@
             box-shadow: 0 4px 20px rgba(#030025, 0.1), inset 0 -2px 3px rgba(black, 0.08);
             transform: rotate(5deg);
             transition: 0.2s ease;
-            //border: 5px solid red;
 
             display: none;
         }
@@ -286,18 +284,15 @@
     .post {
 		width: 350px;
 		border-radius: 12px;
-		box-shadow: 0 15px 40px rgba(black, 0.15);
+		box-shadow: 0 25px 50px rgba(#030025, 0.15);
         aspect-ratio: 5/4;
-
 		opacity: 1;
 		transition: 0.1s ease;
 		color: #030025;
 		position: relative;
-
         border: 2px solid rgba(white, 0.1);
         backdrop-filter: blur(10px);
 		overflow: hidden;
-
 
         .thumbnail{
 			position: absolute;
@@ -353,25 +348,26 @@
 				letter-spacing: -0.25px;
 			}
 
-            .date{
+            .description{
                 color: rgba(black, 0.5);
-                font-size: 13px;
                 font-weight: 500;
-                letter-spacing: -0.4px;
-                background: white;
+            }
+
+            .date{
+                color: rgba(black, 0.4);
+                font-size: 13px;
+                font-weight: 600;
+                letter-spacing: -0.5px;
+                background: rgba(white, 0.5);
                 padding: 4px 8px;
                 border-radius: 8px;
                 width: fit-content;
                 margin-top: 8px;
 
                 position: absolute;
-                bottom: 0;
-                right: 0;
+                bottom: 6px;
+                right: 6px;
             }
-
-			.description{
-				//display: none;
-			}
 		}
 
 
@@ -407,7 +403,7 @@
 				opacity: 0;
                 //transform: translateY(10px);
                 transition: 0.2s ease;
-				background-image: linear-gradient(to top, rgba(white, 0.75), rgba(#030025, 0));
+				background-image: linear-gradient(to top, rgba(#030025, 0.75), rgba(#030025, 0));
                // background: rgba(white, 0.75);
 
                 margin: 12px;
@@ -447,9 +443,11 @@
                 border: 2px solid rgba(white, 0.1);
 
                 box-shadow: 0 5px 20px rgba(#030025, 0.5), inset 0 -5px 10px rgba(black, 0.15);
+                transition: 0.2s ease;
 
                 svg{
                     height: 32px;
+                    transition: 0.2s ease;
                 }
             }
 
@@ -480,6 +478,13 @@
                 .expo{
                     opacity: 1;
                     transform: translateY(0px);
+                }
+                .play{
+                    transform: scale(1.1);
+
+                   svg{
+                        height: 36px;
+                   }
                 }
             }
 		}
@@ -576,10 +581,10 @@
             .gradient{
                 position: absolute;
                 left: 0;
-                bottom: 0;
+                bottom: -2px;
                 width: 100%;
-                height: 50px;
-                background-image: linear-gradient(to top, rgba(white, 1), rgba(white, 0.5));
+                height: 72px;
+                background-image: linear-gradient(to top, rgba(white, 1) 10%, rgba(white, 0));
             }
 
             &:hover{
@@ -594,10 +599,10 @@
 
             .prose{
                 margin: auto;
+                margin-top: 16px;
                 width: 90%;
-                aspect-ratio: 9.5/10;
+                aspect-ratio: 9.8/10;
                 overflow: hidden;
-                //border: 2px solid red;
             }
             .thumbnail{
                 display: none;
@@ -620,7 +625,7 @@
             height: fit-content !important;
             .thumbnail{
                 position: relative;
-                border: 3px solid red;
+                //border: 3px solid red;
             }
             &:hover{
                 .prose{
@@ -664,5 +669,24 @@
             z-index: 3;
         }
 	}
+
+
+    @media screen and (max-width: 800px){
+
+        .post{
+            width: 90vw !important;
+            margin-bottom: 40px;
+        }
+
+    }
+
+
+    @media screen and (max-width: 800px){
+
+        .post{
+        }
+
+    }
+
 
 </style>
