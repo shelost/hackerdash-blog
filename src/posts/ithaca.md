@@ -2,9 +2,11 @@
 series: Canvas — Lesson 1
 type: gallery
 title: Team Ithaca
-description: Intermural Team Designs
+description: School Team Designs
+card: card-scioly
+banner: null
 color: ffefef
-date: '2025-01-27'
+date: '2021-01-27'
 author: 'Dantès'
 categories:
   - sveltekit

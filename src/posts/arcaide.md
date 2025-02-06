@@ -1,7 +1,7 @@
 ---
-type: app
+type: web
 title: Arcaide
-description: AI Research Tool
+description: ARC Annotation Web App
 url: https://shelost.github.io/arcaide2
 banner: banner-platformr
 card: card-arcaide

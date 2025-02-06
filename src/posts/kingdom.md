@@ -3,7 +3,7 @@ type: gallery
 series: Samhan
 title: Kingdom
 description: Concept Art
-card: card-pandemonium
+card: card-kingdom
 banner: null
 color: FFF7E4
 date: '2025-01-27'

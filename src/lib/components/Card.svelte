@@ -85,18 +85,17 @@
         class = 'post {post.meta.type}'
     >
 
-
     {#if post.meta.color}
         <div class = 'color' style = 'background: #{post.meta.color}'></div>
     {/if}
 
     {#if post.meta.card}
-    <!--
-    <img class = 'thumbnail' src = '/card/{post.meta.card}.png' alt = 'Image'>
-    -->
+        <!--
+        <img class = 'thumbnail' src = '/card/{post.meta.card}.png' alt = 'Image'>
+        -->
 
-    <div class = 'thumbnail' style = 'background-image: url("/card/{post.meta.card}.png")'></div>
-{/if}
+        <div class = 'thumbnail' style = 'background-image: url("/card/{post.meta.card}.png")'></div>
+    {/if}
 
     {#if post.meta.type == 'blog'}
 
@@ -282,7 +281,7 @@
 
 
     .post {
-		width: 350px;
+		width: 340px;
 		border-radius: 12px;
 		box-shadow: 0 25px 50px rgba(#030025, 0.15);
         aspect-ratio: 5/4;
@@ -290,7 +289,7 @@
 		transition: 0.1s ease;
 		color: #030025;
 		position: relative;
-        border: 2px solid rgba(white, 0.1);
+        border: 2px solid rgba(white, 0);
         backdrop-filter: blur(10px);
 		overflow: hidden;
 
@@ -374,13 +373,13 @@
 		&.game{
 			color: white;
 			background: white;
-			aspect-ratio: 5/4;
+			aspect-ratio: 1.1;
 			display: flex;
 			flex-direction: column;
 			justify-content: flex-end;
             border-radius: 20px;
             border: none;
-            //border: 10px solid rgba(white, 0);
+            //border: 2px solid rgba(#6355FF, 0.15);
 
             box-shadow: 0 20px 40px rgba(black, 0.1);
 
@@ -394,29 +393,40 @@
                 width: 92%;
                 aspect-ratio: 5/4;
                 height: auto;
-                border-radius: 12px 12px 50px 12px;
+                border-radius: 18px 8px 50px 12px;
                 border: 1px solid rgba(white, 0);
-                box-shadow: 0 8px 16px rgba(black, 0.2), inset 0 -10px 15px rgba(black, 0.05);
+                box-shadow: 0 8px 16px rgba(black, 0.1), inset 0 -10px 15px rgba(black, 0.02);
             }
 
 			.expo{
-				opacity: 0;
-                //transform: translateY(10px);
+				//opacity: 0;
+                //transform: translateX(-20px);
                 transition: 0.2s ease;
-				background-image: linear-gradient(to top, rgba(#030025, 0.75), rgba(#030025, 0));
-               // background: rgba(white, 0.75);
+				background-image: linear-gradient(to top, rgba(white, 1) 50%, rgba(white, 0));
 
-                margin: 12px;
-                border-radius: 12px;
+                //background: rgba(white, .2);
+               // width: fit-content;
 
-                //color: black;
+                //margin: 12px;
+                border-radius: 0 12px 0 0;
+
+                color: black;
+                padding: 80px 20px 16px 80px;
+
 
 				h1{
                     font-size: 26px;
                     font-weight: 800;
-					text-shadow: 0 10px 25px rgba(black, .5);
-                    color: white;
+                    line-height: 100%;
+                    letter-spacing: -0.3px;
+                    margin: 0;
+					//text-shadow: 0 10px 25px rgba(black, .5);
+                    //color: white;
 				}
+                .description{
+                    margin: 0;
+                    margin-top: 4px;
+                }
                 .date{
                     display: none;
                 }
@@ -428,10 +438,10 @@
 
             .play{
                 position: absolute;
-                bottom: 10px;
-                right: 10px;
-                width: 60px;
-                height: 60px;
+                bottom: 16px;
+                left: 16px;
+                width: 50px;
+                height: 50px;
                 border-radius: 50px;
                 z-index: 3;
 
@@ -442,11 +452,11 @@
                 background: #6355FF;
                 border: 2px solid rgba(white, 0.1);
 
-                box-shadow: 0 5px 20px rgba(#030025, 0.5), inset 0 -5px 10px rgba(black, 0.15);
+                box-shadow: 0 4px 12px rgba(#030025, 0.25), inset 0 -4px 8px rgba(black, 0.1);
                 transition: 0.2s ease;
 
                 svg{
-                    height: 32px;
+                    height: 28px;
                     transition: 0.2s ease;
                 }
             }
@@ -483,7 +493,7 @@
                     transform: scale(1.1);
 
                    svg{
-                        height: 36px;
+                        height: 32px;
                    }
                 }
             }
@@ -528,9 +538,10 @@
             &:hover{
                 .thumbnail{
                     border-radius: 12px;
-                    left: -90%;
+                   // left: -90%;
                     //top: 1%;
                     //transform: rotate(-5deg);
+                    opacity: 0;
                 }
                 .expo{
                     opacity: 1;
@@ -547,6 +558,7 @@
 			aspect-ratio: 1;
 			background: rgba(white, 0.8);
             border-radius: 8px;
+            border: 2px solid rgba(#FF2E65, 0.15);
 
             .bar{
                 width: 100%;
@@ -605,32 +617,57 @@
                 overflow: hidden;
             }
             .thumbnail{
-                display: none;
+                //display: none;
+                width: auto;
+                height: auto;
+                aspect-ratio: 1;
+                z-index: 1;
+                transition: 0.4s ease;
+                backdrop-filter: blur(20px);
+                width: 100%;
+                background-size: contain;
             }
             .expo{
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-end;
-                align-items: flex-start;
-                position: fixed;
-                left: 0;
-                bottom: 0;
-                width: 100%;
-                height: 50%;
-                //background-image: linear-gradient(to top, rgba(white, 1) 40%, rgba(white, 0));
+                z-index: 2;
+                position: relative;
+                background: white;
             }
+
+            &:hover{
+                .thumbnail{
+                    //top: 10%;
+                    opacity: 0;
+                }
+            }
+
         }
 
         &.web{
+            aspect-ratio: .95;
             height: fit-content !important;
+
+            .color{
+                display: none;
+            }
             .thumbnail{
+                top: 15px;
+                left: 5%;
+                width: 90%;
+                height: auto;
+                aspect-ratio: 5/4;
+                border-radius: 8px;
                 position: relative;
+                box-shadow: 0 10px 25px rgba(#030025, 0.3);
                 //border: 3px solid red;
+                transition: 0.2s ease;
+            }
+            .expo{
+                margin-top: 16px;
+                padding: 20px;
             }
             &:hover{
-                .prose{
-                    transition: 0.2s ease;
-                    //transform: scale(1.02);
+                .thumbnail{
+                    transform: scale(1.05);
                 }
             }
         }

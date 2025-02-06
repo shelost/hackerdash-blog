@@ -13,6 +13,7 @@ categories:
   - HTML
   - JS
   - Canvas
+tier: 1
 published: true
 ---
 

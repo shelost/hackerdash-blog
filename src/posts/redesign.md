@@ -2,9 +2,8 @@
 series: Canvas — Lesson 1
 type: gallery
 title: Logo Redesigns
-description: Research Lab logos
-
-date: '2025-01-27'
+description: Graphic Design
+date: '2022-01-27'
 author: 'Dantès'
 categories:
   - sveltekit

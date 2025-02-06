@@ -3,8 +3,10 @@ series: Canvas — Lesson 1
 type: gallery
 title: Cornell Lab Logos
 description: Research Lab logos
+card: card-lab
+banner: null
 color: DEE3EA
-date: '2025-01-27'
+date: '2024-01-27'
 author: 'Dantès'
 categories:
   - sveltekit

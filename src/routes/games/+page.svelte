@@ -36,7 +36,7 @@
 	</div>
 
 	<div id = 'posts' in:fade>
-		<Cards data={data} />
+		<Cards data={data} gap = {36}/>
 	</div>
 
 	<!--
@@ -64,6 +64,7 @@
 
 	section{
 		padding-bottom: 100px;
+		padding-top: 100px;
 		background: rgba(#6355FF, 0.03);
 	}
 
@@ -71,6 +72,8 @@
 		margin: 0;
 		padding: 120px 0 60px 0;
 		//background: yellow
+
+		display: none;
 	}
 
 	#posts {

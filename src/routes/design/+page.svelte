@@ -36,7 +36,7 @@
 	</div>
 
 	<div id = 'posts' in:fade>
-		<Cards data={data} />
+		<Cards data={data} gap = {24} />
 	</div>
 
 	<!--
@@ -68,12 +68,18 @@
 
 	section{
 		padding-bottom: 100px;
+		padding-top: 100px;
+		display: flex;
 	}
 
 	#header{
 		margin: 0;
-		padding: 120px 0 60px 0;
-		//background: yellow
+		//padding: 120px 0 60px 0;
+
+		#logo{
+			width: 40px;
+		}
+
 	}
 
 	#posts {

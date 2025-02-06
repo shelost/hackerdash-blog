@@ -140,6 +140,11 @@
 		{ text: 'Apps', route: '/apps', icon: 'apps', color: '#0C75ED' }
 	];
 
+
+	let games = data.posts.filter(a => a.meta.type == 'game')
+	let gallery = data.posts.filter(a => a.meta.type == 'gallery')
+	let blog = data.posts.filter(a => a.meta.type == 'blog')
+
 </script>
 
 <svelte:head>
@@ -168,7 +173,10 @@
 				<img class = 'letter o 8' src = 'o.svg' in:fly={{ x: 80, delay: 700 }}>
 				<img class = 'letter n 9' src = 'n.svg' in:fly={{ x: 80, delay: 800 }}>
 			</div>
-			<h1>  </h1>
+
+			<h3>
+				Designs, Code, and Art
+			</h3>
 
 			<div class = 'links'>
 				{#each links as link, index}
@@ -185,6 +193,11 @@
 				</div>
 			{/each}
 			</div>
+
+			<button>
+				View Projects
+			</button>
+
 		</div>
 
 		<canvas id="canvas">
@@ -192,21 +205,57 @@
 	</div>
 
 
+	<!--
 	<section>
-		<h1 class = 'title'> Featured </h1>
-
-		<!--
-		<div id = 'posts' bind:this={Grid}>
-			{#each data.posts as post}
-				<Card post={post} />
-			{/each}
+		<div class = 'header'>
+			<h1 class = 'title'> Featured Projects </h1>
+			<h2 class = 'subtitle'> This is all my stuff. </h2>
 		</div>
-		-->
+		<div class = 'posts'>
+			<Cards data={{posts: games}} />
+		</div>
+	</section>
 
-		<div id = 'posts'>
+	<section>
+		<div class = 'header'>
+			<h1 class = 'title'> Games </h1>
+			<h2 class = 'subtitle'> This is all my stuff. </h2>
+		</div>
+		<div class = 'posts'>
+			<Cards data={{posts: games}} />
+		</div>
+	</section>
+
+	<section>
+		<div class = 'header'>
+			<h1 class = 'title'> Blog </h1>
+			<h2 class = 'subtitle'> I write about tech, art, and world events. </h2>
+		</div>
+		<div class = 'posts'>
+			<Cards data={{posts: blog}} />
+		</div>
+	</section>
+
+	<section>
+		<div class = 'header'>
+			<h1 class = 'title'> Design & Art </h1>
+			<h2 class = 'subtitle'> It's not a hobby, it's a lifestyle. </h2>
+		</div>
+		<div class = 'posts'>
+			<Cards data={{posts: gallery}} />
+		</div>
+	</section>
+
+	-->
+
+	<section>
+		<div class = 'header'>
+			<h1 class = 'title'> Everything Else </h1>
+			<h2 class = 'subtitle'> This is all my stuff. </h2>
+		</div>
+		<div class = 'posts'>
 			<Cards data={data} />
 		</div>
-
 	</section>
 
 
@@ -264,6 +313,8 @@
 	#main{
 		width: 100vw;
 		padding-bottom: 100px;
+		margin: 0;
+		gap: 0;
 	}
 
 	#flow{
@@ -292,12 +343,35 @@
 
 	section{
 		width: 100vw;
-		.title{
-			font-size: 48px;
-			width: 100%;
-			max-inline-size: 100%;
+		//height: 80vh;
+		//background: yellow;
+		//background: rgba(yellow, 0.25);
+		margin: 0;
+		padding: 40px 0;
+		.header{
 			text-align: center;
-			margin-bottom: 60px;
+			padding: 60px 0;
+			.title{
+				font-size: 40px;
+				font-weight: 900;
+				width: 100%;
+				max-inline-size: 100%;
+				margin-bottom: 12px;
+			}
+			.subtitle{
+				font-size: 20px;
+				font-weight: 400;
+				width: 100%;
+				max-inline-size: 100%;
+			}
+		}
+		.posts{
+			flex-wrap: wrap;
+			justify-content: space-between;
+			margin: auto;
+			width: 1120px;
+			max-width: 90%;
+			padding: 0;
 		}
 	}
 
@@ -322,7 +396,8 @@
 			h3{
 				font-size: 18px;
 				font-weight: 700;
-				display: none;
+				//display: none;
+				display: block;
 			}
 		}
 	}
@@ -531,6 +606,10 @@
 			letter-spacing: -1px;
 			color: black;
 			margin-bottom: 10px;
+		}
+
+		h3{
+			display: none;
 		}
 	}
 

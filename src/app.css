@@ -29,7 +29,15 @@ html {
   background: rgba(3, 0, 37, 0.05);
 }
 
-::highlight() ::-webkit-scrollbar {
+::-moz-selection {
+  background: #ffdd00;
+}
+
+::selection {
+  background: #ffdd00;
+}
+
+::-webkit-scrollbar {
   width: 0 !important;
 }
 
@@ -160,6 +168,26 @@ li {
   height: 60px;
   border-radius: 0;
   border: none;
+}
+
+button {
+  background: #030025;
+  color: white;
+  border: 1px solid #030025;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0px;
+  text-shadow: none;
+  border-radius: 8px;
+  padding: 10px 24px 12px 24px;
+  box-shadow: 0 5px 25px rgba(3, 0, 37, 0.5), inset -1px 2px 4px rgba(255, 255, 255, 0.3);
+  transition: 0.2s ease;
+}
+button:hover {
+  background: #030025;
+  transform: translateY(2px);
+  opacity: 0.85;
+  box-shadow: 0 5px 23px rgba(3, 0, 37, 0.5), inset -1px 2px 4px rgba(255, 255, 255, 0.3);
 }
 
 .prose h1 {

@@ -18,6 +18,7 @@
 	} from 'svelte/transition';
 
 	export let data
+    export let gap = 48
 
     let selected = writable(null)
     let modal = writable(false)
@@ -28,13 +29,20 @@
     let Modal;
     let Banner;
 
+    let sizes = [
+        { columns: 1, gutter: 0},
+        { mq: '800px', columns: 2, gutter: gap/2 },
+        { mq: '1024px', columns: 3, gutter: gap }
+	]
+
+
 	onMount(async () => {
         await tick();
 
 		window.addEventListener('scroll', handleScroll);
 		setTimeout(() => {
 			Bricks = bricks({
-                container: document.getElementById('cards'),
+                container: Grid,
                 packed: 'data-packed',
                 sizes: sizes
             });
@@ -50,7 +58,7 @@
 		}, 100);
 		setTimeout(() => {
 			Bricks = bricks({
-                container: document.getElementById('cards'),
+                container: Grid,
                 packed: 'data-packed',
                 sizes: sizes
             });
@@ -90,11 +98,8 @@
         updateBricks()
     }, 4000);
 
-    let sizes = [
-        { columns: 1, gutter: 0},
-        { mq: '800px', columns: 2, gutter: 20 },
-        { mq: '1024px', columns: 3, gutter: 48 }
-	]
+
+
 
     function titleCase(val) {
         return String(val).charAt(0).toUpperCase() + String(val).slice(1);
@@ -303,6 +308,11 @@
 		width: 100vw;
 		padding-bottom: 100px;
 	}
+
+    #cards{
+        display: flex;
+        gap: 40px;
+    }
 
 	#flow{
 		position: fixed;

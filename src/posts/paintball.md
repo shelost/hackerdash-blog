@@ -2,9 +2,11 @@
 series: Canvas — Lesson 1
 type: gallery
 title: Ithaca Paintball
-description: Research Lab logos
+description: Local Business Branding
+card: card-paintball
+banner: null
 color: F3E9F0
-date: '2025-01-27'
+date: '2019-01-27'
 author: 'Dantès'
 categories:
   - sveltekit

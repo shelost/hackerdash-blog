@@ -2,8 +2,8 @@
 type: gallery
 series: Samhan
 title: NYBC
-description: A one-shot comic
-card: card-pandemonium
+description: Posters & Marketing
+card: card-nybc
 banner: null
 color: e0e0e0
 date: '2025-01-27'
@@ -11,7 +11,8 @@ author: 'Dantès'
 categories:
   - procreate
   - figma
-published: true
+tier: 1
+published: false
 ---
 
 <script>

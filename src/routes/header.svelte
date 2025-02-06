@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { fly, scale } from 'svelte/transition';
 	import { quintOut, cubicOut } from 'svelte/easing';
+	import { showHeader } from '$lib/store.js'
 	import "material-icons/iconfont/material-icons.css";
 
 	let show = false;
@@ -51,6 +52,8 @@
 	}
 </script>
 
+
+{#if $showHeader}
 <nav>
 	<div class="title" on:click={() => { goto(`/`); }}>
 		<img src='smiley.png' class = 'smiley' alt = 'logo'>
@@ -88,6 +91,7 @@
 		</div>
 	</ul>
 </nav>
+{/if}
 
 
 

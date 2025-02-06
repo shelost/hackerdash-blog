@@ -39,24 +39,25 @@
 		<h2> Blog </h2>
 	</div>
 
-
 	<div class="posts" in:fade>
 		{#each posts as post, i}
 			<div class="post"  on:click={(event) => handleClick(event, post)} in:fly = {{x:200, delay: 0+i*100}}>
 
-				<h1 class="title">{post.meta.title}</h1>
+				<div class = 'bar'></div>
 
-                <div class = 'profile'>
-                    <a href="https://lh3.googleusercontent.com/drive-viewer/AITFw-xPEYrPxiy026fqjw7Rjxen5nkMMpx8rP8_gYRhj4f1kkcUhXKJyhTE55n1MXPaQz-cKjTs_EuXD7whMajZsdR0HAn29A=s2560?source=screenshot.guru"> <img src="https://lh3.googleusercontent.com/drive-viewer/AITFw-xPEYrPxiy026fqjw7Rjxen5nkMMpx8rP8_gYRhj4f1kkcUhXKJyhTE55n1MXPaQz-cKjTs_EuXD7whMajZsdR0HAn29A=s2560" /> </a>
-                    <h2> {post.meta.author} </h2>
-                </div>
+				<div class = 'expo'>
+					<h1 class="title">{post.meta.title}</h1>
+					<div class = 'profile'>
+						<a href="https://lh3.googleusercontent.com/drive-viewer/AITFw-xPEYrPxiy026fqjw7Rjxen5nkMMpx8rP8_gYRhj4f1kkcUhXKJyhTE55n1MXPaQz-cKjTs_EuXD7whMajZsdR0HAn29A=s2560?source=screenshot.guru"> <img src="https://lh3.googleusercontent.com/drive-viewer/AITFw-xPEYrPxiy026fqjw7Rjxen5nkMMpx8rP8_gYRhj4f1kkcUhXKJyhTE55n1MXPaQz-cKjTs_EuXD7whMajZsdR0HAn29A=s2560" /> </a>
+						<h2> {post.meta.author} </h2>
+					</div>
+					<p class="description">{post.meta.description}</p>
+					<h2 class="date">{formatDate(post.meta.date)}</h2>
+				</div>
 
-				<p class="date">{formatDate(post.meta.date)}</p>
-				<p class="description">{post.meta.description}</p>
 			</div>
 		{/each}
 	</div>
-
 
 	<!--
 	<div id = 'posts' in:fade>
@@ -71,6 +72,7 @@
 	section{
 		//border: 5px solid red;
 		padding-bottom: 100px;
+		padding-top: 100px;
 	}
 
 	body{
@@ -80,6 +82,7 @@
 	#header{
 		margin: 0;
 		padding: 120px 0 60px 0;
+		display: none;
 		//background: yellow
 	}
 
@@ -110,7 +113,8 @@
 			text-transform: capitalize;
 			margin-bottom: 10px;
 			max-inline-size: 100%;
-			letter-spacing: 0.1px;
+			letter-spacing: 0.2px;
+			color: rgba(black, 0.8);
 		}
 		h2{
 			font-size: 16px;
