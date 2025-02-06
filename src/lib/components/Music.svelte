@@ -72,4 +72,19 @@
         }
     }
 
+    @media screen and (max-width: 800px){
+        #player{
+            bottom: 0;
+            left: 0;
+            width: 100vw;
+            height: 60px;
+            border-radius: 12px 12px 0 0;
+
+            &:hover{
+                transform: none;
+            }
+        }
+    }
+
+
 </style>

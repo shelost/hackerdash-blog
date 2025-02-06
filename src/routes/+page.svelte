@@ -374,22 +374,22 @@
 		position: relative;
 		//top: 40px;
 
-		/*
+
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		*/
+
 	}
 
 	.head{
-		/*
+
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		text-align: center;
-		*/
+
 
 		#logo{
 			display: none;
@@ -634,6 +634,10 @@
 	}
 
 	@media screen and (max-width: 800px){
+
+		#splash{
+			height: 50vh;
+		}
 
 		.head{
 			#logo{

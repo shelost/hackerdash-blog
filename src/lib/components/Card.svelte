@@ -717,6 +717,7 @@
 
         .post{
             width: 90vw !important;
+            //height: 80vh;
             margin-bottom: 40px;
         }
 
