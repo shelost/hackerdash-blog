@@ -315,6 +315,7 @@ window.requestAnimationFrame(loop)
 		height: 100vh;
 		z-index: 2;
 		pointer-events: none;
+		display: none;
 	}
 
 	.layout {
