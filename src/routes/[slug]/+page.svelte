@@ -93,6 +93,19 @@
 
 	<div class = 'sidebar left'>
 
+		<p class = 'blurb'>
+			{#if data.meta.blurb}
+				{data.meta.blurb}
+			{/if}
+		</p>
+
+		<div class="tags">
+			{#each data.meta.categories as category}
+				<div class = 'tag'>
+					<h3> {category}  </h3>
+				</div>
+			{/each}
+		</div>
 
 	</div>
 
@@ -117,15 +130,9 @@
 					<h2> {data.meta.author} </h2>
 				</div>
 
-				<h2> {formatDate(data.meta.date)}</h2>
+				<h2 class = 'date'> {formatDate(data.meta.date)}</h2>
 
-				<div class="tags">
-					{#each data.meta.categories as category}
-						<div class = 'tag'>
-							<h3> {category}  </h3>
-						</div>
-					{/each}
-				</div>
+
 			</hgroup>
 
 			<div class="prose preview">
@@ -189,6 +196,11 @@
 		}
 	}
 
+	.blurb{
+		font-size: 14px;
+		line-height: 130%;
+	}
+
 	.menu{
 		color: black;
 		h2{
@@ -244,7 +256,7 @@
 		height: calc(100vh - 85px);
 		max-height: 1080px;
 
-		margin-top: 28px;
+		//margin-top: 28px;
 
 		border-radius: 12px;
 		box-shadow: 0 20px 60px rgba(#030025, 0.12);
@@ -359,9 +371,10 @@
 			color: black;
 			margin-top: 8px;
 			font-size: 14px;
-			padding: 8px 12px;
+			//padding: 8px 12px;
 			border-radius: 8px;
 			width: fit-content;
+			display: none;
 		}
 
 		.tags {

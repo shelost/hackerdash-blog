@@ -14,8 +14,6 @@
 
 	let show = false
 
-
-
 	setTimeout(() => {
 		show = true
 	}, 100);
@@ -245,14 +243,15 @@ window.requestAnimationFrame(loop)
 
 <div class="layout">
 
-
-
 	<Header />
 
 	<main>
 		<video id = 'video' autoplay muted loop>
 			<source src="platformr.mp4" type="video/mp4">
 		</video>
+
+		<div id = 'background' style = 'background-image: url("samhan.png")'>
+		</div>
 
 		<canvas id="bgcanvas">
 		</canvas>
@@ -279,6 +278,19 @@ window.requestAnimationFrame(loop)
 		width: 100vw;
 		height: 100vh;
 		z-index: -2;
+	}
+
+	#background{
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		z-index: -2;
+		background-size: cover;
+		background-position: center;
+		opacity: 0.1;
+		//filter: contrast(1000%);
 	}
 
 	#video{

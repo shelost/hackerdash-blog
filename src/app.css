@@ -26,7 +26,7 @@ html {
   --background-light: none;
   --border-light: var(--gray-4);
   overflow-x: hidden;
-  background: rgba(3, 0, 37, 0.05);
+  background: rgba(3, 0, 37, 0);
 }
 
 ::-moz-selection {

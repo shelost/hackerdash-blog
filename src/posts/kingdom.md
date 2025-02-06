@@ -8,6 +8,10 @@ banner: null
 color: FFF7E4
 date: '2025-01-27'
 author: 'Dantès'
+blurb: 'The King of Samhan is a story based on the 7th-century Unification Wars,
+which brought an end to the Three Kingdoms period in Korean history.
+I am currently working on a webcomic version, but here are the early drafts of the
+story in text form.'
 categories:
   - procreate
   - figma
@@ -54,12 +58,14 @@ published: true
 </script>
 
 
+
 This is a collection of early drawings / concept art for the **King of Samhan**, a comic project that I'm currently working on.
 
 The story is based on the 7th-century Unification Wars in Korea, when
 
 [a relative link](platformr)
 
+# Gallery
 
 <Gallery images = {images} />
 <Gallery images = {images2} col = 2 />

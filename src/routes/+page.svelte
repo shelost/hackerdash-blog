@@ -175,7 +175,7 @@
 			</div>
 
 			<h3>
-				Designs, Code, and Art
+				Design · Webdev · Comics · AI
 			</h3>
 
 			<div class = 'links'>
@@ -194,9 +194,7 @@
 			{/each}
 			</div>
 
-			<button>
-				View Projects
-			</button>
+
 
 		</div>
 
@@ -378,16 +376,18 @@
 
 	.links{
 		display: flex;
-		gap: 18px;
+		gap: 24px;
 		position: sticky !important;
 		top: 10px;
 		.link{
 			display: flex;
 			align-items: center;
 			gap: 6px;
-			//background: white;
-			padding: 8px;
-			border-radius: 12px;
+			padding: 20px;
+			border-radius: 60px;
+			box-shadow: 0 20px 50px rgba(#030025, 0.15);
+			background: rgba(white, 0.5);
+			backdrop-filter: blur(5px);
 
 			span{
 				font-size: 36px;
@@ -397,7 +397,7 @@
 				font-size: 18px;
 				font-weight: 700;
 				//display: none;
-				display: block;
+				display: none;
 			}
 		}
 	}
@@ -553,22 +553,17 @@
 		align-items: center;
 		text-align: center;
 
-
 		#ahw{
 			display: flex;
 			justify-content: center;
 			align-items: flex-end;
 			gap: 0;
 			margin-bottom: 56px;
-
 			filter: drop-shadow(2px 6px 8px rgba(#030025, 0.3));
-			//background: red;
+
 			.letter{
 				flex-shrink: 0;
 				margin: 0 -4px;
-				//transform: scale(0.1);
-				//width: 60px;
-				//height: auto;
 
 				&.a{
 					margin: 0px -8px -2px 0;
@@ -609,7 +604,14 @@
 		}
 
 		h3{
-			display: none;
+			//display: none;
+
+			font-size: 24px;
+			font-weight: 500;
+			letter-spacing: -0.2px;
+
+			margin-top: -10px;
+			margin-bottom: 36px;
 		}
 	}
 

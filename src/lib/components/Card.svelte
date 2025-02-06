@@ -283,7 +283,7 @@
     .post {
 		width: 340px;
 		border-radius: 12px;
-		box-shadow: 0 25px 50px rgba(#030025, 0.15);
+		box-shadow: 0 25px 50px rgba(#030025, 0.2);
         aspect-ratio: 5/4;
 		opacity: 1;
 		transition: 0.1s ease;
@@ -381,7 +381,7 @@
             border: none;
             //border: 2px solid rgba(#6355FF, 0.15);
 
-            box-shadow: 0 20px 40px rgba(black, 0.1);
+            //box-shadow: 0 20px 40px rgba(black, 0.1);
 
             .color{
                 display: none;
