@@ -5,7 +5,7 @@
 	import { base } from "$app/paths";
 	import { writable } from 'svelte/store'
 	import { tweened } from 'svelte/motion';
-	import { expandedPost } from '$lib/store';
+	import { expandedPost, showHeader } from '$lib/store';
 	import { formatDate } from '$lib/utils'
 	import * as config from '$lib/config'
 	import { onMount } from 'svelte'
@@ -155,10 +155,6 @@
 <div id = 'main' out:fade={{duration: 200}}>
 
 	<div id="splash">
-		<div id="container">
-			<canvas id="bgcanvas">
-			</canvas>
-		</div>
 
 		<div class="head">
 			<img id = 'logo' src = 'ahnheewon3.png' alt = 'Logo' transition:fly={{ duration: 500 }}>
@@ -194,12 +190,8 @@
 				{/each}
 			</div>
 
-
-
 		</div>
 
-		<canvas id="canvas">
-		</canvas>
 	</div>
 
 
@@ -251,7 +243,7 @@
 			<h1 class = 'title'> Everything Else </h1>
 			<h2 class = 'subtitle'> This is all my stuff. </h2>
 		</div>
-		<div class = 'posts'>
+		<div id = 'posts'>
 			<Cards data={data} />
 		</div>
 	</section>
@@ -373,186 +365,35 @@
 		}
 	}
 
-
-	.links{
-		display: flex;
-		gap: 24px;
-		position: sticky !important;
-		top: 10px;
-		.link{
-			display: flex;
-			align-items: center;
-			gap: 6px;
-			padding: 20px;
-			border-radius: 60px;
-			box-shadow: 0 20px 50px rgba(#030025, 0.15);
-			background: rgba(white, 0.5);
-			backdrop-filter: blur(5px);
-
-			span{
-				font-size: 36px;
-			}
-
-			h3{
-				font-size: 18px;
-				font-weight: 700;
-				//display: none;
-				display: none;
-			}
-		}
-	}
-
-	#pop{
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100vw;
-		height: 100vh;
-		background: rgba(black, 0.1);
-		z-index: 2;
-
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		#modal{
-
-			width: 720px;
-			height: 720px;
-			max-height: 85%;
-			border-radius: 12px;
-			transition: 0.2s ease;
-			z-index: 4 !important;
-			background: white;
-			overflow-y: scroll;
-			transform: translateY(16px);
-			box-shadow: 0 15px 60px rgba(black, .25);
-
-			img{
-				border: 0;
-				border-radius: 0;
-			}
-
-			.content{
-				padding: 32px;
-
-				h1{
-					font-family: 'DM Serif Display', sans-serif;
-					font-size: 48px;
-					font-weight: 900;
-					line-height: 98%;
-					letter-spacing: 0;
-				}
-
-				h2{
-					font-size: 24px;
-					font-weight: 500;
-				}
-
-				p{
-					margin-top: 12px;
-					letter-spacing: -0.15px;
-					font-size: 14px;
-					font-weight: 300;
-				}
-
-				.tags{
-					display: flex;
-					gap: 10px;
-					margin-top: 20px;
-					.tag{
-						padding: 8px 10px;
-						border-radius: 12px;
-						background: rgba(#030025, 0.1);
-						h3{
-							font-size: 14px;
-							font-weight: 500;
-						}
-					}
-				}
-
-				button{
-					background: #030025;
-					color: white;
-
-					border: none;
-					outline: none;
-
-					padding: 12px 30px;
-					border-radius: 8px;
-
-					margin-top: 24px;
-
-					h1{
-						font-size: 20px;
-						font-weight: 700;
-						text-shadow: none;
-					}
-				}
-			}
-		}
-	}
-
-
-
-
-	#bgcanvas{
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100vw;
-		height: 100vh;
-		z-index: -2;
-		display: none;
-	}
-
-	#canvas{
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100vw;
-		height: 100vh;
-		z-index: 2;
-		pointer-events: none;
-		display: none;
-	}
-
-
-
 	#splash{
 		margin: 0;
+
+		height: 90vh;
+		width: 100vw;
+
+		position: relative;
+		//top: 40px;
+
+		/*
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		height: 90vh;
-		width: 100vw;
-	}
-
-	#logo{
-		height: 120px;
-		margin-bottom: 100px;
-		display: none;
-	}
-
-	#socials {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		gap: 20px;
-		margin-top: 30px;
-	}
-
-	.icon {
-		height: 44px;
+		*/
 	}
 
 	.head{
+		/*
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		text-align: center;
+		*/
+
+		#logo{
+			display: none;
+		}
 
 		#ahw{
 			display: flex;
@@ -616,6 +457,47 @@
 		}
 	}
 
+
+	.links{
+		display: flex;
+		gap: 24px;
+		position: sticky !important;
+		top: 10px;
+
+		.link{
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			padding: 20px;
+			border-radius: 60px;
+			box-shadow: 0 20px 50px rgba(#030025, 0.15), inset 0 -4px 8px rgba(#030025, 0.02);
+			//border: 2px solid white;
+			background: rgba(white, 0.2);
+			backdrop-filter: blur(5px);
+
+			transition: 0.2s ease;
+			cursor: pointer;
+
+			span{
+				font-size: 36px;
+			}
+
+			h3{
+				font-size: 18px;
+				font-weight: 700;
+				//display: none;
+				display: none;
+			}
+
+			&:hover{
+				transform: scale(1.1);
+				background: rgba(white, 0.1);
+			}
+		}
+	}
+
+
+
 	/* Blog */
 
 	#posts {
@@ -623,9 +505,13 @@
 		flex-wrap: wrap;
 		justify-content: space-between;
 		margin: auto;
-		width: 1120px;
+		width: 1150px;
 		max-width: 90%;
 		padding: 0;
+
+		//width: 95%;
+		//max-width: 95%;
+		//border: 1px solid red;
 		//border: 1px solid yellow;
 		//gap: 2%;
 	}

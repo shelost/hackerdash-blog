@@ -45,7 +45,7 @@
     {#each images as image, index}
 
         <div class = 'elem'
-            in:fly={{y: 50, delay: 200+index*100}}
+            in:fly={{y: 50, delay: 200+index*50}}
             on:click = {(event) => {handleClick(event, image, index)}}
         >
             <img src = '../img/{image.url}.png' alt = 'Image'>

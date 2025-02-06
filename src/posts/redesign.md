@@ -3,6 +3,7 @@ series: Canvas — Lesson 1
 type: gallery
 title: Logo Redesigns
 description: Graphic Design
+card: card-redesign
 date: '2022-01-27'
 author: 'Dantès'
 categories:

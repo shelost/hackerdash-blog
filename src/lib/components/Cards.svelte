@@ -7,6 +7,7 @@
 	import bricks from 'bricks.js';
 	import Card from '$lib/components/Card.svelte'
     import Image from "svelte-image";
+    import { activeImage, showPreview, hoverCard } from '$lib/store';
 	import {
 		blur,
 		crossfade,
@@ -139,6 +140,7 @@
 
     function handleHover(post, event) {
        // console.log(post, event)
+        hoverCard.set(true)
 		selected.set(post)
 		let elem = event.currentTarget;
 		let rect = elem.getBoundingClientRect();
@@ -180,6 +182,10 @@
 				}
 			}
 	}
+
+    function handleOut(post, event) {
+        hoverCard.set(false)
+    }
 
     function closeModal(event) {
 		// Only close the modal if the click was on the background (not the modal itself)
@@ -228,6 +234,7 @@
         <div in:fly={{y: 100, delay: i*150}}>
             <Card post={post}
                 on:mouseover={(event) => handleHover(post, event)}
+                on:mouseout={(event) => handleOut(post, event)}
                 on:click={(event) => handleClick(post, event)}
             />
         </div>

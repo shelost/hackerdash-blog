@@ -1,5 +1,6 @@
 <script>
     import { formatDate, formatYear } from '$lib/utils'
+    import { activeImage, showPreview, hoverCard } from '$lib/store';
     import { goto } from '$app/navigation';
     import "material-icons/iconfont/material-icons.css";
 
@@ -63,7 +64,7 @@
 </script>
 
 
-<div class = 'card' on:mouseover on:click>
+<div class = 'card' on:mouseover on:mouseout on:click>
 
     <div class = 'label'>
         <span class="material-icons" style = 'color: {theme}'>
@@ -126,9 +127,13 @@
 
      {:else if post.meta.type == 'gallery'}
 
+
              <div class = 'prose prose-image'>
+                {#if $hoverCard}
                 <svelte:component this={post.content} />
+                {/if}
              </div>
+
 
             <div class = 'expo'>
                 <h1 class="title">{post.meta.title}</h1>
@@ -281,7 +286,7 @@
 
 
     .post {
-		width: 340px;
+		width: 350px;
 		border-radius: 12px;
 		box-shadow: 0 25px 50px rgba(#030025, 0.2);
         aspect-ratio: 5/4;

@@ -15,7 +15,7 @@ story in text form.'
 categories:
   - procreate
   - figma
-published: true
+published: false
 ---
 
 <script>

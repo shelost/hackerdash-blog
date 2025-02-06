@@ -34,7 +34,7 @@ published: true
   ]
 </script>
 
-<a href = ' https://shelost.github.io/platformr'>
+<a href = 'https://shelost.github.io/platformr'>
   <button>
     Play
   </button>

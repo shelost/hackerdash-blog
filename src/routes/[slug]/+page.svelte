@@ -474,5 +474,18 @@
     }
 
 
+	@media screen and (max-width: 1024px){
+		.sidebar{
+			display: none;
+		}
+		.container{
+			width: calc(105% - 50px);
+			//max-width: 1440px;
+			height: calc(100vh - 50px);
+			//max-height: 1080px;
+		}
+	}
+
+
 
 </style>

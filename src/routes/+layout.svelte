@@ -259,6 +259,8 @@ window.requestAnimationFrame(loop)
 		<PageTransition url={data.url}>
 			<slot />
 		</PageTransition>
+
+
 		<canvas id="canvas">
 		</canvas>
 
