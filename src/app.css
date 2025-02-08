@@ -26,7 +26,7 @@ html {
   --background-light: none;
   --border-light: var(--gray-4);
   overflow-x: hidden;
-  background: rgba(3, 0, 37, 0);
+  color: #030025;
 }
 
 ::-moz-selection {
@@ -176,16 +176,17 @@ button {
   border: 1px solid #030025;
   font-size: 18px;
   font-weight: 600;
+  letter-spacing: -0.2px;
   letter-spacing: 0px;
   text-shadow: none;
-  border-radius: 8px;
-  padding: 10px 24px 12px 24px;
+  border-radius: 16px;
+  padding: 9px 24px 10px 24px;
   box-shadow: 0 5px 25px rgba(3, 0, 37, 0.5), inset -1px 2px 4px rgba(255, 255, 255, 0.3);
   transition: 0.2s ease;
 }
 button:hover {
   background: #030025;
-  transform: translateY(2px);
+  transform: translateY(1px);
   opacity: 0.85;
   box-shadow: 0 5px 23px rgba(3, 0, 37, 0.5), inset -1px 2px 4px rgba(255, 255, 255, 0.3);
 }
@@ -219,7 +220,7 @@ button:hover {
 }
 .prose p {
   font-size: 15px;
-  font-weight: 350;
+  font-weight: 400;
   margin: 16px auto;
   padding: 0;
   max-inline-size: 100%;

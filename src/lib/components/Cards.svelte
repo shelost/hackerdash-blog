@@ -23,7 +23,6 @@
 
     let selected = writable(null)
     let modal = writable(false)
-
     let Grid;
     let Bricks;
     let Flow;
@@ -35,7 +34,6 @@
         { mq: '800px', columns: 2, gutter: gap/2 },
         { mq: '1024px', columns: 3, gutter: gap }
 	]
-
 
 	onMount(async () => {
         await tick();
@@ -100,8 +98,6 @@
     }, 4000);
 
 
-
-
     function titleCase(val) {
         return String(val).charAt(0).toUpperCase() + String(val).slice(1);
     }
@@ -137,14 +133,12 @@
     let icon = 'sports_esports'
     let theme = '#6355FF'
 
-
     function handleHover(post, event) {
-       // console.log(post, event)
+
         hoverCard.set(true)
 		selected.set(post)
 		let elem = event.currentTarget;
 		let rect = elem.getBoundingClientRect();
-		// Wait for modal to be created
 
         switch($selected.meta.type){
             case 'game':
@@ -188,7 +182,6 @@
     }
 
     function closeModal(event) {
-		// Only close the modal if the click was on the background (not the modal itself)
 		if (event.target.id === 'pop') {
 			modal.set(false)
 		}else{
@@ -205,8 +198,6 @@
 		setTimeout(() => {
 			let rect2 = Modal.getBoundingClientRect()
             Flow.style.opacity = 1
-
-            console.log(Banner)
 			setTimeout(() => {
 				Flow.style.transition = '0.3s cubic-bezier(0.22, 1, 0.36, 1)'
 				Flow.style.top = `${rect2.top+75}px`
@@ -214,15 +205,12 @@
 				Flow.style.width = `${rect2.width}px`
 				Flow.style.height = `${rect2.height}px`
 				Flow.style.opacity = 1
-
                 setTimeout(() => {
                       Flow.style.top = `${rect2.top}px`
                 }, 100);
 				setTimeout(() => {
 					Flow.style.opacity = 0
-
 				}, 500);
-
 			}, 100);
 		}, 50);
 	}
@@ -249,24 +237,24 @@
 
 	<div id = 'dark' transition:fade={{duration: 200}} ></div>
 	<div id = 'pop' on:click={closeModal}>
+
+		<div id = 'bar'  in:fade={{delay: 300}}>
+			<h2>
+				{$selected.meta.title}
+			</h2>
+			<div id = 'circles'>
+				<div class = 'circle'>
+				</div>
+				<div class = 'circle'>
+				</div>
+				<div class = 'circle'>
+				</div>
+			</div>
+		</div>
         <div id = 'modal' bind:this={Modal} in:fade={{delay: 300}}>
+
 			{#if $selected.meta.banner}
-
 				<img in:scale = {{ start: .8, delay: 200}} src = '/banner/{$selected.meta.banner}.png' loading='lazy' class = 'banner' alt = 'Image'>
-                <!--
-                <div class = 'banner'>
-                    <Image
-                        src="/banner/{$selected.meta.banner}.png"
-                        alt="Image"
-                        lazy
-                        height=290
-                        width="720"
-                        placeholder="blur"
-                        bind:this={Banner}
-                    />
-                </div>
-                -->
-
 			{/if}
 			<div class = 'content'>
                 <h1 in:fly = {{y: 100, delay: 100}}> { $selected ? $selected.meta.title : 'Title' } </h1>
@@ -356,37 +344,73 @@
 		z-index: 4;
 
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 
-		#modal{
+		#bar{
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			width: 720px;
+			height: 40px;
+			background: #030025;
+			background: #E1E6ED;
+			transform: translateY(36px);
+			z-index: 5;
+			border-radius: 12px 12px 4px 4px;
+			padding: 0 14px;
 
+			//position: fixed;
+			//box-shadow: 0 8px 16px rgba(black, 0.15);
+
+			h2{
+				font-size: 14px;
+				font-weight: 600;
+				letter-spacing: -0.3px;
+				line-height: 100%;
+				color: rgba(black, 0.75);
+			}
+
+			#circles{
+				display: flex;
+				gap: 8px;
+				.circle{
+					width: 12px;
+					height: 12px;
+					background: rgba(white, 0.5);
+					border-radius: 12px;
+					transition: 0.2s ease;
+					&:hover{
+						background: rgba(white, 0.8);
+					}
+				}
+			}
+		}
+
+		#modal{
 			width: 720px;
 			height: 720px;
+			padding-top: 32px;
 			max-height: 85%;
 			border-radius: 12px;
 			transition: 0.2s ease;
 			z-index: 4 !important;
 			background: white;
 			overflow-y: scroll;
-			transform: translateY(16px);
 			box-shadow: 0 15px 60px rgba(black, .25), inset 0px -15px 20px rgba(black, 0.08);
-            border: 1px solid rgba(black, 0.2);
-
-            /*
-			img{
-				border: 0;
-				border-radius: 0;
-			}
-                */
+            //border: 1px solid rgba(black, 0.2);
+			position: relative;
 
             .banner{
                 width: 100%;
                 height: 290px;
+				border-radius: 0;
                 overflow-y: hidden;
                img{
                     width: 100%;
                     height: 290px;
+					border-radius: 0;
                     object-fit: cover;
                }
             }

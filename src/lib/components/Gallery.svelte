@@ -35,8 +35,6 @@
 		}
 	}
 
-    //console.log(images)
-
 </script>
 
 

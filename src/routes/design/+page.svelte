@@ -4,6 +4,7 @@
 	import * as config from '$lib/config'
 	import {send, receive} from '$lib/crossfade.js';
 	import Cards from '$lib/components/Cards.svelte'
+	import { showHeader, themeColor } from '$lib/store';
 	import {
 		blur,
 		crossfade,
@@ -15,6 +16,9 @@
 	} from 'svelte/transition';
 
 	export let data;
+
+	themeColor.set('FFF8DF')
+	showHeader.set(true)
 
 	function handleClick(event, post) {
 		goto(`/${post.slug}`, { noScroll: true });
@@ -36,7 +40,7 @@
 	</div>
 
 	<div id = 'posts' in:fade>
-		<Cards data={data} gap = {24} />
+		<Cards data={data} />
 	</div>
 
 	<!--
@@ -75,6 +79,7 @@
 	#header{
 		margin: 0;
 		//padding: 120px 0 60px 0;
+		display: none;
 
 		#logo{
 			width: 40px;

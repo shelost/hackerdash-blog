@@ -1,8 +1,10 @@
 <script>
     import { formatDate, formatYear } from '$lib/utils'
-    import { activeImage, showPreview, hoverCard } from '$lib/store';
+    import { activeImage, showPreview, hoverCard, showHeader } from '$lib/store';
     import { goto } from '$app/navigation';
     import "material-icons/iconfont/material-icons.css";
+	import { onMount } from 'svelte'
+	import { page } from '$app/stores'
 
     export let post
 
@@ -60,6 +62,8 @@
         default:
             break
     }
+
+
 
 </script>
 
@@ -288,7 +292,7 @@
     .post {
 		width: 350px;
 		border-radius: 12px;
-		box-shadow: 0 25px 50px rgba(#030025, 0.2);
+		box-shadow: 10px 20px 50px rgba(#030025, 0.1);
         aspect-ratio: 5/4;
 		opacity: 1;
 		transition: 0.1s ease;
@@ -297,6 +301,13 @@
         border: 2px solid rgba(white, 0);
         backdrop-filter: blur(10px);
 		overflow: hidden;
+
+        &:hover{
+			opacity: 1;
+			//transform: scale(1.03);
+			//animation: float 0.5s ease-in-out infinite alternate-reverse;
+            box-shadow: 20px 25px 50px rgba(#030025, 0.18), -10px -10px 40px rgba(white, 1);
+		}
 
         .thumbnail{
 			position: absolute;
@@ -327,24 +338,13 @@
 
 			h1{
                // font-family: 'DM Serif Display', sans-serif;
-				font-size: 28px;
+				font-size: 26px;
 				line-height: 90%;
 				font-weight: 700;
 				margin-bottom: 8px;
 				text-align: left;
                 max-inline-size: 100%;
 			}
-
-
-            /*
-			h1{
-				font-family: 'DM Serif Display', sans-serif;
-				font-weight: 900;
-				font-size: 32px !important;
-				letter-spacing: .1px;
-				color: rgba(black, 0.8);
-			}
-            */
 
 			p{
 				font-size: 14px;
@@ -375,10 +375,11 @@
 		}
 
 
+
 		&.game{
 			color: white;
 			background: white;
-			aspect-ratio: 1.1;
+			aspect-ratio: .98;
 			display: flex;
 			flex-direction: column;
 			justify-content: flex-end;
@@ -399,15 +400,16 @@
                 aspect-ratio: 5/4;
                 height: auto;
                 border-radius: 18px 8px 50px 12px;
+                border-radius: 12px;
                 border: 1px solid rgba(white, 0);
-                box-shadow: 0 8px 16px rgba(black, 0.1), inset 0 -10px 15px rgba(black, 0.02);
+                box-shadow: 4px 6px 16px rgba(#030025, 0.2), inset 0 -10px 15px rgba(black, 0.02);
             }
 
 			.expo{
 				//opacity: 0;
                 //transform: translateX(-20px);
                 transition: 0.2s ease;
-				background-image: linear-gradient(to top, rgba(white, 1) 50%, rgba(white, 0));
+				//background-image: linear-gradient(to top, rgba(white, 1) 50%, rgba(white, 0));
 
                 //background: rgba(white, .2);
                // width: fit-content;
@@ -443,8 +445,8 @@
 
             .play{
                 position: absolute;
-                bottom: 16px;
-                left: 16px;
+                bottom: 18px;
+                left: 18px;
                 width: 50px;
                 height: 50px;
                 border-radius: 50px;
@@ -543,14 +545,10 @@
             &:hover{
                 .thumbnail{
                     border-radius: 12px;
-                   // left: -90%;
-                    //top: 1%;
-                    //transform: rotate(-5deg);
                     opacity: 0;
                 }
                 .expo{
                     opacity: 1;
-                    //transform: translateY(0px);
                 }
                 .prose{
                     transition: 30s ease;
@@ -560,17 +558,15 @@
 		}
 
 		&.blog{
-			aspect-ratio: 1;
+			aspect-ratio: .95;
 			background: rgba(white, 0.8);
             border-radius: 8px;
-            border: 2px solid rgba(#FF2E65, 0.15);
 
             .bar{
                 width: 100%;
                 height: 18px;
                 background: rgba(#FF2E65, 0.8);
                 transition: 0.2s ease;
-                //display: none;
             }
 
             .expo{
@@ -694,11 +690,7 @@
             }
         }
 
-		&:hover{
-			opacity: 1;
-			transform: scale(1.03);
-			//animation: float 0.5s ease-in-out infinite alternate-reverse;
-		}
+
 
         &.modal{
             transition: 0.7s cubic-bezier(0.22, 1, 0.36, 1);
@@ -712,7 +704,6 @@
         }
 	}
 
-
     @media screen and (max-width: 800px){
 
         .post{
@@ -720,15 +711,12 @@
             //height: 80vh;
             margin-bottom: 40px;
         }
-
     }
-
 
     @media screen and (max-width: 800px){
 
         .post{
         }
-
     }
 
 

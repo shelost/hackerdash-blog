@@ -32,8 +32,9 @@ html {
 
 	overflow-x: hidden;
 
+	color: #030025;
 
-	background: rgba(#030025,0);
+	//background: rgba(#030025,0);
 	//cursor: url('circle.png'), auto !important;
 
 }
@@ -192,19 +193,20 @@ button{
 	border: 1px solid #030025;
 	font-size: 18px;
 	font-weight: 600;
+	letter-spacing: -0.2px;
 	letter-spacing: 0px;
 	text-shadow: none;
 
-	border-radius: 8px;
+	border-radius: 16px;
 
-	padding: 10px 24px 12px 24px;
+	padding: 9px 24px 10px 24px;
 	box-shadow: 0 5px 25px rgba(#030025, 0.5), inset -1px 2px 4px rgba(white, 0.3);
 
 	transition: 0.2s ease;
 
 	&:hover{
 		background: #030025;
-		transform: translateY(2px);
+		transform: translateY(1px);
 		opacity: 0.85;
 
 		box-shadow: 0 5px 23px rgba(#030025, 0.5), inset -1px 2px 4px rgba(white, 0.3);
@@ -244,11 +246,12 @@ button{
 	}
 	p{
 		font-size: 15px;
-		font-weight: 350;
+		font-weight: 400;
 		margin: 16px auto;
 		padding: 0;
 		//width: 900px;
 		max-inline-size: 100%;
+		//font-family: 'Newsreader', 'Inter', sans-serif;
 	}
 
 	.shiki{

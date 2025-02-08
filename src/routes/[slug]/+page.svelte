@@ -186,6 +186,7 @@
 		//box-shadow: 0 20px 60px rgba(#030025, 0.12);
 		border-radius: 12px;
 		//border: 1px solid orange;
+		overflow-y: scroll;
 	}
 
 
@@ -216,7 +217,7 @@
 				padding: 4px 8px;
 				border-radius: 8px;
 				background: rgba(white, 0.4);
-				box-shadow: 0 6px 12px rgba(#030025, 0.12);
+				//box-shadow: 0 6px 12px rgba(#030025, 0.12);
 				opacity: 0.75;
 				transition: 0.2s ease;
 

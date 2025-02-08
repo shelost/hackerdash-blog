@@ -1,7 +1,5 @@
 <script lang="ts">
 	import { fade, fly, crossfade } from 'svelte/transition'
-	import Player from '$lib/components/Music.svelte'
-
 	const [send, receive] = crossfade({});
 
 	// in:receive={{key: 'box'}} out:send={{key: 'box'}}
@@ -10,11 +8,9 @@
 </script>
 
 {#key url}
-	<div class="transition" >
+	<div class="transition">
 		<slot />
 	</div>
-
-	<Player />
 {/key}
 
 <style>

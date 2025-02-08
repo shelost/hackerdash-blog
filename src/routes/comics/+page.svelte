@@ -4,7 +4,7 @@
 	import * as config from '$lib/config'
 	import {send, receive} from '$lib/crossfade.js';
 	import Cards from '$lib/components/Cards.svelte'
-
+	import { showHeader, themeColor } from '$lib/store.js'
 	import {
 		blur,
 		crossfade,
@@ -16,6 +16,9 @@
 	} from 'svelte/transition';
 
 	export let data;
+
+	themeColor.set('ECFFDF')
+	showHeader.set(true)
 
 	function handleClick(event, post) {
 		goto(`/${post.slug}`, { noScroll: true });

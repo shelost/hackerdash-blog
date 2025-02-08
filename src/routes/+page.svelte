@@ -5,7 +5,7 @@
 	import { base } from "$app/paths";
 	import { writable } from 'svelte/store'
 	import { tweened } from 'svelte/motion';
-	import { expandedPost, showHeader } from '$lib/store';
+	import { expandedPost, showHeader, themeColor } from '$lib/store';
 	import { formatDate } from '$lib/utils'
 	import * as config from '$lib/config'
 	import { onMount } from 'svelte'
@@ -27,7 +27,7 @@
 
 	export let data
 
-	console.log(data)
+	themeColor.set('ffffff')
 
 	let modal = writable(false)
 
@@ -40,6 +40,7 @@
 	let Bricks;
 
 	onMount(() => {
+		handleScroll()
 		window.addEventListener('scroll', handleScroll);
 		/*
 		setTimeout(() => {
@@ -72,6 +73,9 @@
 	function handleScroll(){
 		if (Flow){
 			Flow.style.opacity = 0
+		}
+		if (window.location.pathname.length < 2){
+			showHeader.set(window.scrollY > 800 ? true : false)
 		}
 	}
 
@@ -171,8 +175,12 @@
 			</div>
 
 			<h3>
-				Design · Webdev · Comics · AI
+				I have a lot of projects (most unfinished), so this is where I keep all my stuff.
 			</h3>
+
+			<button id = 'cta'>
+				View Stuff
+			</button>
 
 			<div class = 'links'>
 				{#each links as link, index}
@@ -371,7 +379,7 @@
 		height: 90vh;
 		width: 100vw;
 
-		position: relative;
+		//position: fixed;
 		//top: 40px;
 
 
@@ -383,13 +391,11 @@
 	}
 
 	.head{
-
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		text-align: center;
-
 
 		#logo{
 			display: none;
@@ -446,12 +452,9 @@
 		}
 
 		h3{
-			//display: none;
-
-			font-size: 24px;
+			font-size: 18px;
 			font-weight: 500;
 			letter-spacing: -0.2px;
-
 			margin-top: -10px;
 			margin-bottom: 36px;
 		}
@@ -459,10 +462,11 @@
 
 
 	.links{
-		display: flex;
+		display: none;
 		gap: 24px;
-		position: sticky !important;
+		position: sticky;
 		top: 10px;
+		left: 40px;
 
 		.link{
 			display: flex;

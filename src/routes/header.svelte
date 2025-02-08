@@ -6,7 +6,7 @@
 	import { showHeader } from '$lib/store.js'
 	import "material-icons/iconfont/material-icons.css";
 
-	let show = false;
+	let show = true;
 	setTimeout(() => {
 		show = true;
 	}, 400);
@@ -54,43 +54,43 @@
 
 
 {#if $showHeader}
-<nav>
-	<div class="title" on:click={() => { goto(`/`); }}>
-		<img src='smiley.png' class = 'smiley' alt = 'logo'>
-		<img src='ahw.png' class = 'ahw' alt = 'logo'>
-	</div>
-
-	<ul class="links">
-		{#if show}
-			{#each links as link, index}
-				<div
-					bind:this={buttons[index]}
-					class="link hoverable"
-					on:click={(event) => handleClick(event, index, link.route)}
-					transition:fly={{y: -30, delay: index*75}}
-				>
-					<span class="material-icons" style="color: {link.color}">
-						{link.icon}
-					</span>
-					<h3>
-						{link.text}
-					</h3>
-				</div>
-			{/each}
-		{/if}
-	</ul>
-
-	<ul class="links">
-		<div class = 'link' on:click={() => { goto(`/contact`); }}>
-			<span class="material-icons">
-				phone
-			</span>
-			<h3>
-				Contact
-			</h3>
+	<nav>
+		<div class="title" on:click={() => { goto(`/`); }} transition:fly={{x: -30, delay: 0}}>
+			<img src='smiley.png' class = 'smiley' alt = 'logo'>
+			<img src='ahw.png' class = 'ahw' alt = 'logo'>
 		</div>
-	</ul>
-</nav>
+
+		<ul class="links">
+			{#if show}
+				{#each links as link, index}
+					<div
+						bind:this={buttons[index]}
+						class="link hoverable"
+						on:click={(event) => handleClick(event, index, link.route)}
+						transition:fly={{y: -30, delay: index*75}}
+					>
+						<span class="material-icons" style="color: {link.color}">
+							{link.icon}
+						</span>
+						<h3>
+							{link.text}
+						</h3>
+					</div>
+				{/each}
+			{/if}
+		</ul>
+
+		<ul class="links" transition:fly={{x: 30, delay: 100}}>
+			<div class = 'link' on:click={() => { goto(`/contact`); }}>
+				<span class="material-icons">
+					phone
+				</span>
+				<h3>
+					Contact
+				</h3>
+			</div>
+		</ul>
+	</nav>
 {/if}
 
 
